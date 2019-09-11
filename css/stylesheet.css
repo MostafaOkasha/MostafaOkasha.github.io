@@ -331,7 +331,7 @@
 }
  @media (max-width: 1080px) {
    .landing-header .logo {
-     width: 160px;
+     width: 90px;
   }
    .landing-header .header-content {
      font-size: 30px;
