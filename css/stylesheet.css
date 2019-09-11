@@ -1,5 +1,16 @@
 @charset "utf-8";
 /*-------------------------------------------------------*/
+/* fouc solution based on Paul Irish's solution */
+.no-js {
+ visibility: hidden;
+ opacity: 0;
+}
+
+.js {
+ visibility: visible;
+ opacity: 1;
+}
+/*-------------------------------------------------------*/
 /* FONTS: START */
 /* Charter */
  @font-face {
