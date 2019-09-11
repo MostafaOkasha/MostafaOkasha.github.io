@@ -12,6 +12,7 @@ timezone: America/New_York
 repository: MostafaOkasha/MostafaOkasha.github.io
 
 logo: /images/
+
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag

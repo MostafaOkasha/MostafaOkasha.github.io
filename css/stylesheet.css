@@ -190,6 +190,7 @@
    background: #18212d;
    padding-top: 40px;
    z-index: 3;
+   border-bottom: #598daa 2px solid;
 }
  .landing-header .wrapper {
    display: flex;
