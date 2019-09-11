@@ -1,0 +1,43 @@
+---
+title: "Home"
+layout: default
+---
+
+<header id="header" class="landing-header">
+    <div class="wrapper">
+        <div class="left">
+            <a href="/" class="logo-container">
+            <img class="logo" src="images/m-logo.png" alts="Mostafa Okasha Brand Logo">
+            </a>
+            <div class="intro">
+                {% include header-intro.html %}
+            </div>
+        </div>
+        <div class="right">
+            {% include navigation_links.html %}
+            <div class="commit-history">
+                {% assign site_repository = site.github["public_repositories"] | last %}
+                Last updated with commit
+                <span class="commit-sha">
+                    <a href="https://github.com/MostafaOkasha/mostafaokasha.github.io/commits/master">
+                        @{{ site.github["build_revision"] | truncate: 8, "" }}
+                    </a>
+                </span>
+                <br>
+                on {{ site_repository["pushed_at"] }}
+            </div>
+        </div>
+    </div>
+</header>
+
+<body>
+    <div class="wrapper">
+        <article class="img-info">
+            <h2 title="HELLO!">Hi there! I'm Mostafa Okasha</h2>
+            <hr>
+            <img class="profile-pic" src="images/profile-pic.png" alts="Profile Photo">
+            <p>Hello! Website currently undergoing heavy reconstruction. Check out my resume for now!</p>
+        </article>
+        <img class="img-EyeSee" src="images/projects/EyeSee/EyeSee1.jpg" alt="EyeSee beautiful team!">
+    </div>
+</body>

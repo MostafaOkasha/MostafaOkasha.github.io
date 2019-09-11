@@ -1,0 +1,495 @@
+@charset "utf-8";
+/*-------------------------------------------------------*/
+/* FONTS: START */
+/* Charter */
+ @font-face {
+   font-family: 'Charter';
+   src: url('../fonts/charter/charter_bold_italic-webfont.eot');
+   src: url('../fonts/charter/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_bold_italic-webfont.woff') format('woff');
+   font-weight: bold;
+   font-style: italic;
+}
+ @font-face {
+   font-family: 'Charter';
+   src: url('../fonts/charter/charter_bold-webfont.eot');
+   src: url('../fonts/charter/charter_bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_bold-webfont.woff') format('woff');
+   font-weight: bold;
+   font-style: normal;
+}
+ @font-face {
+   font-family: 'Charter';
+   src: url('../fonts/charter/charter_italic-webfont.eot');
+   src: url('../fonts/charter/charter_italic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_italic-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: italic;
+}
+ @font-face {
+   font-family: 'Charter';
+   src: url('../fonts/charter/charter_regular-webfont.eot');
+   src: url('../fonts/charter/charter_regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_regular-webfont.woff') format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+/* SF Mono */
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 200;
+   font-style: normal;
+   src: url(../fonts/sf_mono/SFMono-Light.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 200;
+   font-style: italic;
+   src: url(../fonts/sf_mono/SFMono-LightItalic.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 400;
+   font-style: normal;
+   src: url(../fonts/sf_mono/SFMono-Regular.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 400;
+   font-style: italic;
+   src: url(../fonts/sf_mono/SFMono-RegularItalic.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 500;
+   font-style: normal;
+   src: url(../fonts/sf_mono/SFMono-Medium.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 500;
+   font-style: italic;
+   src: url(../fonts/sf_mono/SFMono-MediumItalic.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 600;
+   font-style: normal;
+   src: url(../fonts/sf_mono/SFMono-Semibold.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 600;
+   font-style: italic;
+   src: url(../fonts/sf_mono/SFMono-SemiboldItalic.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 700;
+   font-style: normal;
+   src: url(../fonts/sf_mono/SFMono-Bold.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 700;
+   font-style: italic;
+   src: url(../fonts/sf_mono/SFMono-BoldItalic.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 800;
+   font-style: normal;
+   src: url(../fonts/sf_mono/SFMono-Heavy.otf);
+}
+ @font-face {
+   font-family: "SF Mono";
+   font-weight: 800;
+   font-style: italic;
+   src: url(../fonts/sf_mono/SFMono-HeavyItalic.otf);
+}
+/* FONTS: END */
+/* TEST: PASS;
+ */
+/*-------------------------------------------------------*/
+/* BODY and HTML Default*/
+ body {
+   padding: 0;
+   margin: 0;
+   overflow-x: hidden;
+   font-family: "SF Mono", "Lucida Console", Monaco, monospace;
+   font-weight: 200;
+   color: #000;
+   font-size: 17px;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   -webkit-backface-visibility: hidden;
+}
+ html, body {
+   height: 100%;
+}
+/* FONTS: END */
+/* TEST: PASS;
+ */
+/*-------------------------------------------------------*/
+/* RANDOM CSS */
+ a:focus {
+   outline: 0;
+}
+ .container {
+   margin: auto;
+   max-width: 1200px;
+}
+ .vertical-align {
+   position: relative;
+   top: 50%;
+   transform: translateY(-50%);
+}
+ .wrapper {
+   max-width: 980px;
+   margin: auto;
+}
+ @media (max-width: 1050px) {
+   .wrapper {
+     margin: 0 30px;
+  }
+}
+ .small-wrapper {
+   max-width: 800px;
+   margin: auto;
+}
+ .center-align {
+   text-align: center;
+}
+ .right-align {
+   text-align: right;
+}
+ .small {
+   font-size: 25px;
+}
+ .section-link {
+   color: #b93838;
+   text-decoration: none;
+   border-bottom: 5px solid #b93838;
+}
+ .block-link {
+   display: block;
+   text-decoration: none;
+}
+/* RANDOM END */
+/*-------------------------------------------------------*/
+/* HEADER CSS BEGIN: */
+ .landing-header {
+   position: relative;
+   background: #18212d;
+   padding-top: 40px;
+   z-index: 3;
+}
+ .landing-header .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+ .landing-header .wrapper .left {
+   padding-right: 50px;
+}
+ .landing-header .wrapper .right {
+   border-left: 1px solid gray;
+   padding-left: 20px;
+   position: relative;
+}
+ .landing-header .wrapper .right .commit-history {
+   position: absolute;
+   bottom: 0;
+   font-size: 12px;
+   font-weight: 500;
+   line-height: 20px;
+   color: #e1e1e1;
+}
+ .landing-header .wrapper .right .commit-sha {
+   font-weight: 600;
+}
+ .landing-header .wrapper .right .commit-sha a {
+   text-decoration: none;
+   color: #eeeb80;
+}
+ @media (max-width: 920px
+ ) {
+   .landing-header .wrapper {
+     display: block;
+  }
+   .landing-header .wrapper .left {
+     padding-right: 0;
+  }
+   .landing-header .wrapper .right {
+     border-left: none;
+     padding-top: 18px;
+     padding-left: 0;
+     position: static;
+     font-size: 15.5px;
+     text-align: center;
+  }
+   .landing-header .wrapper .right .commit-history {
+     display: none;
+  }
+}
+ .landing-header .intro {
+   color: white;
+   font-weight: 400;
+   line-height: 23px;
+}
+ .landing-header .intro .intro-link {
+   text-decoration: none;
+   color: inherit;
+   transition: opacity 0.15s linear;
+}
+ .landing-header .intro .intro-link:hover {
+   opacity: 0.8;
+}
+ .landing-header .intro .intro-emphasis {
+   font-weight: 500;
+}
+ .landing-header .intro .intro-emphasis:nth-of-type(6n+2) {
+   color: #5197e8;
+}
+ .landing-header .intro .intro-emphasis:nth-of-type(6n+3) {
+   color: #50e3c2;
+}
+ .landing-header .intro .intro-emphasis:nth-of-type(6n+4) {
+   color: #f5a623;
+}
+ .landing-header .intro .intro-emphasis:nth-of-type(6n+5) {
+   color: #f8e71c;
+}
+ .landing-header .intro .intro-emphasis:nth-of-type(6n+6) {
+   color: #db2fff;
+}
+ .landing-header .intro .intro-emphasis:nth-of-type(6n+7) {
+   color: #ff5757;
+}
+ .landing-header .intro .page-type, .landing-header .intro .page-tagline {
+   font-size: 17px;
+   font-weight: 500;
+}
+ .landing-header .intro .page-title {
+   font-size: 23px;
+   font-weight: 700;
+   margin: 3px 0 6px;
+}
+ @media (max-width: 720px) {
+   .landing-header .intro .page-title {
+     line-height: 26px;
+  }
+}
+ @media (max-width: 1080px) {
+   .landing-header .intro {
+     font-size: 15px;
+     line-height: 21px;
+  }
+}
+ .landing-header .logo, .landing-header .logo-container {
+   display: block;
+   width: 100px;
+   padding-top: 0;
+   margin-left: auto;
+   margin-right: auto;
+}
+ @media (max-width: 920px) {
+   .landing-header .logo, .landing-header .logo-container {
+     margin-bottom: 3px;
+  }
+}
+ .landing-header .header-nav-divider {
+   border: 0.5px solid gray;
+   margin: 10px 0 20px;
+   width: 30px;
+}
+ .landing-header ul.header-nav-list {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+}
+ .landing-header ul.header-nav-list li {
+   margin-bottom: 12px;
+   font-weight: 400;
+}
+ .landing-header ul.header-nav-list li a, .landing-header ul.header-nav-list li i {
+   color: white;
+}
+ @media (max-width: 1080px) {
+   .landing-header ul.header-nav-list {
+     font-size: 15.5px;
+     line-height: 16px;
+  }
+}
+ @media (max-width: 1080px) {
+   .landing-header .logo {
+     width: 160px;
+  }
+   .landing-header .header-content {
+     font-size: 30px;
+  }
+}
+ .landing-header {
+   padding-bottom: 40px;
+}
+ .landing-header .wrapper .left {
+   flex: 2 0 0;
+}
+ .landing-header .wrapper .right {
+   flex: 1 0 0;
+}
+ @media (max-width: 920px) {
+   .landing-header {
+     padding-bottom: 21px;
+  }
+   .landing-header li {
+     display: inline-block;
+     margin: 0 5px;
+  }
+   .landing-header li a {
+     color: #c7c9cc !important;
+  }
+   .landing-header .header-social-nav, .landing-header .header-nav-divider {
+     display: none;
+  }
+}
+ @media (max-width: 570px) {
+   .landing-header {
+     padding-top: 30px;
+  }
+}
+/* HEADER CSS END - TESTS: PASS */
+/*-------------------------------------------------------*/
+/* FOOTER CSS BEGIN: */
+/*-------------------------------------------------------*/
+ #footer {
+   position: relative;
+   font-size: 16px;
+   background-color: #18212d;
+   z-index: 2;
+   padding: 30px 0;
+   color: white;
+   border-top: #598daa 2px solid;
+}
+ #footer .footer-social {
+   margin: 0 10px;
+}
+ #footer .footer-group {
+   display: inline-block;
+   margin: 3px 0;
+}
+ @media (max-width: 700px) {
+   #footer .footer-left, #footer .footer-right {
+     float: none;
+     text-align: center;
+  }
+   #footer .footer-left {
+     font-size: 24px;
+     padding-bottom: 4px;
+  }
+   #footer .footer-right {
+     font-size: 20px;
+  }
+}
+ #footer .footer-clear {
+   clear: both;
+}
+ #footer .footer-name {
+   display: inline;
+   padding-right: 10px;
+}
+ #footer .footer-social-icons {
+   display: inline-block;
+   margin: 0 auto;
+}
+ #footer a {
+   color: white;
+   text-decoration: none;
+}
+ #footer .fa {
+   padding: 0 2px;
+}
+/* FOOTER: RAINBOW */
+/*-------------------------------------------------------*/
+ .footer-rainbow {
+   display: flex;
+   width: 100%;
+   height: 10px;
+}
+ .footer-rainbow .rainbow-stripe {
+   flex: 1 0 auto;
+   height: 100%;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(1) {
+   background: #d8d8d8;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(2) {
+   background: #5197e8;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(3) {
+   background: #50e3c2;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(4) {
+   background: #f5a623;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(5) {
+   background: #f8e71c;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(6) {
+   background: #db2fff;
+}
+ .footer-rainbow .rainbow-stripe:nth-of-type(7) {
+   background: #ff5757;
+}
+/* Horizontal line (for footer) */
+ hr {
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 1px solid #ccc;
+   margin: 1em 0;
+   padding: 0;
+   width: 30%;
+   margin-left: auto;
+   margin-right: auto;
+}
+/* END OF FOOTER CSS */
+/*-------------------------------------------------------*/
+ .vertical-spacer.spacer-tiny {
+   height: 4.5px;
+}
+ .vertical-spacer.spacer-small {
+   height: 9px;
+}
+ .vertical-spacer.spacer-medium {
+   height: 13.5px;
+}
+ .vertical-spacer.spacer-large {
+   height: 18px;
+}
+ .profile-pic {
+   display: block;
+   width: 8%;
+   padding-top: 13px;
+   margin-left: auto;
+   margin-right: auto;
+}
+ .img-info {
+   width: 100%;
+}
+ .img-info h2 {
+   width: 100%;
+   padding: 30px 30px 20px;
+   font-family: arial;
+   font-size: 50px;
+   color: #111;
+   line-height: 44px;
+}
+ .img-info p {
+   width: 50%;
+   padding: 20px 30px 20px;
+   font-family: arial;
+   font-size: 16px;
+   color: #111;
+   line-height: 24px;
+}
+ .img-EyeSee {
+   width: 50%;
+   padding-left: 30px;
+}
