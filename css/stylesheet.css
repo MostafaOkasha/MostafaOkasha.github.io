@@ -193,9 +193,9 @@
 
  .basic-header {
    background: #18212d;
-   padding-top: 40px;
+   padding-top: 20px;
    z-index: 3;
-   padding-bottom: 40px;
+   padding-bottom: 20px;
 }
 
 .basic-header img:hover {
@@ -233,7 +233,7 @@
  .landing-header {
    position: relative;
    background: #18212d;
-   padding-top: 40px;
+   padding-top: 20px;
    z-index: 3;
    border-bottom: #598daa 2px solid;
 }
@@ -266,30 +266,10 @@
 }
 
  .commit-sha:hover {
-   opacity: 0.7;
+   opacity: 0.8;
    border-bottom: 1px dashed #989898;
 }
 
- @media (max-width: 920px
- ) {
-   .landing-header .wrapper {
-     display: block;
-  }
-   .landing-header .wrapper .left {
-     padding-right: 0;
-  }
-   .landing-header .wrapper .right {
-     border-left: none;
-     padding-top: 18px;
-     padding-left: 0;
-     position: static;
-     font-size: 15.5px;
-     text-align: center;
-  }
-   .landing-header .wrapper .right .commit-history {
-     display: none;
-  }
-}
  .landing-header .intro {
    color: white;
    font-weight: 400;
@@ -301,7 +281,7 @@
    transition: opacity 0.15s linear;
 }
  .landing-header .intro .intro-link:hover {
-   opacity: 0.7;
+   opacity: 0.8;
    border-bottom: 1px dashed #989898;
 }
  .landing-header .intro .intro-emphasis {
@@ -334,17 +314,7 @@
    font-weight: 700;
    margin: 3px 0 6px;
 }
- @media (max-width: 720px) {
-   .landing-header .intro .page-title {
-     line-height: 26px;
-  }
-}
- @media (max-width: 1080px) {
-   .landing-header .intro {
-     font-size: 15px;
-     line-height: 21px;
-  }
-}
+
  .landing-header .logo, .landing-header .logo-container {
    display: block;
    width: 100px;
@@ -352,11 +322,7 @@
    margin-left: auto;
    margin-right: auto;
 }
- @media (max-width: 920px) {
-   .landing-header .logo, .landing-header .logo-container {
-     margin-bottom: 3px;
-  }
-}
+
  .landing-header .header-nav-divider {
    border: 0.5px solid gray;
    margin: 10px 0 20px;
@@ -377,8 +343,7 @@
 }
 
  ul.header-nav-list li a:hover {
-   opacity: 0.7;
-   border-bottom: 1px dashed #989898;
+   opacity: 0.8;
 }
 
  .landing-header img:hover {
@@ -386,6 +351,25 @@
    filter: brightness(70%);
 }
 
+ .landing-header .wrapper .left {
+   flex: 2 0 0;
+}
+ .landing-header .wrapper .right {
+   flex: 1 0 0;
+}
+
+/*--------------------------*/
+/* media edits */
+/* 1080px */
+ @media (max-width: 1080px) {
+   .landing-header .intro {
+     font-size: 15px;
+     line-height: 21px;
+  }
+}
+ .landing-header {
+   padding-bottom: 20px;
+}
  @media (max-width: 1080px) {
    .landing-header ul.header-nav-list {
      font-size: 15.5px;
@@ -400,19 +384,40 @@
      font-size: 30px;
   }
 }
- .landing-header {
-   padding-bottom: 40px;
-}
- .landing-header .wrapper .left {
-   flex: 2 0 0;
-}
- .landing-header .wrapper .right {
-   flex: 1 0 0;
+
+/*--------------------------*/
+/* 920px */
+@media (max-width: 920px
+ ) {
+   .landing-header .wrapper {
+     display: block;
+  }
+   .landing-header {
+   padding-bottom: 0px;
+  }
+  
+   .landing-header .wrapper .left {
+     padding-right: 0;
+  }
+   .landing-header .wrapper .right {
+     border-left: none;
+     padding-left: 0;
+     position: static;
+     font-size: 15.5px;
+     text-align: center;
+     padding-top: 13px;
+     padding-bottom: 0px;
+  }
+   .landing-header .wrapper .right .commit-history {
+     display: none;
+  }
 }
  @media (max-width: 920px) {
-   .landing-header {
-     padding-bottom: 21px;
+   .landing-header .logo, .landing-header .logo-container {
+     margin-bottom: 3px;
   }
+}
+ @media (max-width: 920px) {
    .landing-header li {
      display: inline-block;
      margin: 0 5px;
@@ -424,13 +429,30 @@
      display: none;
   }
 }
+
+/*--------------------------*/
+/* 720px */
+ @media (max-width: 720px) {
+   .landing-header .intro .page-title {
+     line-height: 26px;
+  }
+  .landing-header .wrapper .right {
+     padding-top: 13px;
+     padding-bottom: 0px;
+  }
+}
+
+/*--------------------------*/
+/* 570px */
  @media (max-width: 570px) {
-   .landing-header {
-     padding-top: 30px;
+   .landing-header .wrapper .right {
+     padding-top: 13px;
+     padding-bottom: 0px;
   }
 }
 /* HEADER CSS END - TESTS: PASS */
 /*-------------------------------------------------------*/
+
 /* FOOTER CSS BEGIN: */
 /*-------------------------------------------------------*/
  #footer {
@@ -480,6 +502,11 @@
  #footer .fa {
    padding: 0 2px;
 }
+
+ .footer-group:hover {
+   opacity: 0.8;
+}
+
 /* FOOTER: RAINBOW */
 /*-------------------------------------------------------*/
  .footer-rainbow {
@@ -567,4 +594,29 @@
  .img-EyeSee {
    width: 50%;
    padding-left: 30px;
+}
+
+/* --------- YouTube Embed Overlay --------- */
+/* background overlay */
+
+#mPlayer {
+  display: none;
+  background: rgba(0, 0, 0, .8);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  left: 0;
+  top: 0;
+}
+
+/* video player */
+
+#mPlayer DIV {
+  position: fixed;
+  background: #000;
+  width: 560px; /* width of YouTube Player */
+  height: 315px; /* height of YouTube Player */
+  left: calc(50vw - 280px); /* 280 is .5(560), centers x axis*/
+  top: calc(50vh - 157px); /* 157 is .5(315), centers y axis*/
 }
