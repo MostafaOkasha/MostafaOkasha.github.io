@@ -182,6 +182,51 @@
    display: block;
    text-decoration: none;
 }
+
+ .resume-download {
+   color: #e1e1e1;
+   text-decoration: none;
+   background: #598daa;
+   padding-bottom: 3px;
+   padding-top: 2px;
+}
+
+ .basic-header {
+   background: #18212d;
+   padding-top: 40px;
+   z-index: 3;
+   padding-bottom: 40px;
+}
+
+.basic-header img:hover {
+   -webkit-filter: brightness(70%);
+   filter: brightness(70%);
+}
+
+ .basic-logo-container {
+   display: block;
+   width: 100px;
+   padding-top: 0;
+   margin: 0 auto;
+}
+
+.basic-logo {
+   display: block;
+   width: 100px;
+   padding-top: 0;
+   margin: 0 auto;
+}
+
+ .sticky {
+   position: fixed;
+   top: 0;
+   width: 100%;
+}
+
+ .resume-download a:hover {
+   opacity: 0.5;
+}
+
 /* RANDOM END */
 /*-------------------------------------------------------*/
 /* HEADER CSS BEGIN: */
@@ -219,6 +264,12 @@
    text-decoration: none;
    color: #eeeb80;
 }
+
+ .commit-sha:hover {
+   opacity: 0.7;
+   border-bottom: 1px dashed #989898;
+}
+
  @media (max-width: 920px
  ) {
    .landing-header .wrapper {
@@ -250,7 +301,8 @@
    transition: opacity 0.15s linear;
 }
  .landing-header .intro .intro-link:hover {
-   opacity: 0.8;
+   opacity: 0.7;
+   border-bottom: 1px dashed #989898;
 }
  .landing-header .intro .intro-emphasis {
    font-weight: 500;
@@ -323,6 +375,17 @@
  .landing-header ul.header-nav-list li a, .landing-header ul.header-nav-list li i {
    color: white;
 }
+
+ ul.header-nav-list li a:hover {
+   opacity: 0.7;
+   border-bottom: 1px dashed #989898;
+}
+
+ .landing-header img:hover {
+   -webkit-filter: brightness(70%);
+   filter: brightness(70%);
+}
+
  @media (max-width: 1080px) {
    .landing-header ul.header-nav-list {
      font-size: 15.5px;

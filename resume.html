@@ -1,12 +1,21 @@
 ---
 title: "Resume"
-layout: null
+layout: resume_layout
 permalink: '/resume'
 ---
 
-<meta http-equiv="refresh" content="0; url=https://okasha.me/resume/resume.pdf" />
+<header class="basic-header">
+    <div>
+        <a href="/" id="logo" class="basic-logo-container">
+        	<img class="basic-logo" src="images/m-logo.png" alts="Mostafa Okasha Brand Logo">
+        </a>
+    </div>
+</header>
 
-{% include favicon.html %}
+<div class="resume-download center-align" id="sticky-header">
+	<a href="/resume/resume.pdf"download="Mostafa_Okasha_Resume.pdf">Download</a>
+</div>
 
-<!-- Page Title -->
-<title>{{ page.title }} | Mostafa Okasha</title>
+<iframe src="https://drive.google.com/file/d/1cGq1EHcwA-2OkDcVLbTiKJGE7cZJlATA/preview"  style="width:100%; height:100%;" frameborder="0"></iframe>
+
+{% include sticky-script.html %}
