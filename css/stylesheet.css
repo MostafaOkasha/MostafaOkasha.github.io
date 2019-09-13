@@ -1,5 +1,8 @@
 @charset "utf-8";
 /*-------------------------------------------------------*/
+* {
+  box-sizing: border-box;
+}
 /* fouc solution based on Paul Irish's solution */
 .no-js {
  visibility: hidden;

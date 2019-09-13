@@ -24,3 +24,7 @@ Check out the Jekyll installation page for more information on how to get starte
 
 
 Cheers!
+
+# License
+
+www.okasha.me is licensed under The MIT License. You can view it [here](https://github.com/MostafaOkasha/MostafaOkasha.github.io/blob/master/LICENSE).
