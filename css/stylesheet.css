@@ -39,12 +39,20 @@
    display: block;
    border-radius: 50%;
    width: 250px;
-   
    margin-left: auto;
    margin-right: auto;
    background: rgba(24, 33, 45, 0.55);
-   
 }
+
+#app {
+  padding-top: 20px;
+  color: white;
+  font-weight: 400;
+  line-height: 23px;
+  font-size: 28px;
+  padding-left: 33%;
+}
+
 
 /* fouc solution based on Paul Irish's solution */
 .no-js {

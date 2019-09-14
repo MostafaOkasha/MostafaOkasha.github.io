@@ -30,15 +30,49 @@
 
     <div class="vid-overlay">
         <div class="wrapper">
-            <div class="vid-body center-align">
-                <div data-jarallax-element="-50">
-                    <img class="profile-pic" src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
-                    Hello
-                </div>
+            <div class="vid-body">
+                <img class="profile-pic" src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
+                <div
+                <div id="app"></div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+var app = document.getElementById('app');
+var typewriter = new Typewriter(app, {
+    loop: true
+});
+typewriter.typeString('Explore My: Skills')
+    .pauseFor(1500)
+    .deleteChars(6)
+    .typeString('Experiences')
+    .pauseFor(1500)
+    .deleteChars(11)
+    .typeString('Projects')
+    .pauseFor(1500)
+    .deleteChars(8)
+    .typeString('Hobbies')
+    .pauseFor(1500)
+    .deleteChars(7)
+    .typeString('Projects')
+    .pauseFor(1500)
+    .deleteChars(8)
+    .typeString('Vision')
+    .pauseFor(1500)
+    .deleteChars(6)
+    .typeString('Goals')
+    .pauseFor(1500)
+    .deleteChars(5)
+    .typeString('World')
+    .pauseFor(5000)
+    .deleteAll()
+    .typeString('Hello Again!')
+    .pauseFor(2000)
+    .deleteAll()
+    .start();
+</script>
 
 <!--
 <script>
