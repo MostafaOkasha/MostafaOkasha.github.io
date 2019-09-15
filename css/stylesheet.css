@@ -970,57 +970,57 @@
 
 
 
-@media screen and (max-width: 800px) {  
+@media screen and (max-width: 805px) {  
   #app  {
     font-size:25px;
     }
   }
 
-@media screen and (max-width: 700px) {  
+@media screen and (max-width: 705px) {  
   #app  {
     font-size:21.5px;
     }
   }
 
-@media screen and (max-width: 600px) {  
+@media screen and (max-width: 605px) {  
   #app  {
     font-size:17px;
     }
   }
 
-@media screen and (max-width: 500px) {  
+@media screen and (max-width: 505px) {  
   #app  {
     font-size:15.5px;
     }
   }
 
-@media screen and (max-width: 450px) {  
+@media screen and (max-width: 455px) {  
   #app  {
     font-size:14px;
     } 
   }
 
-@media screen and (max-width: 405px) {  
+@media screen and (max-width: 410px) {  
   #app  {
     font-size:13px;
     } 
   }
 
-@media screen and (max-width: 382px) {
+@media screen and (max-width: 387px) {
   #app  {
     font-size:11px;
     }
   }
 
-@media screen and (max-width: 335px) {
+@media screen and (max-width: 340px) {
   #app  {
     font-size:9.5px;
     }
   }
 
-@media screen and (max-width: 335px) {
+@media screen and (max-width: 315px) {
   #app  {
-    font-size:9.5px;
+    font-size:9px;
     }
   }
 
