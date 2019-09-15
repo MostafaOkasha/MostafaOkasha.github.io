@@ -3,63 +3,8 @@
 * {
   box-sizing: border-box;
 }
-/*-------------------------------------------------------*/
-/* Jarallax Specific CSS */
-.jarallax {
-    position: relative;
-    z-index: 0;
-}
-.jarallax > .jarallax-img {
-    position: absolute;
-    object-fit: cover;
-    /* support for plugin https://github.com/bfred-it/object-fit-images */
-    font-family: 'object-fit: cover;';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
+/* second body is 54vh */
 
-/*-------------------------------------------------------*/
-.vid-overlay {
-    height: calc(100vh - 348px);
-    height: -o-calc(100vh - 348px); /* opera */
-    height: -webkit-calc(100vh - 348px); /*google,safari*/
-    height: -moz-calc(100vh - 348px); /* firefox */
-    background: rgba(24, 33, 45, 0.3);
-    border-bottom: #598daa 2px solid;
-}
-
- .wrapper-pic {
-   max-width: 980px;
-   margin: auto;
-   height: calc(100vh - 348px);
-   height: -o-calc(100vh - 348px); /* opera */
-   height: -webkit-calc(100vh - 348px); /*google,safari*/
-   height: -moz-calc(100vh - 348px); /* firefox */
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
- @media (max-width: 1050px) {
-   .wrapper-pic {
-     margin: 0 30px;
-  }
-}
-
- .profile-pic-container {
-    padding-left: 4%;
-    vertical-align:middle;
- }
-
- .profile-pic {
-   display: inline;
-   vertical-align:middle;
-   border-radius: 50%;
-   width: 30%;
-   background: rgba(24, 33, 45, 0.55);
-}
 
 #app {
   margin: auto;
@@ -70,14 +15,6 @@
   font-size: 28px;
   display: inline;
   padding-left: 4%;
-}
-
-.vid-overlay .wrapper .vid-body .left {
-
-}
-
-.vid-overlay .wrapper .vid-body .right {
-
 }
 
 /* fouc solution based on Paul Irish's solution */
@@ -328,7 +265,7 @@
 /* HEADER CSS BEGIN: */
  .landing-header {
    position: relative;
-   background: rgba(24, 33, 45, 0.75);
+   background: rgba(24, 33, 45, 0.8);
    padding-top: 20px;
    z-index: 3;
    border-bottom: #598daa 2px solid;
@@ -551,6 +488,42 @@
 
 /* FOOTER CSS BEGIN: */
 /*-------------------------------------------------------*/
+.vid-overlay {
+    height: 54vh;
+    background: rgba(24, 33, 45, 0.45);
+}
+
+ .wrapper-pic {
+   max-width: 980px;
+   margin: auto;
+   height: 54vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+ @media (max-width: 1050px) {
+   .wrapper-pic {
+     margin: 0 30px;
+  }
+}
+
+ .profile-pic-container {
+    padding-left: 4%;
+    vertical-align:middle;
+ }
+
+ .profile-pic {
+   display: inline;
+   vertical-align:middle;
+   border-radius: 50%;
+   width: 30%;
+   min-width:100px;
+   background: rgba(24, 33, 45, 0.6);
+}
+
+/*-------------------------------------------------------*/
+/* FOOTER CSS BEGIN: */
+/*-------------------------------------------------------*/
  #footer {
    position: relative;
    font-size: 16px;
@@ -663,17 +636,27 @@
    height: 18px;
 }
 
-
-
-
-
-
-
-
-
-/* SCROLL */
+/*-------------------------------------------------------*/
+/* Jarallax Specific CSS */
+.jarallax {
+    position: relative;
+    z-index: 0;
+}
+.jarallax > .jarallax-img {
+    position: absolute;
+    object-fit: cover;
+    /* support for plugin https://github.com/bfred-it/object-fit-images */
+    font-family: 'object-fit: cover;';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+/*-------------------------------------------------------*/
+/* Mouse-CSS */
+/*-------------------------------------------------------*/
 @import url(https://fonts.googleapis.com/css?family=Raleway);
-
 .mouse-wrap{
   display:inline-block;
   position:absolute;
@@ -681,8 +664,7 @@
   top:83%;
   transform:translate(-50%,-50%);
 }
-
-p {
+.scroll {
   font-family: "Raleway", sans-serif;
   letter-spacing: 12px;
   font-size:14px;
@@ -694,7 +676,6 @@ p {
   transform:translateX(-50%) translateY(0);
   margin-left:6px;
 }
-
 .mouse {
   top:0;
   position: absolute;
@@ -703,7 +684,6 @@ p {
   width: 48px;
   animation: nudgeMouse 5.5s ease-out infinite;
 }
-
 .mouse:after {
   content: '';
   background-color: #ffffff;
@@ -719,49 +699,39 @@ p {
   margin: auto;
   transform:translateY(20px);
 }
-
 .mouse .frame {
   width: 100%;
   position: absolute;
   z-index: 1;
 }
-
 .mouse .frame path {
   fill: none;
   stroke: #ffffff;
   stroke-width: 3;
   opacity:0.5;
 }
-
 .mouse .mouse-left,
 .mouse .mouse-right {
   width: 50%;
   position: absolute;
   z-index: 2;
 }
-
 .mouse .mouse-right {
   right: 0;
 }
-
 .mouse .Animate-Draw {
   fill: none;
   stroke: #FFFFFF;
   stroke-width: 3;
   fill-opacity: 1;
 }
-
 .mouse .mouse-left .Animate-Draw {
   animation: DrawLine 5.5s ease-out infinite;
 }
-
 .mouse .mouse-right .Animate-Draw {
   animation: DrawLineBack 5.5s ease-out infinite;
 }
-
-
 /*Keyframes*/
-
 @keyframes DrawLine {
   0% {
     stroke-dashOffset: 0;
@@ -814,7 +784,6 @@ p {
     stroke-opacity:0;
   }
 }
-
 @keyframes DrawLineBack {
   0% {
     stroke-dashOffset: 0;
@@ -867,7 +836,6 @@ p {
     stroke-opacity:0;
   }
 }
-
 @keyframes nudgeMouse {
   0% {
     transform: translateY(0) translateX(-50%);
@@ -891,10 +859,7 @@ p {
     transform: translateY(9px) translateX(-50%);
   }
 }
-
-
 /*Text*/
-
 @keyframes nudgeText {
   0% {
     transform: translateY(0) translateX(-50%) scaleY(1);
@@ -925,10 +890,6 @@ p {
     opacity:0.5;
   }
 }
-
-
-
-
 /*Mouse wheel*/
 @keyframes trackBallSlide {
   0% {
