@@ -3,12 +3,11 @@
 * {
   box-sizing: border-box;
 }
-/* second body is 54vh */
+/* second body is 54vh, figure shit out with minimum 320 pixels*/
 
 
 #app {
   margin: auto;
-  width: 40%;
   color: white;
   font-weight: 400;
   line-height: 23px;
@@ -16,6 +15,8 @@
   display: inline;
   padding-left: 4%;
 }
+
+
 
 /* fouc solution based on Paul Irish's solution */
 .no-js {
@@ -517,7 +518,6 @@
    vertical-align:middle;
    border-radius: 50%;
    width: 30%;
-   min-width:100px;
    background: rgba(24, 33, 45, 0.6);
 }
 
@@ -963,3 +963,91 @@
     opacity:1;
   }
 }
+
+
+
+
+
+
+
+@media screen and (max-width: 800px) {  
+  #app  {
+    font-size:25px;
+    }
+  }
+
+@media screen and (max-width: 700px) {  
+  #app  {
+    font-size:22px;
+    }
+  }
+
+@media screen and (max-width: 600px) {  
+  #app  {
+    font-size:18px;
+    }
+  }
+
+@media screen and (max-width: 500px) {  
+  #app  {
+    font-size:15.5px;
+    }
+  }
+
+@media screen and (max-width: 450px) {  
+  #app  {
+    font-size:14px;
+    } 
+  }
+
+@media screen and (max-width: 405px) {  
+  #app  {
+    font-size:13px;
+    } 
+  }
+
+@media screen and (max-width: 382px) {
+  #app  {
+    font-size:11px;
+    }
+  }
+
+@media screen and (max-width: 335px) {
+  #app  {
+    font-size:9.5px;
+    }
+  }
+
+@media screen and (max-width: 335px) {
+  #app  {
+    font-size:9.5px;
+    }
+  }
+
+@media screen and (max-width: 300px) {
+  #app  {
+    font-size:8.5px;
+    }
+  }
+  /*
+@media screen and (max-width: 900px) {  
+  #app  {
+    font-size:28px;
+    }
+  }
+@media screen and (max-width: 1000px){  
+  #app  {
+    font-size:28px;
+    }
+  }
+@media screen and (max-width: 1100px){  
+  #app  {
+    font-size:28px;
+    }
+  }
+@media screen and (max-width: 1200px){  
+  #app  { 
+    font-size:28px;
+    }
+  }
+  */
