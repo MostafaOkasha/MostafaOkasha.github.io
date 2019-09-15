@@ -1,5 +1,5 @@
-<div class="jarallax" data-jarallax-video="https://www.youtube.com/watch?v=bTqVqk7FSmY">
-    <!-- mp4:./videos/sunrise.mp4 -->
+<div class="jarallax" data-jarallax-video="mp4:./videos/temp.mp4">
+    <!-- mp4:./videos/temp.mp4 -->
     <header id="header" class="landing-header">
         <div class="wrapper">
             <div class="left">
@@ -28,14 +28,16 @@
         </div>
     </header>
 
-    <div class="vid-overlay">
-        <div class="wrapper">
-            <div class="vid-body">
-                <img class="profile-pic" src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
-                <div
-                <div id="app"></div>
-            </div>
+    <div class="vid-overlay vid-body">
+        <div class="wrapper animated fadeIn center-div">
+            <img class="profile-pic"src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
+            <div id="app"></div>
         </div>
+
+        <div class="wrapper animated fadeIn">
+            {% include scroll.html %}
+        </div>
+
     </div>
 </div>
 
@@ -53,16 +55,22 @@ typewriter.typeString('Explore My: Skills')
     .typeString('Projects')
     .pauseFor(1500)
     .deleteChars(8)
+    .typeString('Education')
+    .pauseFor(1500)
+    .deleteChars(9)
     .typeString('Hobbies')
     .pauseFor(1500)
     .deleteChars(7)
-    .typeString('Projects')
-    .pauseFor(1500)
-    .deleteChars(8)
     .typeString('Vision')
     .pauseFor(1500)
     .deleteChars(6)
     .typeString('Goals')
+    .pauseFor(1500)
+    .deleteChars(5)
+    .typeString('Interests')
+    .pauseFor(1500)
+    .deleteChars(9)
+    .typeString('Value')
     .pauseFor(1500)
     .deleteChars(5)
     .typeString('World')
@@ -73,7 +81,6 @@ typewriter.typeString('Explore My: Skills')
     .deleteAll()
     .start();
 </script>
-
 <!--
 <script>
     function myFunction() {
