@@ -78,13 +78,41 @@ typewriter.typeString('Explore My: Experiences')
     .deleteAll()
     .start();
 </script>
-<!--
-<script>
-    function myFunction() {
-    $(document).ready(function() {
-    $(".vid-overlay").css("height", 100vh - 
-    $(".header").offsetHeight; });
-    }
+
+<!-- 
+<script> 
+    x = 0; 
+    $(document).ready(function() { 
+        $(window).resize(function() { 
+            $("p").text(x += 1); 
+        }); 
+    }); 
 </script>
-$('#divId').outerHeight(true)
 -->
+
+<script>
+    $(document).ready(function () {
+        headerFit();
+        
+        $(window).resize(function() {
+            headerFit();
+            }
+        );
+        }
+    );
+
+    function headerFit() {
+            var headerHeight = $('.landing-header').outerHeight(true);
+            var windowHeight = $(window).height();
+            if ((headerHeight/windowHeight) < 0.7) {
+                var diff = windowHeight - headerHeight + "px";
+            }
+            else {
+                var diff = "50vh"
+            }
+            
+            
+            $(".wrapper-pic").css("height", diff);
+            }
+</script>
+

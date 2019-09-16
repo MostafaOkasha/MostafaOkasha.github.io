@@ -3,20 +3,6 @@
 * {
   box-sizing: border-box;
 }
-/* second body is 54vh, figure shit out with minimum 320 pixels*/
-
-
-#app {
-  margin: auto;
-  color: white;
-  font-weight: 400;
-  line-height: 23px;
-  font-size: 28px;
-  display: inline;
-  padding-left: 4%;
-}
-
-
 
 /* fouc solution based on Paul Irish's solution */
 .no-js {
@@ -487,17 +473,16 @@
 /* HEADER CSS END - TESTS: PASS */
 /*-------------------------------------------------------*/
 
-/* FOOTER CSS BEGIN: */
+/* Header Bottop pic and typewriter:   height: 54vh; */ 
 /*-------------------------------------------------------*/
 .vid-overlay {
-    height: 54vh;
     background: rgba(24, 33, 45, 0.45);
 }
 
  .wrapper-pic {
    max-width: 980px;
    margin: auto;
-   height: 54vh;
+
    display: flex;
    justify-content: center;
    align-items: center;
@@ -519,6 +504,16 @@
    border-radius: 50%;
    width: 30%;
    background: rgba(24, 33, 45, 0.6);
+}
+
+#app {
+  margin: auto;
+  color: white;
+  font-weight: 400;
+  line-height: 23px;
+  font-size: 28px;
+  display: inline;
+  padding-left: 4%;
 }
 
 /*-------------------------------------------------------*/
