@@ -1,4 +1,4 @@
-<div class="jarallax" data-jarallax-video="https://youtu.be/bTqVqk7FSmY">
+<div class="jarallax" data-jarallax-video="mp4:./videos/sunrise1.mp4">
     <!-- mp4:./videos/temp.mp4 -->
     <header id="header" class="landing-header">
         <div class="wrapper">
@@ -31,16 +31,15 @@
     <div class="vid-overlay">
         <div class="wrapper-pic animated fadeIn">
             <div class="profile-pic-container">
-                <img class="profile-pic"src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
+                <img id="my-ppic" class="profile-pic" src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
                 
                 <div id="app"></div>
             </div>
+            <div class="chevron animated fadeIn">
+                <!-- <div class="padd-bot"> SCROLL</div> -->
+                <div class="arrow"></div>
+            </div>
         </div>
-
-        <div class="animated fadeIn">
-            {% include scroll.html %}
-        </div>
-
     </div>
 </div>
 
@@ -93,15 +92,20 @@ typewriter.typeString('Explore My: Experiences')
     function headerFit() {
             var headerHeight = $('.landing-header').outerHeight(true);
             var windowHeight = $(window).height();
-            if ((headerHeight/windowHeight) < 0.7) {
-                var diff = windowHeight - headerHeight + "px";
+            var wrapWidth = $('.wrapper').width();
+            var maxWidth = 0.3 * wrapWidth;
+
+            var difff = windowHeight - headerHeight;
+
+            if (maxWidth < difff) {
+                var diff = difff  + "px";
+                $(".wrapper-pic").css("height", diff);
             }
+
             else {
-                var diff = "50vh"
+                var diff = maxWidth + 15 + 'px';
+                $(".wrapper-pic").css("height", diff);
             }
-            
-            
-            $(".wrapper-pic").css("height", diff);
             }
 </script>
 
