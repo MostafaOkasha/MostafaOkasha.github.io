@@ -657,6 +657,10 @@
   top:95%;
  }
 
+.chevron:hover {
+  color: #B8860B;
+}
+
 .arrow,
 .arrow:before {
   position: absolute;
@@ -675,6 +679,10 @@
   border-right: 2px #fff solid;
   border-bottom: 2px #fff solid;
 }
+
+.chevron a:hover {
+    color: #B8860B;
+ }
 
 .arrow:before {
   content: "";
