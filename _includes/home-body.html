@@ -1,17 +1,13 @@
 <body>
 	<div class="experience">
+
+		<!-- write anictdoe with your signature at the end 
+		simple, plain and wide design with a loto f space
+
+
+		-->
 		<div class="wrapper">
-		{% assign sorted_experience = site.experience | reverse %}
-            {% for experience in sorted_experience %}
-                {% assign experience_subtitle = experience.tagline
-                                              | append: "<div class='vertical-spacer spacer-tiny'></div>"
-                                              | append: experience.date_string %}
-                {% include cv_item.html link=experience.link
-                                        main_header=experience.title
-                                        right_header=experience.location
-                                        subtitle=experience_subtitle
-                                        content=experience.content %}
-            {% endfor %}
+
 		</div>
 
 	</div>
