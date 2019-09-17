@@ -1,14 +1,14 @@
 <script>
 window.onscroll = function() {myFunction()};
 
-var header = document.getElementById("sticky-header");
-var sticky = header.offsetTop;
+var newheader = document.getElementById("sticky-b");
+var sticky = newheader.offsetTop;
 
 function myFunction() {
   if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
+    newheader.classList.add("sticky");
   } else {
-    header.classList.remove("sticky");
+    newheader.classList.remove("sticky");
   }
 }
 </script>

@@ -1,5 +1,69 @@
 <body>
+	<div class="experience">
+		<div class="wrapper">
+		{% assign sorted_experience = site.experience | reverse %}
+            {% for experience in sorted_experience %}
+                {% assign experience_subtitle = experience.tagline
+                                              | append: "<div class='vertical-spacer spacer-tiny'></div>"
+                                              | append: experience.date_string %}
+                {% include cv_item.html link=experience.link
+                                        main_header=experience.title
+                                        right_header=experience.location
+                                        subtitle=experience_subtitle
+                                        content=experience.content %}
+            {% endfor %}
+		</div>
+
+	</div>
+
+
+	<div class="projects">
+		<div class="wrapper">
+
+		</div>
+
+
+	</div>
+
+
+	<div class="skills">
+		<div class="wrapper">
+
+		</div>
+
+
+	</div>
+
+
+	<div class="education">
+		<div class="wrapper">
+
+		</div>
+
+
+	</div>
+
+
+	<div class="about">
+		<div class="wrapper">
+
+		</div>
+
+
+	</div>
+
+
+	<div class="">
+		<div class="wrapper">
+
+		</div>
+
+
+	</div>
+
+
 	<div id="top-body" class="landing-body">
+
 		<!-- landing video here -->
 		<!-- 
 
@@ -97,3 +161,4 @@
 		</div>
 	</div>
 </body>
+{% include sticky-script.html %}

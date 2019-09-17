@@ -141,6 +141,8 @@
    -moz-osx-font-smoothing: grayscale;
    -webkit-backface-visibility: hidden;
 }
+
+
 /*-------------------------------------------------------*/
 /* home-body.html styling */
 .landing-body {
@@ -235,12 +237,6 @@
    width: 100px;
    padding-top: 0;
    margin: 0 auto;
-}
-
- .sticky {
-   position: fixed;
-   top: 0;
-   width: 100%;
 }
 
  .resume-download a:hover {
