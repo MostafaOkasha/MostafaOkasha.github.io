@@ -123,7 +123,6 @@
    overflow-x: hidden;
    font-family: "SF Mono", "Lucida Console", Monaco, monospace;
    font-weight: 200;
-   color: #000;
    font-size: 17px;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
@@ -133,18 +132,106 @@
 
 /*-------------------------------------------------------*/
 /* home-body.html styling */
-.landing-body {
+
+.experience {
    position: relative;
-   background: #0a192f;
-   padding-top: 20px; 
-   z-index: 3;
+   padding-top: 20px;
    padding-bottom: 20px;
+   height: 130vh;
+   min-height: 130vh;
 }
 
-.landing-body .wrapper {
+.experience .wrapper {
    display: flex;
    flex-direction: row;
 }
+
+
+.education {
+   position: relative;
+   background: #0a192f;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   height: 100vh;
+   min-height: 100vh;
+   color: #fff;
+}
+
+.education .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+
+.projects {
+   position: relative;
+   background: #0a192f;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   height: 130vh;
+   min-height: 130vh;
+   color: #fff;
+}
+
+.projects .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+
+.skills {
+   position: relative;
+   background: #0a192f;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   height: 100vh;
+   max-height: 100vh;
+   color: #fff;
+}
+
+.skills .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+
+
+.about-me {
+   position: relative;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   height: 100vh;
+   min-height: 100vh;
+}
+
+.about-me .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+
+.epilogue {
+   position: relative;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   height: 100vh;
+   min-height: 100vh;
+}
+
+.epilogue .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+
+.photography {
+   position: relative;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   height: 100vh;
+   min-height: 100vh;
+}
+
+.photography .wrapper {
+   display: flex;
+   flex-direction: row;
+}
+
 
 
 /*-------------------------------------------------------*/
@@ -504,7 +591,7 @@
  #footer {
    position: relative;
    font-size: 16px;
-   background-color: #020c1b;
+   background-color: #0a192f;
    z-index: 2;
    padding-top: 20px;
    padding-bottom: 10px;
