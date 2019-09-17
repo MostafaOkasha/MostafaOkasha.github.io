@@ -651,15 +651,10 @@
 
  .chevron {
   width: 100%;
-  color: #D3D3D3;
   position: absolute;
   z-index:3;
   top:95%;
  }
-
-.chevron:hover {
-  color: #B8860B;
-}
 
 .arrow,
 .arrow:before {
@@ -676,13 +671,9 @@
   -webkit-transform: rotate(45deg);
   border-left: none;
   border-top: none;
-  border-right: 2px #fff solid;
-  border-bottom: 2px #fff solid;
+  border-right: 2px #FFF8E7 solid;
+  border-bottom: 2px #FFF8E7 solid;
 }
-
-.chevron a:hover {
-    color: #B8860B;
- }
 
 .arrow:before {
   content: "";
@@ -692,8 +683,8 @@
   margin: -10px 0 0 -10px;
   border-left: none;
   border-top: none;
-  border-right: 1px #fff solid;
-  border-bottom: 1px #fff solid;
+  border-right: 1px #BDB76B solid;
+  border-bottom: 1px #BDB76B solid;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-name: arrow;
@@ -708,11 +699,6 @@
     transform: translate(-10px, -10px);
   }
 }
-
-
-
-
-
 
 @media screen and (max-width: 805px) {  
   #app  {
