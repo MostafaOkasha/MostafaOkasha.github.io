@@ -1,18 +1,66 @@
 <body>
 	<div id="top-body" class="experience">
 		<div class="wrapper">
-			<div class="section-head">EXPERIENCE</div>
-			<br>
-			<br>
-			<br>
-			Ericssn: Software Engineer
-			<br>
-			McMaster University: Instructional Assistant Intern
-			<br>
-			QKids: Business Development Engineer Intern
-			<br>
-			King Faisal Hospital: Biomedical Engineer Intern
-			<br>
+			<div class="overlay-text" data-text="EXPERIENCE">EXPERIENCE</div>
+
+			<div class="where-loc">WHERE</div>
+			<div class="where-txt"> I've worked so far</div>
+			<section class="timeline">
+			  <ul>
+			    <li>
+			      <div>
+			        <div class="wrapper2">
+						<img class="exp-img-container" src="/images/ericsson.png" alt="Ericsson Logo">
+						<div class="exp-container">
+							Ericsson
+							<br>
+							Software Developer Intern (LTE/5G)
+							<br>
+						</div>
+					</div>
+			      </div>
+			    </li>
+			    <li>
+			      <div>
+			        <div class="wrapper2">
+						<img class="exp-img-container" src="/images/mcmaster.png" alt="McMaster University Logo">
+						<div class="exp-container">
+							McMaster University
+							<br>
+							Instructional Assistant Intern
+							<br>
+						</div>
+					</div>
+			      </div>
+			    </li>
+			    <li>
+			      <div>
+			        <div class="wrapper2">
+						<img class="exp-img-container" src="/images/qkids.png" alt="Qkids Logo">
+						<div class="exp-container">
+							QKids Technologies Inc.
+							<br>
+							Business Development Engineer Intern
+							<br>
+						</div>
+					</div>
+			      </div>
+			    </li>
+			    <li>
+			      <div>
+			        <div class="wrapper2">
+						<img class="exp-img-container" src="/images/kfsh.png" alt="KFSH Logo">
+						<div class="exp-container">
+							King Faisal Hospital
+							<br>
+							Biomedical Engineering Intern
+							<br>
+						</div>
+					</div>
+			      </div>
+			    </li>
+			  </ul>
+			</section>
 		</div>
 	</div>
 
@@ -21,17 +69,15 @@
 	<div class="education">
 		<div class="wrapper">
 			<div class="section-head center-align">EDUCATION</div>
-			<br>
-			<br>
-			<br>
-			Ericssn: Software Engineer
-			<br>
-			McMaster University: Instructional Assistant Intern
-			<br>
-			QKids: Business Development Engineer Intern
-			<br>
-			King Faisal Hospital: Biomedical Engineer Intern
-			<br>
+			<div class="wrapper2">
+				<img class="ed-img-container" src="/images/mcmaster.png" alt="McMaster University Logo">
+				<div class="ed-container">
+					McMaster University
+					<br>
+					Bachelor of Engineering - Mechatronics Engineering & Co-op
+					<br>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -39,17 +85,6 @@
 	<div class="projects">
 		<div class="wrapper">
 			<div class="section-head right-align">PROJECTS</div>
-			<br>
-			<br>
-			<br>
-			Ericssn: Software Engineer
-			<br>
-			McMaster University: Instructional Assistant Intern
-			<br>
-			QKids: Business Development Engineer Intern
-			<br>
-			King Faisal Hospital: Biomedical Engineer Intern
-			<br>
 		</div>
 	</div>
 
@@ -59,34 +94,11 @@
 	<div class="skills">
 		<div class="wrapper">
 			<div class="section-head center-align">SKILLS</div>
-			<br>
-			<br>
-			<br>
-			Ericssn: Software Engineer
-			<br>
-			McMaster University: Instructional Assistant Intern
-			<br>
-			QKids: Business Development Engineer Intern
-			<br>
-			King Faisal Hospital: Biomedical Engineer Intern
-			<br>
-			<div class="section-head2">EXPERIENCE</div>
-			<br>
-			<br>
-			<div class="section-head3 center-align">EXPERIENCE</div>
-			<br>
-			<br>
-			<div class="section-head4 right-align">EXPERIENCE</div>
-			<br>
-			<br>
-			<div class="section-head5 center-align">EXPERIENCE</div>
-			<br>
-			<br>
-			<div class="section-head6">EXPERIENCE</div>
-			<br>
-			<br>
-			<br>
+			<div class="wrapper2">
 
+
+
+			</div>
 		</div>
 	</div>
 
@@ -160,7 +172,6 @@
 		Projects with picture and slide show, Experiences with company logos and photos, skills with logos and greyed out, clickable to skill website, only logo but when you hover over it shows the name underneath.
 
 		Hobbies with photos
-		side hussle?
 		interests small section talking about what you like
 
 		I try my best to abide by the following values:
@@ -170,3 +181,31 @@
 
 		Interests: Piano, Ukelele, Photography, Google Reviews, 
 -->
+
+
+<script>
+var items = document.querySelectorAll(".timeline li");
+ 
+// code for the isElementInViewport function
+ 
+function callbackFunc() {
+  for (var i = 0; i < items.length; i++) {
+    if (isElementInViewport(items[i])) {
+      items[i].classList.add("in-view");
+    }
+  }
+}
+ 
+window.addEventListener("load", callbackFunc);
+window.addEventListener("scroll", callbackFunc);
+
+function isElementInViewport(el) {
+  var rect = el.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+</script>
