@@ -537,7 +537,13 @@ body, h1, h2, h3, p {
    font-size: 17px;
 }
 
-
+.section-head {
+  font-size: 4vw;
+  font-family: 'SummitBold-Inline';
+  font-weight: normal;
+  font-style: normal;
+  display: block;
+}
 /*-------------------------------------------------------*/
 /* home-body.html styling */
 
@@ -692,10 +698,12 @@ body, h1, h2, h3, p {
   max-width: 150px;
   width:20%;
   height: auto;
-  padding-left: 7%;
-  padding-right: 3%;
+  align-content: center;
 }
 
+
+
+/*-------------------------------------------------------*/
 .projects {
    position: relative;
    background: #1f1c17;
@@ -711,6 +719,9 @@ body, h1, h2, h3, p {
    flex-direction: row;
 }
 
+
+
+/*-------------------------------------------------------*/
 .skills {
    position: relative;
    background: #0a192f;
@@ -725,6 +736,10 @@ body, h1, h2, h3, p {
    display: flex;
    flex-direction: row;
 }
+
+/*-------------------------------------------------------*/
+
+
 
 
 .about-me {
@@ -741,6 +756,10 @@ body, h1, h2, h3, p {
    display: flex;
    flex-direction: row;
 }
+/*-------------------------------------------------------*/
+
+
+
 
 .epilogue {
    position: relative;
@@ -756,6 +775,9 @@ body, h1, h2, h3, p {
    flex-direction: row;
 }
 
+
+
+/*-------------------------------------------------------*/
 .photography {
    position: relative;
    padding-top: 20px; 
@@ -771,6 +793,9 @@ body, h1, h2, h3, p {
    flex-direction: row;
 }
 
+
+
+/*-------------------------------------------------------*/
 .pre-footer {
   font-size: 3vw;
   height: 40vh;
@@ -780,107 +805,8 @@ body, h1, h2, h3, p {
   color: #53ffda;
 }
 
-.section-head {
-  font-size: 4vw;
-  font-family: 'SummitBold-Inline';
-  font-weight: normal;
-  font-style: normal;
-  display: block;
-}
 
 
-
-
-
-
-/* FOR TESTING */
-.section-head2 {
-  font-size: 4vw;
-  font-family: 'SummitRegular-Solid';
-  font-weight: normal;
-  font-style: normal;
-  display: block;
-}
-
-
-.section-head3 {
-  font-size: 4vw;
-  font-family: 'SummitBold-Display';
-  font-weight: normal;
-  font-style: normal;
-  display: block;
-}
-
-
-.section-head4 {
-  font-size: 4vw;
-  font-family: 'SummitMedium-Solid';
-  font-weight: normal;
-  font-style: normal;
-  display: block;
-}
-
-.section-head5 {
-  font-size: 4vw;
-  font-family: 'SummitMedium-Display';
-  font-weight: normal;
-  font-style: normal;
-  display: block;
-}
-
-.section-head6 {
-  font-size: 4vw;
-  font-family: 'SummitRegular-Display';
-  font-weight: normal;
-  font-style: normal;
-  display: block;
-}
-
-
-.temp1 {
-   position: relative;
-   background: #0a192f;
-   padding-top: 20px; 
-   padding-bottom: 20px;
-   height: 130vh;
-   min-height: 130vh;
-   color: #fff;
-}
-
-.temp1 .wrapper2 {
-   display: flex;
-   flex-direction: row;
-}
-
-.temp2 {
-   position: relative;
-   background: #0a192f;
-   padding-top: 20px; 
-   padding-bottom: 20px;
-   height: 130vh;
-   min-height: 130vh;
-   color: #fff;
-}
-
-.temp2 .wrapper2 {
-   display: flex;
-   flex-direction: row;
-}
-
-.temp3 {
-   position: relative;
-   background: #0a192f;
-   padding-top: 20px; 
-   padding-bottom: 20px;
-   height: 130vh;
-   min-height: 130vh;
-   color: #fff;
-}
-
-.temp3 .wrapper2 {
-   display: flex;
-   flex-direction: row;
-}
 /*-------------------------------------------------------*/
 /* RANDOM CSS */
  a:focus {
