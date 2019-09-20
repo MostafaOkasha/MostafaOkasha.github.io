@@ -5,6 +5,38 @@
 }
 /*-------------------------------------------------------*/
 /* FONTS: START */
+
+/** Regular */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 400;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+}
+
+/** Medium */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 500;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff");
+}
+
+/** Semi Bold */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 600;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff");
+}
+
+/** Bold */ 
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 700;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff");
+}
+
+
+
+
 /* Charter */
  @font-face {
    font-family: 'Charter';
@@ -558,19 +590,25 @@ body, h1, h2, h3, p {
 }
 
 .experience .wrapper2 {
-   display: flex;
-   flex-direction: row;
-   padding-top: 5%;
-   padding-bottom: 5%;
+   display:flex;
+   align-items:flex-start;
    width: 100%;
+   height: 100%;
 }
 
 .exp-img-container {
+  display: inline-block;
+  vertical-align:middle;
   width: 15%;
   max-width: 120px;
   min-width: 50px;
-  margin-left: 7%;
-  margin-right: 3%;
+  margin-left: 5%;
+}
+
+.exp-container {
+  display: inline-block;
+  width:85%;
+  padding-left: 5%;
 }
 
 .where-loc {
@@ -604,16 +642,44 @@ body, h1, h2, h3, p {
   left: 0;
 }
 
+.exp-text {
+  font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
+  color: #64ffda;
+  font-size: 22px;
+  font-weight: 500;
+  position:relative;
+}
+.exp-text::before {
+  font-family: inherit;
+  color: rgb(204, 214, 246);
+  content: attr(data-text);
+  position: relative;
+}
+
+.exp-text::after {
+  font-family: "SF Mono", "Lucida Console", Monaco, monospace;
+  font-size: 13px;
+  color: rgb(168, 178, 209);
+  content: attr(date-text);
+  display: block;
+  margin-bottom: 30px;
+}
 
 
 
 /*------------*/
+
+.timeline ul {
+  margin-top: 0;
+  padding-left: 38px;
+}
+
 .timeline ul li {
   list-style-type: none;
   position: relative;
   width: 3px;
   padding-top: 25px;
-  background: #64ffda;
+  background: #64ffda; /* long line */
 }
  
 .timeline ul li::after {
@@ -622,29 +688,30 @@ body, h1, h2, h3, p {
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #fff;
+  background: #64ffda;
 }
 
-.timeline ul li div {
+.timeline ul li .time-div {
   position: relative;
   bottom: 0;
-  width: 600px;
+  width: 70vw;
+  max-width: 800px;
   padding: 15px;
-  background: #F45B69;
+  border-left: 2px solid #F45B69;
   left: 45px;
 }
  
-.timeline ul li div::before {
+.timeline ul li .time-div::before {
   content: '';
   position: absolute;
-  bottom: 7px;
+  bottom: 2px;
   width: 0;
   height: 0;
   border-style: solid;
-  left: -15px;
+  left: -16px;
   border-width: 8px 16px 8px 0;
   border-color: transparent #F45B69 transparent transparent;
 }
@@ -658,17 +725,17 @@ body, h1, h2, h3, p {
   background: #F45B69;
 }
  
-.timeline ul li div {
+.timeline ul li .time-div {
   visibility: hidden;
   opacity: 0;
   transition: all .5s ease-in-out;
 }
  
-.timeline ul li div {
+.timeline ul li .time-div {
   transform: translate3d(200px,0,0);
 }
  
-.timeline ul li.in-view div {
+.timeline ul li.in-view .time-div {
   transform: none;
   visibility: visible;
   opacity: 1;
