@@ -583,7 +583,7 @@ body, h1, h2, h3, p {
    position: relative;
    padding-top: 5vh;
    padding-bottom: 5vh;
-   height: 150vh;
+
    min-height: 150vh;
    background: #0a192f;
    color: #fff;
@@ -690,7 +690,7 @@ body, h1, h2, h3, p {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #f4cab3;
+  background: #cee0d0;
 }
 
 .timeline > ul > li .time-div {
@@ -699,20 +699,23 @@ body, h1, h2, h3, p {
   width: 70vw;
   max-width: 800px;
   padding: 15px;
-  border-left: 2px solid #f4cab3;
+  padding-left: 0;
+  border-radius: 10px;
+  border-left: 15px solid #cee0d0;
   left: 45px;
 }
  
 .timeline > ul > li .time-div::before {
   content: '';
   position: absolute;
-  bottom: 2px;
+  bottom: 4px;
   width: 0;
   height: 0;
   border-style: solid;
-  left: -16px;
-  border-width: 8px 16px 8px 0;
-  border-color: transparent #f4cab3 transparent transparent;
+  left: -13.5px;
+  border-radius: 6px;
+  border-width: 6px 12px 6px 0;
+  border-color: transparent #0a192f transparent transparent;
 }
 
 .timeline > ul > li::after {
@@ -739,7 +742,7 @@ body, h1, h2, h3, p {
   visibility: visible;
   opacity: 1;
 }
-
+/* -------------------------- */
 .timeline ul li ul {
   font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
   line-height: 1.3;
@@ -752,11 +755,15 @@ body, h1, h2, h3, p {
   font-size: 18px;
   margin-bottom: 10px;
   list-style-type: none;
+  position: relative;
+  padding-left: 30px;
+  display: list-item;
+  text-align: -webkit-match-parent;
 }
 
 .timeline ul li ul li::before {
   content: "▹";
-  position: relative;
+  position: absolute;
   left: 0px;
   color: rgb(100, 255, 218);
   line-height: 20px;
@@ -778,6 +785,22 @@ body, h1, h2, h3, p {
    color: #000;
 }
 
+.what-loc {
+  color: #64ffda;
+  font-family: 'SummitRegular-Solid';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  border: 1px solid #64ffda;
+  display:inline-block;
+  padding: 2px 2px 2px 2px;
+}
+
+.what-txt {
+  color: #f4cab3;
+  display:inline-block;
+}
+
 .education .wrapper2 {
    display: flex;
    flex-direction: row;
@@ -789,8 +812,6 @@ body, h1, h2, h3, p {
   height: auto;
   align-content: center;
 }
-
-
 
 /*-------------------------------------------------------*/
 .projects {
