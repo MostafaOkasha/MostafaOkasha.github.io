@@ -570,7 +570,7 @@ body, h1, h2, h3, p {
 }
 
 .section-head {
-  font-size: 4vw;
+  font-size: 55px;
   font-family: 'SummitBold-Inline';
   font-weight: normal;
   font-style: normal;
@@ -780,38 +780,83 @@ body, h1, h2, h3, p {
    position: relative;
    padding-top: 20px; 
    padding-bottom: 20px;
-   height: 130vh;
    min-height: 130vh;
-   color: #000;
+   color: #1f1c17;
+   background: #fff;
 }
 
 .what-loc {
-  color: #64ffda;
+  color: #50182e;
   font-family: 'SummitRegular-Solid';
   font-weight: normal;
   font-style: normal;
   font-size: 16px;
-  border: 1px solid #64ffda;
+  border: 1px solid #50182e;
   display:inline-block;
   padding: 2px 2px 2px 2px;
+  margin-bottom: 5%;
 }
 
 .what-txt {
-  color: #f4cab3;
+  color: #5e6692;
   display:inline-block;
-}
-
-.education .wrapper2 {
-   display: flex;
-   flex-direction: row;
 }
 
 .ed-img-container {
   max-width: 150px;
   width:20%;
   height: auto;
-  align-content: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.education .wrapper2 {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
+   font-size: 18px;
+}
+
+.ed-container {
+  border: 2px solid #d9dde0;
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.ed-vertical {
+  width: 2px;
+  height: 80px;
+  background: #909497;
+  border: none;
+}
+
+.ed-vertical2 {
+  width: 2px;
+  height: 40px;
+  background: #909497;
+  border: none;
+}
+
+.ed-vertical3 {
+  width: 2px;
+  height: 20px;
+  background: #909497;
+  border: none;
+}
+
+.ed-date {
+  color: #818487;
+  font-family: "SF Mono", "Lucida Console", Monaco, monospace;
+  font-size: 16px;
+
+}
+
+
+
+
 
 /*-------------------------------------------------------*/
 .projects {
