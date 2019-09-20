@@ -666,15 +666,14 @@ body, h1, h2, h3, p {
 }
 
 
-
 /*------------*/
 
-.timeline ul {
+.timeline > ul {
   margin-top: 0;
   padding-left: 38px;
 }
 
-.timeline ul li {
+.timeline > ul > li {
   list-style-type: none;
   position: relative;
   width: 3px;
@@ -682,7 +681,7 @@ body, h1, h2, h3, p {
   background: #64ffda; /* long line */
 }
  
-.timeline ul li::after {
+.timeline > ul > li::after {
   content: '';
   position: absolute;
   left: 50%;
@@ -691,20 +690,20 @@ body, h1, h2, h3, p {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #64ffda;
+  background: #f4cab3;
 }
 
-.timeline ul li .time-div {
+.timeline > ul > li .time-div {
   position: relative;
   bottom: 0;
   width: 70vw;
   max-width: 800px;
   padding: 15px;
-  border-left: 2px solid #F45B69;
+  border-left: 2px solid #f4cab3;
   left: 45px;
 }
  
-.timeline ul li .time-div::before {
+.timeline > ul > li .time-div::before {
   content: '';
   position: absolute;
   bottom: 2px;
@@ -713,32 +712,55 @@ body, h1, h2, h3, p {
   border-style: solid;
   left: -16px;
   border-width: 8px 16px 8px 0;
-  border-color: transparent #F45B69 transparent transparent;
+  border-color: transparent #f4cab3 transparent transparent;
 }
 
-.timeline ul li::after {
-  background: #fff;
+.timeline > ul > li::after {
+  background: #64ffda;
   transition: background .5s ease-in-out;
 }
  
-.timeline ul li.in-view::after {
-  background: #F45B69;
+.timeline > ul > li.in-view::after {
+  background: #f4cab3; /* circle color after */
 }
  
-.timeline ul li .time-div {
+.timeline > ul > li .time-div {
   visibility: hidden;
   opacity: 0;
   transition: all .5s ease-in-out;
 }
  
-.timeline ul li .time-div {
+.timeline > ul > li .time-div {
   transform: translate3d(200px,0,0);
 }
  
-.timeline ul li.in-view .time-div {
+.timeline > ul > li.in-view .time-div {
   transform: none;
   visibility: visible;
   opacity: 1;
+}
+
+.timeline ul li ul {
+  font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
+  line-height: 1.3;
+  padding: 0;
+  margin: 0;
+}
+
+.timeline ul li ul li {
+  color: rgb(136, 146, 176);
+  font-size: 18px;
+  margin-bottom: 10px;
+  list-style-type: none;
+}
+
+.timeline ul li ul li::before {
+  content: "▹";
+  position: relative;
+  left: 0px;
+  color: rgb(100, 255, 218);
+  line-height: 20px;
+  margin-right: 15px;
 }
 /*------------*/
 
