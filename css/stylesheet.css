@@ -781,8 +781,8 @@ body, h1, h2, h3, p {
    padding-top: 20px; 
    padding-bottom: 20px;
    min-height: 130vh;
-   color: #1f1c17;
-   background: #fff;
+   color: #413e3a;
+   background: #fffff2;
 }
 
 .what-loc {
@@ -840,13 +840,6 @@ body, h1, h2, h3, p {
   border: none;
 }
 
-.ed-vertical3 {
-  width: 2px;
-  height: 20px;
-  background: #909497;
-  border: none;
-}
-
 .ed-date {
   color: #818487;
   font-family: "SF Mono", "Lucida Console", Monaco, monospace;
@@ -854,6 +847,29 @@ body, h1, h2, h3, p {
 
 }
 
+.ed-courses {
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width:80%;
+}
+
+.ed-course {
+  border: 2px solid #d9dde0;
+  padding: 4px;
+  border-radius: 5px;
+  margin:5px;
+}
+
+.ed-course:hover {
+  border: 2px solid #1f1c17;
+  background: #e8e9dc;
+  
+}
 
 
 
