@@ -583,7 +583,6 @@ body, h1, h2, h3, p {
    position: relative;
    padding-top: 5vh;
    padding-bottom: 5vh;
-
    min-height: 150vh;
    background: #0a192f;
    color: #fff;
@@ -623,7 +622,7 @@ body, h1, h2, h3, p {
 }
 
 .where-txt {
-  color: #f4cab3;
+  color: #57CBFF;
   display:inline-block;
 }
 
@@ -701,7 +700,7 @@ body, h1, h2, h3, p {
   padding: 15px;
   padding-left: 0;
   border-radius: 10px;
-  border-left: 15px solid #cee0d0;
+  border-left: 15px solid #202D41;
   left: 45px;
 }
  
@@ -715,7 +714,7 @@ body, h1, h2, h3, p {
   left: -13.5px;
   border-radius: 6px;
   border-width: 6px 12px 6px 0;
-  border-color: transparent #0a192f transparent transparent;
+  border-color: transparent #378C77 transparent transparent;
 }
 
 .timeline > ul > li::after {
@@ -724,7 +723,7 @@ body, h1, h2, h3, p {
 }
  
 .timeline > ul > li.in-view::after {
-  background: #f4cab3; /* circle color after */
+  background: #378C77; /* circle color after */
 }
  
 .timeline > ul > li .time-div {
