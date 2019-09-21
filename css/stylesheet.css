@@ -880,7 +880,6 @@ body, h1, h2, h3, p {
    background: #1f1c17;
    padding-top: 20px; 
    padding-bottom: 20px;
-   height: 130vh;
    min-height: 130vh;
    color: #e0cd95;
 }
@@ -912,6 +911,11 @@ body, h1, h2, h3, p {
   border-radius: 3px;
   padding: 10px;
   margin: 5px;
+}
+
+.project-mainimage {
+  width:100%;
+  height: auto;
 }
 
 /*-------------------------------------------------------*/
