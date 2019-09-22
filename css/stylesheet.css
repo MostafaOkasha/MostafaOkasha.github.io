@@ -923,16 +923,31 @@ body, h1, h2, h3, p {
    background: #B0C6CE;
    padding-top: 20px; 
    padding-bottom: 20px;
-   height: 130vh;
    min-height: 130vh;
    color: #0a192f;
 }
 
 .skills .wrapper2 {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
+   align-items: center;
+   font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
+   font-size: 18px;
 }
 
+.skills-container {
+  border: 2px solid #d9dde0;
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.skills-top3 {
+  width: 15%;
+  margin: 10px;
+  height: auto;
+  display: inline-block;
+}
 /*-------------------------------------------------------*/
 
 
