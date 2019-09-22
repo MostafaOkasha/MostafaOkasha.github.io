@@ -924,7 +924,7 @@ body, h1, h2, h3, p {
    padding-top: 20px; 
    padding-bottom: 20px;
    min-height: 130vh;
-   color: #0a192f;
+   color: #05204A;
 }
 
 .skills .wrapper2 {
@@ -935,11 +935,34 @@ body, h1, h2, h3, p {
    font-size: 18px;
 }
 
+.tech-loc {
+  color: #E94F37; 
+  font-family: 'SummitRegular-Solid', Roboto, Calibre;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  border: 1px solid #E94F37; /* good alternative: 383961 and 383961 */
+  display:inline-block;
+  padding: 2px 2px 2px 2px;
+  margin-bottom: 5%;
+}
+
+.tech-txt {
+  color: #212922;
+  display:inline-block;
+}
+
 .skills-container {
-  border: 2px solid #d9dde0;
   padding: 8px;
-  border-radius: 10px;
   text-align: center;
+}
+
+.skill-title {
+  color: #36558F;
+  font-family: 'SummitBold-Solid', Roboto, Calibre;
+  border: 2px solid #8ba9ed;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .skills-top3 {
