@@ -920,12 +920,12 @@ body, h1, h2, h3, p {
 /*-------------------------------------------------------*/
 .skills {
    position: relative;
-   background: #0a192f;
+   background: #B0C6CE;
    padding-top: 20px; 
    padding-bottom: 20px;
    height: 130vh;
    min-height: 130vh;
-   color: #fff;
+   color: #0a192f;
 }
 
 .skills .wrapper2 {
