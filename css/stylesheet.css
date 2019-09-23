@@ -770,8 +770,6 @@ body, h1, h2, h3, p {
 }
 /*------------*/
 
-
-
 /*-------------------------------------------------------*/
 
 
@@ -826,6 +824,13 @@ body, h1, h2, h3, p {
 }
 
 .ed-vertical {
+  width: 2px;
+  height: 80px;
+  background: #909497;
+  border: none;
+}
+
+.ed-vertical1 {
   width: 2px;
   height: 80px;
   background: #909497;
@@ -965,8 +970,9 @@ body, h1, h2, h3, p {
   border-radius: 5px;
 }
 
-.skills-top3 {
+.skills-icons {
   width: 15%;
+  min-width:100px;
   margin: 10px;
   height: auto;
   display: inline-block;
