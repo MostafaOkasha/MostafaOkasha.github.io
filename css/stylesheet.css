@@ -1043,6 +1043,23 @@ body, h1, h2, h3, p {
    flex-direction: row;
 }
 
+.phpto-loc {
+  color: #E94F37; 
+  font-family: 'SummitRegular-Solid', Roboto, Calibre;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  border: 1px solid #E94F37; /* good alternative: 383961 and 383961 */
+  display:inline-block;
+  padding: 2px 2px 2px 2px;
+  margin-bottom: 5%;
+}
+
+.photo-txt {
+  color: #212922;
+  display:inline-block;
+}
+
 
 
 /*-------------------------------------------------------*/
