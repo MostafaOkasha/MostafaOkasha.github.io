@@ -949,6 +949,8 @@ body, h1, h2, h3, p {
 
 .proj-header {
   width: 15%;
+  position: relative;
+  vertical-align:middle;
 }
 
 .project-mainimage {
@@ -964,6 +966,10 @@ body, h1, h2, h3, p {
   border: 1px solid #e0613f;
   border-radius: 5px;
   background: #1f1c17;
+  position: absolute;  
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /*  position: relative;
