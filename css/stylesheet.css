@@ -956,13 +956,15 @@ body, h1, h2, h3, p {
 .project-mainimage {
   width:100%;
   height: auto;
+  opacity: 0.7;
+  z-index: 1;
 }
 
 .project-title {
   color: #e0613f;
   font-size: 18px;
   font-weight: 700;
-  padding: 2px 2px 2px 2px;
+  padding: 5px 5px 5px 5px;
   border: 1px solid #e0613f;
   border-radius: 5px;
   background: #1f1c17;
@@ -970,6 +972,7 @@ body, h1, h2, h3, p {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 /*  position: relative;
@@ -986,6 +989,7 @@ body, h1, h2, h3, p {
   width:60%;
   height:auto;
   z-index: 1;
+  border-radius: 10px;
 }
 
 .project-img-r {
