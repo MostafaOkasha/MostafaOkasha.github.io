@@ -3,6 +3,11 @@
 * {
   box-sizing: border-box;
 }
+html * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /*-------------------------------------------------------*/
 /* FONTS: START */
 
@@ -559,6 +564,8 @@ body, h1, h2, h3, p {
     -webkit-backface-visibility: hidden !important;
 }
 
+
+
 /* Fixes the fonting for the entire website */
  body {
    padding: 0;
@@ -918,7 +925,7 @@ body, h1, h2, h3, p {
 }
 
 .project-l {
-  border: 2px solid #e0cd95;
+  /*border: 2px solid #e0cd95;*/
   border-radius: 3px;
   padding: 10px;
   margin: 5px;
@@ -932,7 +939,7 @@ body, h1, h2, h3, p {
 }
 
 .project-r {
-  border: 2px solid #e0cd95;
+  /*border: 2px solid #e0cd95;*/
   border-radius: 3px;
   padding: 10px;
   margin: 5px;
@@ -967,7 +974,7 @@ body, h1, h2, h3, p {
   padding: 5px 5px 5px 5px;
   border: 1px solid #e0613f;
   border-radius: 5px;
-  background: #1f1c17;
+  background: rgba(31,28,23,0.85);
   position: absolute;  
   left: 50%;
   top: 50%;
@@ -985,17 +992,11 @@ body, h1, h2, h3, p {
 
 
 
-.project-img-l {
+.project-img {
   width:60%;
   height:auto;
   z-index: 1;
-  border-radius: 10px;
-}
-
-.project-img-r {
-  width:60%;
-  height:auto;
-  z-index: 1;
+  border-radius: 5px;
 }
 
 /*-------------------------------------------------------*/
