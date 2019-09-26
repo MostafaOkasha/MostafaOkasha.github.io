@@ -925,17 +925,17 @@ body, h1, h2, h3, p {
 }
 
 .project-l {
-  /*border: 2px solid #e0cd95;*/
+  border: 2px solid #e0cd95;
   border-radius: 3px;
   padding: 10px;
   margin: 5px;
-  margin-bottom: 5vh;
+  margin-bottom: 10vh;
   width:100%;
-  display: flex;
+  /*display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  align-content: center;
+  align-content: center;*/
 }
 
 .project-r {
@@ -958,6 +958,7 @@ body, h1, h2, h3, p {
   width: 15%;
   position: relative;
   vertical-align:middle;
+  display: inline-block;
 }
 
 .project-mainimage {
@@ -979,25 +980,60 @@ body, h1, h2, h3, p {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 5;
 }
-
-/*  position: relative;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);*/
-
-
-
-
 
 .project-img {
   width:60%;
   height:auto;
-  z-index: 1;
+  z-index: 4;
   border-radius: 5px;
+  opacity: 0.5;
+  position: relative;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  vertical-align:middle;
 }
+
+.project-img:hover {
+  opacity: 1;
+  -webkit-filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
+  -moz-filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
+  -ms-filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
+  -o-filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
+  filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
+}
+
+
+
+.project-body-l {
+  z-index: 0;
+  position: relative;
+  vertical-align:middle;
+  width:40%;
+  border: 1px solid #e0cd95;
+  padding-left: 10%;
+  border-radius: 5px;
+  background: rgba(56,52,47,0.9);
+  display:inline-block;
+  transform: translateX(-18.75%);
+}
+
+
+.project-body-r {
+  z-index: 3;
+  position: relative;
+  display: inline;
+}
+
+.proj-header-body{
+  vertical-align: middle;
+  position: relative;
+  width: 100%;
+  border: 1px solid #fff;
+}
+
+
 
 /*-------------------------------------------------------*/
 .skills {
