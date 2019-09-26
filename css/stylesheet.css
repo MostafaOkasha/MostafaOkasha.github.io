@@ -925,7 +925,6 @@ body, h1, h2, h3, p {
 }
 
 .project-l {
-  border: 2px solid #e0cd95;
   border-radius: 3px;
   padding: 10px;
   margin: 5px;
@@ -943,13 +942,13 @@ body, h1, h2, h3, p {
   border-radius: 3px;
   padding: 10px;
   margin: 5px;
-  margin-bottom: 5vh;
+  margin-bottom: 10vh;
   width:100%;
-  display: flex;
+  /*display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
-  align-content: center;
+  align-content: center;*/
 }
 
 
@@ -959,13 +958,17 @@ body, h1, h2, h3, p {
   position: relative;
   vertical-align:middle;
   display: inline-block;
+  z-index: 3;
 }
 
 .project-mainimage {
   width:100%;
   height: auto;
-  opacity: 0.7;
   z-index: 1;
+  background: #1f1c17;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
 }
 
 .project-title {
@@ -983,19 +986,37 @@ body, h1, h2, h3, p {
   z-index: 5;
 }
 
-.project-img {
+.project-img-r {
   width:60%;
   height:auto;
-  z-index: 4;
+  z-index: 1;
   border-radius: 5px;
-  opacity: 0.5;
-  position: relative;
+  opacity: 0.9;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
+  position: relative;
+  display:inline-block;
   vertical-align:middle;
+  margin-left: -27.25%;
+  right:0;
 }
 
-.project-img:hover {
+.project-img-l {
+  width:60%;
+  height:auto;
+  z-index: 1;
+  border-radius: 5px;
+  opacity: 0.9;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  position: relative;
+  display:inline-block;
+  vertical-align:middle;
+  margin-right: -27.25%;
+  right:0;
+}
+
+.project-img-l:hover, .project-img-r:hover {
   opacity: 1;
   -webkit-filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
   -moz-filter: drop-shadow(0 0px 4px rgba(0,0,0,.5));
@@ -1007,30 +1028,42 @@ body, h1, h2, h3, p {
 
 
 .project-body-l {
-  z-index: 0;
-  position: relative;
-  vertical-align:middle;
-  width:40%;
+  width:50%;
   border: 1px solid #e0cd95;
   padding-left: 10%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
   border-radius: 5px;
   background: rgba(56,52,47,0.9);
+  z-index: 2;
+  position: relative;
+  vertical-align:middle;
   display:inline-block;
-  transform: translateX(-18.75%);
+  transform: translateX(-17.3%);
 }
 
 
 .project-body-r {
-  z-index: 3;
+  width:50%;
+  border: 1px solid #e0cd95;
+  padding-right: 10%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  border-radius: 5px;
+  background: rgba(56,52,47,0.9);
+  z-index: 2;
   position: relative;
-  display: inline;
+  vertical-align:middle;
+  display:inline-block;
+  transform: translateX(17.3%);
 }
 
 .proj-header-body{
   vertical-align: middle;
   position: relative;
   width: 100%;
-  border: 1px solid #fff;
 }
 
 
