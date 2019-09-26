@@ -1066,6 +1066,25 @@ body, h1, h2, h3, p {
   width: 100%;
 }
 
+.proj-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.proj-gallery-img {
+  width: 45%;
+  height: auto;
+  margin: 2.5%;
+}
+
+.img-tmp1 {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
 
 
 /*-------------------------------------------------------*/
@@ -1183,6 +1202,13 @@ body, h1, h2, h3, p {
 /* RANDOM CSS */
  a:focus {
    outline: 0;
+}
+a {
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
 }
  .container {
    margin: auto;
