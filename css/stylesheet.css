@@ -1217,15 +1217,24 @@ body, h1, h2, h3, p {
    min-height: 130vh;
    background: #fcfaf9;
    color: #444444;
+   min-height: 130vh;
 }
 
 .about-me .wrapper2 {
-   display: flex;
-   flex-direction: row;
+  width: 80%;
+  font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
+  height: 100%;
+  
+  margin: 0 auto;
+}
+
+.about-me .my-pic {
+  width: 20%;
+  height: auto;
+  float: right;
+  margin-left: 15%;
 }
 /*-------------------------------------------------------*/
-
-
 
 
 .epilogue {
@@ -1237,8 +1246,17 @@ body, h1, h2, h3, p {
 }
 
 .epilogue .wrapper2 {
-   display: flex;
-   flex-direction: row;
+   width: 90%;
+   height: 100%;
+   margin: 0 auto;
+   background: #fff;
+   padding: 10%;
+   border-radius: 10px;
+}
+
+.signature {
+  width: 40%;
+  height: auto;
 }
 
 
