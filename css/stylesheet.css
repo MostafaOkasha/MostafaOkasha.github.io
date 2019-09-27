@@ -1150,16 +1150,73 @@ body, h1, h2, h3, p {
 /*-------------------------------------------------------*/
 
 
+.design {
+   position: relative;
+   padding-top: 20px; 
+   padding-bottom: 20px;
+   min-height: 130vh;
+   background: #B0C6CE;
+   color: #50514F;
+}
 
+.design .wrapper2 {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: flex-start;
+   flex-direction: row;
+   justify-content: center;
+
+   margin-top: 3vh;
+   height: 100%;
+   width: 100%;
+   margin-bottom: 5vh;
+}
+
+.design-image-1 {
+  width: 30%;
+  height: auto;
+  margin: 1%;
+}
+
+.img-tmp1 {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.design-head {
+  margin-top: 3vh;
+  font-family: "San Francisco", "SF Pro Text", -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Roboto, Calibre;
+  width: 60%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.design-loc {
+  color: #D17B0F; 
+  font-family: 'SummitRegular-Solid', Roboto, Calibre;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  border: 1px solid #D17B0F;
+  display:inline-block;
+  padding: 2px 2px 2px 2px;
+  margin-bottom: 5%;
+}
+
+.design-txt {
+  color: #50514F;
+  display:inline-block;
+}
+/*-------------------------------------------------------*/
 
 .about-me {
    position: relative;
    padding-top: 20px; 
    padding-bottom: 20px;
-   height: 130vh;
    min-height: 130vh;
-   background: #B0C6CE;
-   color: #413e3a;
+   background: #fcfaf9;
+   color: #444444;
 }
 
 .about-me .wrapper2 {
@@ -1175,7 +1232,6 @@ body, h1, h2, h3, p {
    position: relative;
    padding-top: 20px; 
    padding-bottom: 20px;
-   height: 130vh;
    min-height: 130vh;
    background: #EFDFBB;
 }
