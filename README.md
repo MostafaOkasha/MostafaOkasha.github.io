@@ -23,7 +23,7 @@ You can use <kbd>Option</kbd><kbd>C</kbd> to stop the server.
 Check out the Jekyll installation page for more information on how to get started. You might face a few issues with the Gemfile if you're trying to clone this website, what I recommend is to download any Jekyll layout/theme and manually move over all your static HTML/CSS code while following the appropriate Jekyll structure.
 
 
-Cheers!
+## Cheers!
 
 Note: Built using Jekyll, Node.js, HTML5, CSS3
 
