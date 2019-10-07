@@ -14,7 +14,7 @@ ending:
 I was born in Egypt and moved to Saudi Arabia soon after. I recieved my honors high school diploma by completing the Cambridge IGCSE, and Edexcel AS and A2 curriculum. I then moved to Canada where I attended McMaster University
 
 <aside class="post-aside">
-  Since I lived in New Jersey while attending Regis, I commuted ninety minutes each way to school!
+  I was the class clown in highschool!
 </aside>
 
 Before Brown, I was a student at Regis High School, a tuition-free instutition located in the Upper East Side of Manhattan. While I was there, I was the [Layout Editor of _The Owl_](/designs/the-owl), the [Lighting Designer][lighting-design] for the _Regis Repertory_, and one of the founding members of the school's Mock Trial team. I also was the Speech President of _The Hearn_, Regis's nationally-ranked speech and debate society, where I managed and coached a cohort of about sixty peers during weekly tournaments within New York and other events around the country.
