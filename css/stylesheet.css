@@ -1234,6 +1234,18 @@ body, h1, h2, h3, p {
   float: right;
   margin-left: 15%;
 }
+
+.ame-title {
+  color: #e0613f;
+  font-family: 'SummitRegular-Solid';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  border: 1px solid #e0613f;
+  display:inline-block;
+  padding: 2px 2px 2px 2px;
+  margin-top: 5%;
+}
 /*-------------------------------------------------------*/
 
 
@@ -1312,6 +1324,10 @@ a {
  .right-align {
    text-align: right;
 }
+ .center-align-obj {
+  text-align: center;
+  display: block;
+ }
  .small {
    font-size: 25px;
 }
@@ -1372,6 +1388,7 @@ a {
    padding-top: 20px;
    z-index: 3;
 }
+
  .landing-header .wrapper {
    display: flex;
    flex-direction: row;
