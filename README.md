@@ -1,15 +1,21 @@
 # MostafaOkasha.github.io
-## My Personal Website.
-
-This is the latest version of my website.
-The base is an open-source Jekyll theme, which has been modified, adapted and incorporated with JQuery and Node.js for some simplistic beauty.
-
-
+## Personal Website and Portfolio
 ### Check out: https://www.okasha.me
-#### SSL Certified and Cloudflare Protected!
 
 
-## Installation
+&nbsp;
+
+This website was created in 2019 using an open-source Jekyll theme, which has been modified, adapted and incorporated with JQuery and Node.js for simplistic beauty.
+
+This is hosted on [Github Pages](https://pages.github.com/), with a custom domain name (okasha.me) through NameCheap, SSL Certified through Cloudflare with custom global CDN hosting (overkill, I know).
+
+
+&nbsp;
+
+
+## Installation Process
+
+To get started with a similar theme or using Jekyll for Github Pages web hosting see the Jekyll Guide [here](https://jekyllrb.com/docs/)
 
 ```console
 git clone https://github.com/MostafaOkasha/MostafaOkasha.github.io
@@ -20,14 +26,15 @@ bundle exec jekyll serve
 
 You can use <kbd>Option</kbd><kbd>C</kbd> to stop the server.
 
-Check out the Jekyll installation page for more information on how to get started. You might face a few issues with the Gemfile if you're trying to clone this website, what I recommend is to download any Jekyll layout/theme and manually move over all your static HTML/CSS code while following the appropriate Jekyll structure.
+You might face a few issues with the Gemfile if you're trying to clone this website, what I recommend is to download any Jekyll layout/theme and manually move over all your static HTML/CSS code while following the appropriate Jekyll structure.
 
-The website is currently not fully complete. It breaks on screens smaller than 900 pixels wide, I'm currently working on making it work on every screen size!
 
-## Cheers!
-
-Note: Built using Jekyll, Node.js, HTML5, CSS3
+&nbsp;
 
 # License
 
 www.okasha.me is licensed under The MIT License. You can view it [here](https://github.com/MostafaOkasha/MostafaOkasha.github.io/blob/master/LICENSE).
+
+&nbsp;
+
+##### Built using Jekyll, Node.js, HTML5, CSS3
