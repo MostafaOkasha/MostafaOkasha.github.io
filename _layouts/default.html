@@ -1,29 +1,21 @@
----
-layout: default
----
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if (IE 9)]><html class="no-js ie9" lang="en"><![endif]-->
-<!-- Mobile Internet Explorer ClearType Technology -->
-<!--[if IEMobile]>  <meta http-equiv="cleartype" content="on">  <![endif]-->
-
 <html lang="en-US">
     <head>
         {% include head.html %}
-        {% include scripts.html %}
         {% include favicon.html %}
     </head>
 
-    </header>
-        {% include header.html %}
-        {% include lazyload.html %}
-    </header>
-    
-    {{ content }}
+    <body>
+        <header>
+            {% include header.html %}
+        </header>
 
-    <footer>
-    	{% include footer.html %}
-    </footer>
+        {{ content }}
+
+        <footer>
+            {% include footer.html %}
+        </footer>
+
+        {% include scripts.html %}
+    </body>
 </html>
