@@ -1236,7 +1236,9 @@ a {
    vertical-align:middle;
    border-radius: 50%;
    width: 30%;
-
+   /* the img has width/height attributes for aspect-ratio hinting;
+      without this the attribute height (600px) would win over the 30% width */
+   height: auto;
 }
 
 #app {
