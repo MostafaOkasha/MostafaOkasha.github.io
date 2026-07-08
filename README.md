@@ -5,7 +5,7 @@
 
 &nbsp;
 
-This website was created in 2019 using an open-source Jekyll theme, which has been modified, adapted and incorporated with JQuery and Node.js for simplistic beauty.
+This website was created in 2019 using an open-source Jekyll theme, heavily modified over the years. As of 2026 it is plain Jekyll + vanilla JavaScript — no jQuery, no frameworks.
 
 This is hosted on [Github Pages](https://pages.github.com/), with a custom domain name (okasha.me) through NameCheap, SSL Certified through Cloudflare with custom global CDN hosting (overkill, I know).
 
@@ -13,21 +13,31 @@ This is hosted on [Github Pages](https://pages.github.com/), with a custom domai
 &nbsp;
 
 
-## Installation Process
+## Running Locally
 
-To get started with a similar theme or using Jekyll for Github Pages web hosting see the Jekyll Guide [here](https://jekyllrb.com/docs/)
+To get started with Jekyll for Github Pages web hosting see the Jekyll Guide [here](https://jekyllrb.com/docs/)
 
 ```console
 git clone https://github.com/MostafaOkasha/MostafaOkasha.github.io
 cd MostafaOkasha.github.io
 bundle install
-bundle exec jekyll serve
+LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 bundle exec jekyll serve
+# or on a different port:
+LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 bundle exec jekyll serve --port 4001
 ```
 
-You can use <kbd>Option</kbd><kbd>C</kbd> to stop the server.
+The UTF-8 locale variables matter: the GitHub Pages sass converter fails with `Invalid US-ASCII character` without them. Stop the server with <kbd>Ctrl</kbd><kbd>C</kbd>.
 
-You might face a few issues with the Gemfile if you're trying to clone this website, what I recommend is to download any Jekyll layout/theme and manually move over all your static HTML/CSS code while following the appropriate Jekyll structure.
+## Project Structure
 
+- `_layouts/default.html` — the single page layout (head, header, content, footer, scripts)
+- `_includes/` — page sections: `home-body.html` (experience/education/projects/skills/design/about), `header.html` (hero + video parallax), `head.html`, `scripts.html`, `icon.html` (inline SVG icons)
+- `css/stylesheet.css` — all styling, including the mobile layout (`@media (max-width: 768px)` block at the bottom)
+- `javascripts/main.js` — all site behavior (typewriter, timeline reveal, lightbox, hero video)
+- `images/webp/` — optimized WebP versions used for display; originals elsewhere in `images/` are kept for the lightbox full-size views
+- `resume/resume.pdf` — linked from the nav
+
+Third-party libraries (all loaded deferred from CDNs): [GLightbox](https://biati-digital.github.io/glightbox/) for galleries, [Jarallax](https://github.com/nk-o/jarallax) for the hero video parallax, [TypewriterJS](https://github.com/tameemsafi/typewriterjs) for the hero text.
 
 &nbsp;
 
@@ -37,4 +47,4 @@ www.okasha.me is licensed under The MIT License. You can view it [here](https://
 
 &nbsp;
 
-##### Built using Jekyll, Node.js, HTML5, CSS3
+##### Built using Jekyll, HTML5, CSS3

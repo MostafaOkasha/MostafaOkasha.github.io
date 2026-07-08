@@ -1,25 +1,27 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-
-<!-- Import CSS StyleSheet -->
-<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
-
-<!-- Import animate.css -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-
-<!-- Import fancybox files -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<meta name="theme-color" content="#18212d">
 
 <meta name="description" content="Mostafa Okasha Personal Website and Portfolio">
 <meta name="keywords" content="Mostafa Okasha, Okasha, okashm, McMaster University, Software Engineer, mostafa@okasha.me">
-
 <meta name="author" content="Mostafa Okasha">
 
 <!-- Page Title -->
 <title>{{ page.title }} | Mostafa Okasha</title>
 
-<!-- Custom CSS -->
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<!-- Canonical URL, OpenGraph/Twitter cards and JSON-LD from _config.yml -->
+{% seo title=false %}
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<!-- The two assets every first paint needs: hero photo and body font -->
+<link rel="preload" href="/images/webp/DSC_0027.webp" as="image" type="image/webp">
+<link rel="preload" href="/fonts/sf_mono/SFMono-Light.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- Import CSS StyleSheet -->
+<link href="/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+<!-- GLightbox (image galleries) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">

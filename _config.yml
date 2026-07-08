@@ -11,7 +11,7 @@ github_username: MostafaOkasha
 timezone: America/New_York
 repository: MostafaOkasha/MostafaOkasha.github.io
 
-logo: /images/
+logo: /images/m-logo.png
 
 plugins:
   - jekyll-sitemap

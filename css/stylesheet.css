@@ -10,553 +10,133 @@ html * {
 
 /*-------------------------------------------------------*/
 /* FONTS: START */
+/* Only the font faces the site actually uses are declared here.
+   SF Mono covers body/mono text (weights 200-700 + italics);
+   the four Summit faces cover the big section headings.
+   font-display: swap keeps text visible while fonts load. */
 
-/** Regular */
 @font-face {
-  font-family: "San Francisco";
+  font-family: "SF Mono";
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-Light.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-Light.otf) format("opentype");
+}
+@font-face {
+  font-family: "SF Mono";
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-LightItalic.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-LightItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: "SF Mono";
   font-weight: 400;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+  font-style: normal;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-Regular.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-Regular.otf) format("opentype");
 }
-
-/** Medium */
 @font-face {
-  font-family: "San Francisco";
+  font-family: "SF Mono";
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-RegularItalic.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-RegularItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: "SF Mono";
   font-weight: 500;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff");
+  font-style: normal;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-Medium.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-Medium.otf) format("opentype");
 }
-
-/** Semi Bold */
 @font-face {
-  font-family: "San Francisco";
+  font-family: "SF Mono";
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-MediumItalic.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-MediumItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: "SF Mono";
   font-weight: 600;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff");
+  font-style: normal;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-Semibold.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-Semibold.otf) format("opentype");
 }
-
-/** Bold */ 
 @font-face {
-  font-family: "San Francisco";
+  font-family: "SF Mono";
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-SemiboldItalic.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-SemiboldItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: "SF Mono";
   font-weight: 700;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff");
+  font-style: normal;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-Bold.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-Bold.otf) format("opentype");
+}
+@font-face {
+  font-family: "SF Mono";
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url(../fonts/sf_mono/SFMono-BoldItalic.woff2) format("woff2"),
+      url(../fonts/sf_mono/SFMono-BoldItalic.otf) format("opentype");
 }
 
-
-
-
-/* Charter */
- @font-face {
-   font-family: 'Charter';
-   src: url('../fonts/charter/charter_bold_italic-webfont.eot');
-   src: url('../fonts/charter/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_bold_italic-webfont.woff') format('woff');
-   font-weight: bold;
-   font-style: italic;
+@font-face {
+  font-family: 'SummitRegular-Solid';
+  src: url('../fonts/summit/SummitRegular-Solid.woff2') format('woff2'),
+      url('../fonts/summit/SummitRegular-Solid.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
- @font-face {
-   font-family: 'Charter';
-   src: url('../fonts/charter/charter_bold-webfont.eot');
-   src: url('../fonts/charter/charter_bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_bold-webfont.woff') format('woff');
-   font-weight: bold;
-   font-style: normal;
+@font-face {
+  font-family: 'SummitBold-Solid';
+  src: url('../fonts/summit/SummitBold-Solid.woff2') format('woff2'),
+      url('../fonts/summit/SummitBold-Solid.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
- @font-face {
-   font-family: 'Charter';
-   src: url('../fonts/charter/charter_italic-webfont.eot');
-   src: url('../fonts/charter/charter_italic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_italic-webfont.woff') format('woff');
-   font-weight: normal;
-   font-style: italic;
+@font-face {
+  font-family: 'SummitBold-Inline';
+  src: url('../fonts/summit/SummitBold-Inline.woff2') format('woff2'),
+      url('../fonts/summit/SummitBold-Inline.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
- @font-face {
-   font-family: 'Charter';
-   src: url('../fonts/charter/charter_regular-webfont.eot');
-   src: url('../fonts/charter/charter_regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/charter/charter_regular-webfont.woff') format('woff');
-   font-weight: normal;
-   font-style: normal;
-}
-/* SF Mono */
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 200;
-   font-style: normal;
-   src: url(../fonts/sf_mono/SFMono-Light.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 200;
-   font-style: italic;
-   src: url(../fonts/sf_mono/SFMono-LightItalic.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 400;
-   font-style: normal;
-   src: url(../fonts/sf_mono/SFMono-Regular.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 400;
-   font-style: italic;
-   src: url(../fonts/sf_mono/SFMono-RegularItalic.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 500;
-   font-style: normal;
-   src: url(../fonts/sf_mono/SFMono-Medium.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 500;
-   font-style: italic;
-   src: url(../fonts/sf_mono/SFMono-MediumItalic.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 600;
-   font-style: normal;
-   src: url(../fonts/sf_mono/SFMono-Semibold.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 600;
-   font-style: italic;
-   src: url(../fonts/sf_mono/SFMono-SemiboldItalic.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 700;
-   font-style: normal;
-   src: url(../fonts/sf_mono/SFMono-Bold.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 700;
-   font-style: italic;
-   src: url(../fonts/sf_mono/SFMono-BoldItalic.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 800;
-   font-style: normal;
-   src: url(../fonts/sf_mono/SFMono-Heavy.otf);
-}
- @font-face {
-   font-family: "SF Mono";
-   font-weight: 800;
-   font-style: italic;
-   src: url(../fonts/sf_mono/SFMono-HeavyItalic.otf);
+@font-face {
+  font-family: 'SummitBold-Shadow';
+  src: url('../fonts/summit/SummitBold-Shadow.woff2') format('woff2'),
+      url('../fonts/summit/SummitBold-Shadow.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 /* FONTS: END */
-/* TEST: PASS */
-
-
-@font-face {
-    font-family: 'SummitThin-SolidTwo';
-    src: url('../fonts/summit/SummitThin-SolidTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-SolidTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-Solid';
-    src: url('../fonts/summit/SummitRegular-Solid.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-Solid.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-Shadow';
-    src: url('../fonts/summit/SummitMedium-Shadow.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-Shadow.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-SolidOne';
-    src: url('../fonts/summit/SummitLight-SolidOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-SolidOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-InlineTwo';
-    src: url('../fonts/summit/SummitThin-InlineTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-InlineTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-InlineThree';
-    src: url('../fonts/summit/SummitThin-InlineThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-InlineThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-SolidTwo';
-    src: url('../fonts/summit/SummitRegular-SolidTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-SolidTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-Solid';
-    src: url('../fonts/summit/SummitBold-Solid.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-Solid.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-Inline';
-    src: url('../fonts/summit/SummitMedium-Inline.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-Inline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-InlineTwo';
-    src: url('../fonts/summit/SummitLight-InlineTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-InlineTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-Display';
-    src: url('../fonts/summit/SummitMedium-Display.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-Display.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-Display';
-    src: url('../fonts/summit/SummitThin-Display.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-Display.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-Inline';
-    src: url('../fonts/summit/SummitBold-Inline.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-Inline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-SolidOne';
-    src: url('../fonts/summit/SummitBold-SolidOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-SolidOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-SolidOne';
-    src: url('../fonts/summit/SummitThin-SolidOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-SolidOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-InlineOne';
-    src: url('../fonts/summit/SummitBold-InlineOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-InlineOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-Shadow';
-    src: url('../fonts/summit/SummitLight-Shadow.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-Shadow.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-Inline';
-    src: url('../fonts/summit/SummitThin-Inline.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-Inline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-InlineTwo';
-    src: url('../fonts/summit/SummitRegular-InlineTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-InlineTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-SolidThree';
-    src: url('../fonts/summit/SummitBold-SolidThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-SolidThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-SolidThree';
-    src: url('../fonts/summit/SummitRegular-SolidThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-SolidThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-Shadow';
-    src: url('../fonts/summit/SummitBold-Shadow.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-Shadow.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-Display';
-    src: url('../fonts/summit/SummitLight-Display.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-Display.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-InlineTwo';
-    src: url('../fonts/summit/SummitBold-InlineTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-InlineTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-Inline';
-    src: url('../fonts/summit/SummitLight-Inline.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-Inline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-InlineTwo';
-    src: url('../fonts/summit/SummitMedium-InlineTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-InlineTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-SolidTwo';
-    src: url('../fonts/summit/SummitBold-SolidTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-SolidTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-SolidOne';
-    src: url('../fonts/summit/SummitMedium-SolidOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-SolidOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-Shadow';
-    src: url('../fonts/summit/SummitThin-Shadow.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-Shadow.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-SolidTwo';
-    src: url('../fonts/summit/SummitLight-SolidTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-SolidTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-SolidThree';
-    src: url('../fonts/summit/SummitThin-SolidThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-SolidThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-SolidTwo';
-    src: url('../fonts/summit/SummitMedium-SolidTwo.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-SolidTwo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-SolidOne';
-    src: url('../fonts/summit/SummitRegular-SolidOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-SolidOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-InlineThree';
-    src: url('../fonts/summit/SummitLight-InlineThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-InlineThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-Display';
-    src: url('../fonts/summit/SummitRegular-Display.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-Display.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-InlineOne';
-    src: url('../fonts/summit/SummitRegular-InlineOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-InlineOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-InlineOne';
-    src: url('../fonts/summit/SummitLight-InlineOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-InlineOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-SolidThree';
-    src: url('../fonts/summit/SummitLight-SolidThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-SolidThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-InlineThree';
-    src: url('../fonts/summit/SummitBold-InlineThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-InlineThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-InlineThree';
-    src: url('../fonts/summit/SummitRegular-InlineThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-InlineThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-Shadow';
-    src: url('../fonts/summit/SummitRegular-Shadow.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-Shadow.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-InlineOne';
-    src: url('../fonts/summit/SummitThin-InlineOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-InlineOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-InlineThree';
-    src: url('../fonts/summit/SummitMedium-InlineThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-InlineThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitThin-Solid';
-    src: url('../fonts/summit/SummitThin-Solid.woff2') format('woff2'),
-        url('../fonts/summit/SummitThin-Solid.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitRegular-Inline';
-    src: url('../fonts/summit/SummitRegular-Inline.woff2') format('woff2'),
-        url('../fonts/summit/SummitRegular-Inline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-Solid';
-    src: url('../fonts/summit/SummitMedium-Solid.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-Solid.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitLight-Solid';
-    src: url('../fonts/summit/SummitLight-Solid.woff2') format('woff2'),
-        url('../fonts/summit/SummitLight-Solid.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-InlineOne';
-    src: url('../fonts/summit/SummitMedium-InlineOne.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-InlineOne.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitMedium-SolidThree';
-    src: url('../fonts/summit/SummitMedium-SolidThree.woff2') format('woff2'),
-        url('../fonts/summit/SummitMedium-SolidThree.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SummitBold-Display';
-    src: url('../fonts/summit/SummitBold-Display.woff2') format('woff2'),
-        url('../fonts/summit/SummitBold-Display.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-
-
-/*------------------------------------------*/
 
 /*-------------------------------------------------------*/
 /* BODY and HTML Default*/
  html, body {
    min-height: 100vh;
+}
+html {
+  scroll-behavior: smooth;
 }
 body, h1, h2, h3, p {
     -webkit-font-smoothing: antialiased !important;
@@ -609,6 +189,21 @@ body, h1, h2, h3, p {
   max-width: 120px;
   min-width: 50px;
   margin-left: 5%;
+  flex-shrink: 0;
+}
+
+/* Lettermark badge used when no company logo image is available */
+.exp-logo-text {
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  border: 2px solid #64ffda;
+  border-radius: 20%;
+  color: #64ffda;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .exp-container {
@@ -666,7 +261,7 @@ body, h1, h2, h3, p {
   font-family: "SF Mono", "Lucida Console", Monaco, monospace;
   font-size: 13px;
   color: rgb(168, 178, 209);
-  content: attr(date-text);
+  content: attr(data-date);
   display: block;
   margin-bottom: 30px;
 }
@@ -1286,6 +881,13 @@ body, h1, h2, h3, p {
 
 /*-------------------------------------------------------*/
 /* RANDOM CSS */
+/* Inline SVG icons (nav + footer) */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
  a:focus {
    outline: 0;
 }
@@ -1642,7 +1244,8 @@ a {
   color: white;
   font-weight: 400;
   line-height: 23px;
-  font-size: 28px;
+  /* scales smoothly from small phones up to the 28px desktop size */
+  font-size: clamp(9px, 3.4vw, 28px);
   display: inline;
   padding-left: 4%;
 }
@@ -1799,84 +1402,135 @@ a {
   }
 }
 
-@media screen and (max-width: 805px) {  
-  #app  {
-    font-size:25px;
-    }
+/*-------------------------------------------------------*/
+/* Hero fade-in (replaces the animate.css CDN dependency) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animated.fadeIn {
+  animation: fadeIn 1s both;
+}
+
+/* Solid backdrop behind the hero; also what mobile users see
+   instead of the parallax video */
+.jarallax {
+  background-color: #18212d;
+}
+
+.epilogue-quote {
+  width: min(100%, 600px);
+  margin: 0 auto 5vh;
+}
+
+/*-------------------------------------------------------*/
+/* MOBILE LAYOUT                                          */
+/*-------------------------------------------------------*/
+@media (max-width: 768px) {
+  .wrapper {
+    margin: 0 16px;
   }
 
-@media screen and (max-width: 705px) {  
-  #app  {
-    font-size:21.5px;
-    }
+  .section-head {
+    font-size: 38px;
+  }
+  .overlay-text {
+    font-size: 36px;
   }
 
-@media screen and (max-width: 605px) {  
-  #app  {
-    font-size:17px;
-    }
+  /* Timeline: tighter rail, cards sized to the screen */
+  .timeline > ul {
+    padding-left: 10px;
+  }
+  .timeline > ul > li .time-div {
+    width: calc(100vw - 90px);
+    left: 25px;
+  }
+  .experience .wrapper2 {
+    flex-direction: column;
+  }
+  .exp-img-container {
+    width: 60px;
+    margin-left: 5%;
+    margin-bottom: 10px;
+  }
+  .exp-container {
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .timeline ul li ul li {
+    font-size: 16px;
+  }
+  .exp-text {
+    font-size: 19px;
   }
 
-@media screen and (max-width: 505px) {  
-  #app  {
-    font-size:15.5px;
-    }
+  /* Projects: stack the icon, description and screenshot vertically */
+  .project-l, .project-r {
+    margin-bottom: 6vh;
+    padding: 0;
+  }
+  .proj-header {
+    width: 45%;
+    display: block;
+    margin: 0 auto 15px;
+  }
+  .project-body-l, .project-body-r {
+    display: block;
+    width: 100%;
+    transform: none;
+    padding: 15px;
+  }
+  .project-img-l, .project-img-r {
+    display: block;
+    width: 100%;
+    margin: 15px 0 0;
   }
 
-@media screen and (max-width: 455px) {  
-  #app  {
-    font-size:14px;
-    } 
+  .proj-gallery-img {
+    width: 100%;
+    margin: 2.5% 0;
   }
 
-@media screen and (max-width: 410px) {  
-  #app  {
-    font-size:13px;
-    } 
+  .ed-courses {
+    width: 100%;
   }
 
-@media screen and (max-width: 387px) {
-  #app  {
-    font-size:11px;
-    }
+  .skills-icons {
+    min-width: 70px;
+    width: 22%;
+    margin: 6px;
   }
 
-@media screen and (max-width: 340px) {
-  #app  {
-    font-size:9.5px;
-    }
+  .design-image-1 {
+    width: 46%;
+    margin: 2%;
+  }
+  .design-head {
+    width: 100%;
   }
 
-@media screen and (max-width: 315px) {
-  #app  {
-    font-size:9px;
-    }
+  .about-me .my-pic {
+    float: none;
+    display: block;
+    width: 55%;
+    margin: 0 auto 20px;
+  }
+  .about-me .wrapper2 {
+    width: 100%;
   }
 
-@media screen and (max-width: 300px) {
-  #app  {
-    font-size:8.5px;
-    }
+  .epilogue .wrapper2 {
+    width: 100%;
+    padding: 24px;
   }
-  /*
-@media screen and (max-width: 900px) {  
-  #app  {
-    font-size:28px;
-    }
+  .signature {
+    width: 60%;
   }
-@media screen and (max-width: 1000px){  
-  #app  {
-    font-size:28px;
-    }
+
+  .pre-footer {
+    font-size: 26px;
+    height: 25vh;
   }
-@media screen and (max-width: 1100px){  
-  #app  {
-    font-size:28px;
-    }
-  }
-@media screen and (max-width: 1200px){  
-  #app  { 
-    font-size:28px;
-    }
-  }
-  */
+}

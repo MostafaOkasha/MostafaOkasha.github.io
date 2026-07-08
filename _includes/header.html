@@ -1,10 +1,9 @@
-<div class="jarallax" data-jarallax-video="mp4:./videos/hero_compressed.mp4">
-    <!-- mp4:./videos/temp.mp4 -->
+<div class="jarallax">
     <header id="header" class="landing-header">
         <div class="wrapper">
             <div class="left">
                 <a href="/" class="logo-container">
-                <img class="logo" src="images/m-logo.png" alts="Mostafa Okasha Brand Logo">
+                <img class="logo" src="/images/m-logo.png" alt="Mostafa Okasha Brand Logo">
                 </a>
                 <div class="intro">
                     {% include header-intro.html %}
@@ -13,161 +12,29 @@
             <div class="right">
                 {% include navigation_links.html %}
                 <div class="commit-history">
-                    {% assign commit_time = site.github.public_repositories | where_exp: "item", "item.id == 189687010" | map: "pushed_at" %}
-
                     Last updated with commit
                     <span class="commit-sha">
                         <a href="https://github.com/MostafaOkasha/mostafaokasha.github.io/commits/master" target="_blank">
                             @{{ site.github.build_revision | truncate: 7, "" }}
                         </a>
                     </span>
-                    <br>
-                    on {{ commit_time }}
                 </div>
             </div>
         </div>
     </header>
-    
+
     <div class="vid-overlay">
         <div class="wrapper-pic animated fadeIn">
             <div class="profile-pic-container">
-                <img id="my-ppic" class="profile-pic" src="/images/DSC_0027.png" alts="Mostafa Okasha Photo">
-                
+                <img id="my-ppic" class="profile-pic" src="/images/webp/DSC_0027.webp" alt="Mostafa Okasha Photo" width="600" height="600" fetchpriority="high">
+
                 <div id="app"></div>
             </div>
             <div class="chevron animated fadeIn">
-                <!-- <div class="padd-bot"> SCROLL</div> -->
-                <a href="#top-body">
+                <a href="#top-body" aria-label="Scroll down to content">
                 <div id="hovered" class="arrow"></div>
                 </a>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-$(function() {
-    $('a[href*=\\#]:not([href=\\#])').on('click', function() {
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.substr(1) +']');
-        if (target.length) {
-            $('html,body').animate({
-                scrollTop: target.offset().top
-            }, 1000);
-            return false;
-        }
-    });
-});
-</script>
-
-
-
-<!--
-
-
-<script>
-$('#scrollto').click(function() {
-    $('html, body').animate({
-        scrollTop: eval($('#' + $('top-body').offset().top - 70))
-    }, 1000);
-});
-</script>
-
-
-
-
-
-
-
-
-
-<script>
-    // handle links with @href started with '#' only
-    // for going to top of page!
-$(document).on('click', 'a[href^="#"]', function(e) {
-    // target element id
-    var id = $(this).attr('href');
-
-    // target element
-    var $id = $(id);
-    if ($id.length === 0) {
-        return;
-    }
-
-    // prevent standard hash navigation (avoid blinking in IE)
-    e.preventDefault();
-
-    // top position relative to the document
-    var pos = $id.offset().top;
-
-    // animated top scrolling
-    $('body, html').animate({scrollTop: pos});
-});
-</script>
--->
-
-<script>
-var app = document.getElementById('app');
-var typewriter = new Typewriter(app, {
-    loop: true
-});
-typewriter.typeString('Explore My: Experiences')
-    .pauseFor(1500)
-    .deleteChars(11)
-    .typeString('Projects')
-    .pauseFor(1500)
-    .deleteChars(8)
-    .typeString('Skills')
-    .pauseFor(1500)
-    .deleteChars(6)
-    .typeString('Education')
-    .pauseFor(1500)
-    .deleteChars(9)
-    .typeString('Values')
-    .pauseFor(1500)
-    .deleteChars(6)
-    .typeString('Goals')
-    .pauseFor(1500)
-    .deleteChars(5)
-    .typeString('Interests')
-    .pauseFor(1500)
-    .deleteChars(9)
-    .typeString('World')
-    .pauseFor(5000)
-    .deleteAll()
-    .typeString('Get To Know Me!')
-    .pauseFor(3000)
-    .deleteAll()
-    .start();
-</script>
-
-<script>
-    $(document).ready(function () {
-        headerFit();
-        
-        $(window).resize(function() {
-            headerFit();
-            }
-        );
-        }
-    );
-
-    function headerFit() {
-            var headerHeight = $('.landing-header').outerHeight(true);
-            var windowHeight = $(window).height();
-            var wrapWidth = $('.wrapper').width();
-            var maxWidth = 0.3 * wrapWidth;
-
-            var difff = windowHeight - headerHeight;
-
-            if (maxWidth < difff) {
-                var diff = difff  + "px";
-                $(".wrapper-pic").css("height", diff);
-            }
-
-            else {
-                var diff = maxWidth + 15 + 'px';
-                $(".wrapper-pic").css("height", diff);
-            }
-            }
-</script>
