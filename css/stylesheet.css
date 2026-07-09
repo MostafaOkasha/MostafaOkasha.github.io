@@ -1091,6 +1091,8 @@ a {
  .landing-header ul.header-nav-list li {
    margin-bottom: 12px;
    font-weight: 400;
+   /* the inline SVG icons take their fill from currentColor */
+   color: white;
 }
  .landing-header ul.header-nav-list li a, .landing-header ul.header-nav-list li i {
    color: white;
@@ -1226,29 +1228,32 @@ a {
   }
 }
 
+ /* Fixed-width flex row: the photo's size and position must not depend on
+    how much text the typewriter has typed at any given moment. */
  .profile-pic-container {
     padding-left: 4%;
-    vertical-align:middle;
+    display: flex;
+    align-items: center;
+    width: 100%;
  }
 
  .profile-pic {
-   display: inline;
-   vertical-align:middle;
    border-radius: 50%;
+   /* 30% of the full (stable) container width, never reflowed by the text */
    width: 30%;
+   flex-shrink: 0;
    /* the img has width/height attributes for aspect-ratio hinting;
       without this the attribute height (600px) would win over the 30% width */
    height: auto;
 }
 
 #app {
-  margin: auto;
+  flex: 1;
   color: white;
   font-weight: 400;
-  line-height: 23px;
+  line-height: 1.3;
   /* scales smoothly from small phones up to the 28px desktop size */
   font-size: clamp(9px, 3.4vw, 28px);
-  display: inline;
   padding-left: 4%;
 }
 
