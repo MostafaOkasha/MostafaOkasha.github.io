@@ -1,0 +1,244 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { SKILLS } from '../data/skills';
+---
+
+<Base title="Skills | Mostafa Okasha" description="Every icon opens a dossier: years, the projects it shipped, and where it lives in the Library.">
+  <Nav current="skills" />
+
+  <div class="skills-grid-page">
+    <!-- skill field -->
+    <div class="field">
+      <h1 class="page-title">Click a tool.</h1>
+      <p class="page-sub">
+        Every icon opens a dossier: years, the projects it shipped, and where it lives in the
+        Library.
+      </p>
+
+      <div class="tile-grid">
+        {
+          SKILLS.map((s) => (
+            <button class="tile" data-skill={s.k}>
+              <div class="glyph mono" style={`color:${s.color};`}>{s.glyph}</div>
+              <div class="tname">{s.name}</div>
+              <div class="tyrs mono">{s.yrs}</div>
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="section-label section-label--muted sysd-label">SYSTEM DESIGNS</div>
+      <div class="sysd-grid">
+        <a href="/workshop#systems" class="sysd card">
+          <svg width="100%" height="64" viewBox="0 0 220 64">
+            <rect x="4" y="22" width="46" height="22" rx="4" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+            <rect x="88" y="6" width="46" height="22" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+            <rect x="88" y="38" width="46" height="22" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+            <rect x="172" y="22" width="44" height="22" rx="4" fill="none" stroke="#ffd76b" stroke-width="1.2"></rect>
+            <line x1="50" y1="33" x2="88" y2="17" stroke="#495670" stroke-width="1"></line>
+            <line x1="50" y1="33" x2="88" y2="49" stroke="#495670" stroke-width="1"></line>
+            <line x1="134" y1="17" x2="172" y2="33" stroke="#495670" stroke-width="1"></line>
+            <line x1="134" y1="49" x2="172" y2="33" stroke="#495670" stroke-width="1"></line>
+          </svg>
+          <div class="sname">ChessMate pipeline</div>
+          <div class="scap mono">vision → engine → arm control</div>
+        </a>
+        <a href="/workshop#systems" class="sysd card">
+          <svg width="100%" height="64" viewBox="0 0 220 64">
+            <circle cx="26" cy="33" r="13" fill="none" stroke="#d8a3ff" stroke-width="1.2"></circle>
+            <rect x="72" y="22" width="46" height="22" rx="11" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+            <rect x="150" y="6" width="60" height="20" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+            <rect x="150" y="40" width="60" height="20" rx="4" fill="none" stroke="#ffd76b" stroke-width="1.2"></rect>
+            <line x1="39" y1="33" x2="72" y2="33" stroke="#495670" stroke-width="1"></line>
+            <line x1="118" y1="30" x2="150" y2="16" stroke="#495670" stroke-width="1"></line>
+            <line x1="118" y1="38" x2="150" y2="50" stroke="#495670" stroke-width="1"></line>
+          </svg>
+          <div class="sname">Fraud-rule serving</div>
+          <div class="scap mono">stream → features → decisions</div>
+        </a>
+        <a href="/workshop#systems" class="sysd card">
+          <svg width="100%" height="64" viewBox="0 0 220 64">
+            <rect x="4" y="6" width="52" height="20" rx="4" fill="none" stroke="#7dead8" stroke-width="1.2"></rect>
+            <rect x="4" y="38" width="52" height="20" rx="4" fill="none" stroke="#7dead8" stroke-width="1.2"></rect>
+            <rect x="96" y="22" width="52" height="22" rx="11" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+            <rect x="184" y="22" width="32" height="22" rx="4" fill="none" stroke="#ff8ba3" stroke-width="1.2"></rect>
+            <line x1="56" y1="16" x2="96" y2="30" stroke="#495670" stroke-width="1"></line>
+            <line x1="56" y1="48" x2="96" y2="38" stroke="#495670" stroke-width="1"></line>
+            <line x1="148" y1="33" x2="184" y2="33" stroke="#495670" stroke-width="1"></line>
+          </svg>
+          <div class="sname">Agent memory scaffold</div>
+          <div class="scap mono">task + core memories → llm</div>
+        </a>
+        <a href="/workshop#systems" class="sysd dashed mono">all diagrams in the workshop →</a>
+      </div>
+    </div>
+
+    <!-- dossier -->
+    <aside class="dossier" data-dossier>
+      <button class="sheet-close mono" data-sheet-close aria-label="Close">close ×</button>
+      <div class="section-label section-label--muted">DOSSIER</div>
+      <div class="d-head">
+        <span class="d-glyph mono" data-d-glyph></span>
+        <span class="d-name" data-d-name></span>
+        <span class="d-since mono" data-d-since></span>
+      </div>
+      <div class="d-timeline" data-d-timeline></div>
+      <div class="section-label section-label--muted ships">SHIPS WITH</div>
+      <div class="d-chips mono" data-d-chips></div>
+      <a class="d-lib" data-d-lib href="/library">
+        <span data-d-libnote></span>
+        <span class="go">→ open</span>
+      </a>
+    </aside>
+  </div>
+</Base>
+
+<script is:inline define:vars={{ skills: SKILLS }}>
+  const $ = (s) => document.querySelector(s);
+  const dossier = $('[data-dossier]');
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+  function show(k, openSheet) {
+    const s = skills.find((x) => x.k === k) || skills[0];
+    $('[data-d-glyph]').textContent = s.glyph;
+    $('[data-d-glyph]').style.color = s.color;
+    $('[data-d-name]').textContent = s.name;
+    $('[data-d-since]').textContent = s.since;
+    $('[data-d-timeline]').innerHTML = s.timeline
+      .map(
+        (r) => `<div class="trow"><span class="when mono">${r.when}</span><span class="what">${r.what}</span></div>`
+      )
+      .join('');
+    $('[data-d-chips]').innerHTML = s.chips.map((c) => `<span class="chip-slate">${c}</span>`).join('');
+    $('[data-d-libnote]').textContent = s.lib;
+    $('[data-d-lib]').setAttribute('href', s.libHref);
+    document.querySelectorAll('.tile').forEach((t) => t.classList.toggle('sel', t.dataset.skill === s.k));
+    if (openSheet && isMobile()) dossier.classList.add('sheet-open');
+  }
+
+  document.querySelectorAll('.tile').forEach((t) =>
+    t.addEventListener('click', () => show(t.dataset.skill, true))
+  );
+  document.querySelector('[data-sheet-close]')?.addEventListener('click', () => dossier.classList.remove('sheet-open'));
+  show(skills[0].k, false);
+</script>
+
+<style>
+  .skills-grid-page {
+    display: grid;
+    grid-template-columns: 1fr 440px;
+    min-height: calc(100vh - 69px);
+  }
+  .field { padding: 40px 44px 60px; min-width: 0; }
+
+  .tile-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 14px;
+    max-width: 720px;
+  }
+  .tile {
+    cursor: pointer;
+    border: 1px solid var(--mint-border);
+    background: transparent;
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+    font-family: var(--font-ui);
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+  .tile:hover { border-color: var(--mint); }
+  .tile.sel { border-color: var(--mint); background: rgba(100, 255, 218, 0.1); }
+  .glyph { font-weight: 600; font-size: 20px; }
+  .tname { margin-top: 6px; font-size: 13px; color: var(--text-bright); }
+  .tyrs { font-size: 11px; color: var(--text-muted); }
+
+  .sysd-label { margin-top: 44px; }
+  .sysd-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 14px;
+    max-width: 720px;
+  }
+  .sysd { border-radius: 12px; padding: 16px 18px; display: block; }
+  .sysd.card:hover { border-color: var(--mint); }
+  .sname { margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--text-bright); }
+  .scap { font-size: 11px; color: var(--text-muted); }
+  .sysd.dashed {
+    border: 1px dashed var(--mint-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--mint);
+    min-height: 120px;
+  }
+
+  .dossier {
+    border-left: 1px solid var(--mint-border-soft);
+    padding: 40px 32px;
+    background: rgba(17, 34, 64, 0.4);
+  }
+  .sheet-close { display: none; }
+  .d-head { margin-top: 10px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .d-glyph { font-weight: 600; font-size: 30px; }
+  .d-name { font-weight: 700; font-size: 26px; color: var(--text-bright); }
+  .d-since { font-size: 12px; color: var(--text-muted); }
+  .d-timeline { margin-top: 18px; display: flex; flex-direction: column; }
+  .dossier :global(.trow) {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--mint-divider);
+  }
+  .dossier :global(.when) { font-size: 12px; color: var(--text-muted); width: 78px; flex: none; }
+  .dossier :global(.what) { font-size: 14px; color: var(--text-body); }
+  .ships { margin-top: 22px; }
+  .d-chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+  .d-lib {
+    display: block;
+    margin-top: 26px;
+    border: 1px dashed var(--mint-border-strong);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .d-lib .go { color: var(--mint); margin-left: 6px; }
+
+  @media (max-width: 900px) {
+    .skills-grid-page { grid-template-columns: 1fr; }
+    .field { padding: 28px 20px 56px; }
+    .tile-grid { grid-template-columns: repeat(3, 1fr); }
+    .sysd-grid { grid-template-columns: 1fr; }
+    .dossier {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 40;
+      background: #0d1b33;
+      border-left: none;
+      border-top: 1px solid var(--mint-border-strong);
+      border-radius: 16px 16px 0 0;
+      padding: 14px 20px 26px;
+      transform: translateY(105%);
+      transition: transform 220ms ease;
+      max-height: 72vh;
+      overflow-y: auto;
+    }
+    .dossier.sheet-open { transform: translateY(0); }
+    .sheet-close {
+      display: block;
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--mint);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+  }
+</style>

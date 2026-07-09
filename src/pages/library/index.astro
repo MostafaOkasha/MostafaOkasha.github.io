@@ -1,0 +1,254 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { getCollection } from 'astro:content';
+import { SHELF_TYPES, fmtMeta, type ShelfType } from '../../data/shelves';
+
+const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const shelves = [
+  { key: 'all', label: 'everything', count: entries.length },
+  ...(Object.keys(SHELF_TYPES) as ShelfType[]).map((key) => ({
+    key,
+    label: SHELF_TYPES[key].label,
+    count: entries.filter((e) => e.data.type === key).length,
+  })),
+];
+
+const rows = entries.map((e) => ({
+  url: `/library/${e.id}`,
+  type: e.data.type,
+  badge: SHELF_TYPES[e.data.type].badge,
+  color: SHELF_TYPES[e.data.type].color,
+  title: e.data.title,
+  desc: e.data.description,
+  meta: fmtMeta(e.data.date, e.data.readingTime),
+  haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
+}));
+---
+
+<Base title="Library | Mostafa Okasha" description="Essays, CS notes, ML notes, book summaries, paper notes, open ideas, reflections, and more — all on one set of shelves.">
+  <Nav current="library" />
+
+  <div class="lib-grid">
+    <!-- shelves sidebar -->
+    <aside class="shelves">
+      <div class="section-label section-label--muted shelves-title">SHELVES</div>
+      <div class="shelf-list" data-shelf-list>
+        {
+          shelves.map((s) => (
+            <button class="shelf" data-shelf={s.key}>
+              <span>{s.label}</span>
+              <span class="count mono">{s.count}</span>
+            </button>
+          ))
+        }
+      </div>
+      <div class="shelf-note mono">
+        every entry is a markdown file with a type + topics. drop a file in /library, it appears
+        here.
+      </div>
+    </aside>
+
+    <!-- entries -->
+    <main class="entries">
+      <div class="search-row">
+        <div class="search-box">
+          <span class="glyph">⌕</span>
+          <input type="text" placeholder="search the library…" data-lib-search autocomplete="off" />
+          <kbd>⌘K</kbd>
+        </div>
+        <span class="result-label mono" data-result-label>{rows.length} of {rows.length} entries</span>
+      </div>
+
+      <div class="entry-list" data-entry-list>
+        {
+          rows.map((r) => (
+            <a
+              href={r.url}
+              class="entry"
+              data-type={r.type}
+              data-haystack={r.haystack}
+            >
+              <span class="badge" style={`color:${r.color}; border:1px solid ${r.color}66;`}>
+                {r.badge}
+              </span>
+              <span class="entry-main">
+                <span class="entry-title">{r.title}</span>
+                <span class="entry-desc">{r.desc}</span>
+              </span>
+              <span class="entry-meta mono">{r.meta}</span>
+            </a>
+          ))
+        }
+        <div class="no-results mono" data-no-results hidden>nothing on this shelf matches.</div>
+      </div>
+    </main>
+  </div>
+</Base>
+
+<script>
+  const list = document.querySelector('[data-entry-list]')!;
+  const entries = [...list.querySelectorAll<HTMLElement>('.entry')];
+  const shelfBtns = [...document.querySelectorAll<HTMLElement>('[data-shelf]')];
+  const search = document.querySelector<HTMLInputElement>('[data-lib-search]')!;
+  const label = document.querySelector('[data-result-label]')!;
+  const noResults = document.querySelector<HTMLElement>('[data-no-results]')!;
+  const total = entries.length;
+
+  const params = new URLSearchParams(location.search);
+  let shelf = params.get('shelf') || 'all';
+  if (!shelfBtns.some((b) => b.dataset.shelf === shelf)) shelf = 'all';
+  search.value = params.get('q') || '';
+
+  function apply() {
+    const q = search.value.trim().toLowerCase();
+    let shown = 0;
+    for (const el of entries) {
+      const ok =
+        (shelf === 'all' || el.dataset.type === shelf) &&
+        (!q || el.dataset.haystack!.includes(q));
+      el.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    }
+    label.textContent = `${shown} of ${total} entries`;
+    noResults.hidden = shown > 0;
+    for (const b of shelfBtns) b.classList.toggle('active', b.dataset.shelf === shelf);
+    // shareable URL
+    const p = new URLSearchParams();
+    if (shelf !== 'all') p.set('shelf', shelf);
+    if (q) p.set('q', q);
+    history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname);
+  }
+
+  shelfBtns.forEach((b) =>
+    b.addEventListener('click', () => {
+      shelf = b.dataset.shelf!;
+      apply();
+    })
+  );
+  search.addEventListener('input', apply);
+  apply();
+</script>
+
+<style>
+  .lib-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 69px);
+  }
+
+  .shelves { border-right: 1px solid var(--mint-border-soft); padding: 28px 0; }
+  .shelves-title { padding: 0 28px; }
+  .shelf-list { margin-top: 14px; display: flex; flex-direction: column; }
+  .shelf {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 28px;
+    background: transparent;
+    border: none;
+    border-left: 2px solid transparent;
+    color: var(--text-body);
+    font-family: var(--font-ui);
+    font-size: 14.5px;
+    text-align: left;
+    cursor: pointer;
+  }
+  .shelf .count { font-size: 12px; color: var(--text-muted); }
+  .shelf:hover { color: var(--mint); }
+  .shelf.active {
+    background: rgba(100, 255, 218, 0.08);
+    border-left-color: var(--mint);
+    color: var(--text-bright);
+  }
+  .shelf.active .count { color: var(--mint); }
+  .shelf-note {
+    margin: 26px 28px 0;
+    border: 1px dashed rgba(100, 255, 218, 0.3);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .entries { padding: 28px 44px 60px; min-width: 0; }
+  .search-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 8px;
+    padding: 11px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    max-width: 460px;
+  }
+  .search-box .glyph { color: var(--mint); }
+  .search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-bright);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    min-width: 0;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+  .search-box kbd { border-color: var(--slate-border); font-size: 11px; color: var(--text-muted); padding: 1px 6px; }
+  .result-label { font-size: 12px; color: var(--text-muted); }
+
+  .entry-list { margin-top: 20px; display: flex; flex-direction: column; }
+  .entry {
+    display: grid;
+    grid-template-columns: 128px 1fr auto;
+    gap: 18px;
+    align-items: baseline;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--mint-divider);
+    transition: background 150ms ease;
+  }
+  .entry:hover { background: rgba(100, 255, 218, 0.04); }
+  .entry .badge { align-self: center; }
+  .entry-title { display: block; font-size: 19px; font-weight: 600; color: var(--text-bright); }
+  .entry-desc { display: block; margin-top: 4px; font-size: 14px; color: var(--text-muted); }
+  .entry-meta { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .no-results { padding: 30px 0; color: var(--text-muted); font-size: 13px; }
+
+  @media (max-width: 768px) {
+    .lib-grid { grid-template-columns: 1fr; }
+    .shelves {
+      border-right: none;
+      padding: 18px 0 0;
+    }
+    .shelves-title { padding: 0 20px; }
+    .shelf-note { display: none; }
+    .shelf-list {
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 10px 20px 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .shelf {
+      flex: none;
+      border: 1px solid var(--slate-border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      min-height: 44px;
+      align-items: center;
+    }
+    .shelf.active { border-color: var(--mint); background: rgba(100, 255, 218, 0.08); }
+    .entries { padding: 16px 20px 50px; }
+    .entry { grid-template-columns: 1fr; gap: 6px; padding: 15px 0; }
+    .entry .badge { justify-self: start; }
+    .entry-meta { order: -1; }
+  }
+</style>

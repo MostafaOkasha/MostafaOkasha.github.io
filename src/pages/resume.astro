@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { RECEIPTS } from '../data/receipts';
+---
+
+<Base title="Resume | Mostafa Okasha" description="The paper resume, but every claim opens its receipts — stories, diagrams, and artifacts.">
+  <Nav current="resume">
+    <button slot="nav-extra" class="btn-mint" style="padding: 7px 14px;" data-print>download PDF</button>
+  </Nav>
+
+  <div class="hint mono no-print">
+    anything <span class="dash-demo">dashed</span> is clickable — it opens the receipts →
+  </div>
+
+  <div class="resume-grid">
+    <!-- the paper -->
+    <div class="paper">
+      <div class="p-head">
+        <div class="p-name">Mostafa Okasha</div>
+        <div class="p-contact mono">mostafa@okasha.me · okasha.me</div>
+      </div>
+      <div class="p-role mono">Software Engineer — AI, ML infrastructure &amp; geospatial products</div>
+
+      <div class="p-sec mono">EXPERIENCE</div>
+
+      <div class="job">
+        <div class="j-head"><b>Meta (Reality Labs)</b><span class="j-date mono">Nov 2024 — Feb 2026</span></div>
+        <div class="j-role">Software Engineer · Toronto</div>
+        <ul>
+          <li>Led the migration of a <span class="claim" data-proof="mlplat">distributed ML platform</span>, fully rebuilding compute, storage &amp; networking infrastructure</li>
+          <li>Rewrote CPU-bound image preprocessing into GPU kernels — a <span class="claim claim-hot" data-proof="gpu">350x speedup</span> with &lt;1% output drift</li>
+          <li>Led the migration of 30+ models to MIG GPU infra; enabled CONNECT tunneling that improved cross-network ML throughput by 2×</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="j-head"><b>MapSight</b><span class="j-date mono">Apr 2024 — Present</span></div>
+        <div class="j-role">Founder · Waterloo</div>
+        <ul>
+          <li>Built a <span class="claim" data-proof="mapsight">geospatial analytics platform</span> that finds optimal distribution locations by analyzing driving-time metrics (AWS, React, Python, Flask, DynamoDB)</li>
+          <li>Categorized industry locations with cosine similarity, FuzzyWuzzy &amp; agglomerative clustering, with an LLM in the loop</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="j-head"><b>Scale AI</b><span class="j-date mono">Jan 2024 — Nov 2024</span></div>
+        <div class="j-role">Software Engineer, AI Training · Remote</div>
+        <ul>
+          <li>Wrote 30+ novel DSA problems &amp; reviewed 230+ submissions (Python, Java, C++)</li>
+          <li>Assisted the RLHF training of <span class="claim" data-proof="gemini">Google Gemini's</span> external API capabilities for the trip-planning feature, across 12 LLM projects</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="j-head"><b>Capital One</b><span class="j-date mono">Nov 2019 — Sep 2022</span></div>
+        <div class="j-role">Senior Software Engineer · Toronto</div>
+        <ul>
+          <li>Analyzed 95 fraud &amp; dispute case states and designed solutions reducing losses by <span class="claim claim-hot" data-proof="fraud">$2M+/year</span></li>
+          <li>Applied for the <span class="claim" data-proof="sred">SR&amp;ED tax incentive</span> worth $300K+ for the currency-conversion work</li>
+          <li>Developed scalable ECS clusters on AWS with CI/CD; features &amp; REST APIs across 10+ Java Spring Boot microservices</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="j-head"><b>Ericsson</b><span class="j-date mono">Jan — Aug 2018</span></div>
+        <div class="j-role">Software Developer Intern · 5G RAN</div>
+        <ul>
+          <li>5G radio features in C++ on <span class="claim" data-proof="fiveg">live carrier networks</span> — helped increase LTE throughput by 400%</li>
+        </ul>
+      </div>
+
+      <div class="p-sec mono">PROJECTS</div>
+      <ul class="projects">
+        <li><span class="claim" data-proof="chess">ChessMate</span> — led a team of 6: a SCARA robot that plays chess (ML, OpenCV, AWS)</li>
+        <li><span class="claim" data-proof="eyesee">EyeSee</span> — assistive vision headset, 1st place @ HackPrinceton</li>
+        <li>Beneficent Relief — donation money-tracking transparency system</li>
+      </ul>
+
+      <div class="p-sec mono">EDUCATION &amp; CERTIFICATIONS</div>
+      <div class="edu">
+        <div class="j-head"><span><b>McMaster University</b> — B.Eng, Mechatronics &amp; Co-op (software focus)</span><span class="j-date mono">June 2019</span></div>
+        <div class="j-head" style="margin-top: 8px;"><span>AWS <b>Solutions Architect</b> — Associate</span><span class="j-date mono">Dec 2023</span></div>
+      </div>
+
+      <div class="p-sec mono">SKILLS</div>
+      <div class="skills-line">
+        <b>Languages:</b> Python, C++, Java, JavaScript, TypeScript, Rust<br />
+        <b>Frameworks:</b> PyTorch, React, OpenCV, Flask, Django, TensorFlow, Spring Boot, Next.js<br />
+        <b>Technologies:</b> Kubernetes, Docker, CUDA, Triton, AWS, PostgreSQL, MySQL
+      </div>
+    </div>
+
+    <!-- receipts panel -->
+    <div class="panel-wrap no-print" data-panel>
+      <button class="sheet-close mono" data-sheet-close aria-label="Close">close ×</button>
+      <div class="section-label section-label--muted">RECEIPTS — <span data-r-label></span></div>
+      <div class="receipt-card">
+        <div class="r-title" data-r-title></div>
+        <div class="r-body" data-r-body></div>
+        <div class="r-links mono" data-r-links></div>
+      </div>
+      <div class="explainer mono no-print">
+        Every dashed phrase opens proof: a story from the Library, a demo, or a system diagram
+        from the Workshop.
+      </div>
+      <div class="human no-print">
+        <img src="/images/my-photo.jpg" alt="Mostafa" />
+        <div>Prefer the human version?<br /><a href="/">→ start at the beginning</a></div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script is:inline define:vars={{ receipts: RECEIPTS }}>
+  const rLabel = document.querySelector('[data-r-label]');
+  const rTitle = document.querySelector('[data-r-title]');
+  const rBody = document.querySelector('[data-r-body]');
+  const rLinks = document.querySelector('[data-r-links]');
+  const panel = document.querySelector('[data-panel]');
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+  function show(key, openSheet) {
+    const r = receipts[key];
+    if (!r) return;
+    rLabel.textContent = r.label;
+    rTitle.textContent = r.title;
+    rBody.textContent = r.body;
+    rLinks.innerHTML = r.links
+      .map((l) => `<a href="${l.href}" class="${l.mint ? 'chip-mint' : 'chip-slate'}">${l.label}</a>`)
+      .join('');
+    document.querySelectorAll('.claim').forEach((c) => c.classList.toggle('sel', c.dataset.proof === key));
+    if (openSheet && isMobile()) panel.classList.add('sheet-open');
+  }
+
+  document.querySelectorAll('.claim').forEach((c) =>
+    c.addEventListener('click', () => show(c.dataset.proof, true))
+  );
+  document.querySelector('[data-sheet-close]')?.addEventListener('click', () => panel.classList.remove('sheet-open'));
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+
+  show('gpu', false);
+</script>
+
+<style>
+  .hint { padding: 14px 44px 8px; font-size: 13px; color: var(--text-muted); }
+  .dash-demo { color: var(--mint); border-bottom: 1px dashed var(--mint); }
+
+  .resume-grid {
+    display: grid;
+    grid-template-columns: minmax(560px, 720px) minmax(360px, 460px);
+    gap: 36px;
+    padding: 12px 44px 70px;
+    align-items: start;
+    justify-content: center;
+  }
+
+  /* ---- the paper ---- */
+  .paper {
+    background: var(--paper-bg);
+    border-radius: 6px;
+    padding: 44px 48px;
+    color: var(--paper-ink);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  }
+  .p-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+  .p-name { font-weight: 700; font-size: 32px; letter-spacing: -0.01em; }
+  .p-contact { font-size: 11.5px; color: var(--paper-secondary); }
+  .p-role { margin-top: 2px; font-size: 12.5px; color: var(--paper-secondary); }
+  .p-sec {
+    margin-top: 28px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: #8a93a5;
+    border-bottom: 1px solid var(--paper-rule);
+    padding-bottom: 6px;
+  }
+  .job { margin-top: 18px; }
+  .j-head { display: flex; justify-content: space-between; gap: 10px; font-size: 16px; flex-wrap: wrap; }
+  .j-date { font-size: 12px; color: var(--paper-secondary); white-space: nowrap; }
+  .j-role { font-size: 13.5px; color: #454f5f; margin-top: 2px; }
+  .job ul, .projects { margin: 8px 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: #333c4a; }
+  .projects { margin-top: 12px; }
+  .edu { margin-top: 12px; font-size: 14.5px; }
+  .edu .j-head { font-size: 14.5px; }
+  .skills-line { margin-top: 12px; font-size: 13px; line-height: 1.9; color: #333c4a; }
+
+  .claim {
+    cursor: pointer;
+    border-bottom: 1.5px dashed var(--paper-dash);
+    color: var(--paper-link);
+    font-weight: 600;
+  }
+  .claim-hot { background: rgba(13, 138, 114, 0.14); }
+  .claim.sel { background: rgba(13, 138, 114, 0.22); }
+
+  /* ---- receipts panel ---- */
+  .panel-wrap {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .sheet-close { display: none; }
+  .receipt-card {
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    background: var(--navy-raised-solid);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .r-title { font-size: 19px; font-weight: 600; color: var(--text-bright); }
+  .r-body { margin-top: 10px; font-size: 14.5px; line-height: 1.65; color: var(--text-body); }
+  .r-links { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; }
+  .explainer {
+    border: 1px dashed rgba(100, 255, 218, 0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .human {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    border-top: 1px solid var(--mint-border-soft);
+    padding-top: 16px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .human img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; }
+  .human a { color: var(--mint); }
+
+  /* ---- mobile: bottom sheet ---- */
+  @media (max-width: 900px) {
+    .resume-grid { grid-template-columns: 1fr; padding: 12px 20px 60px; }
+    .hint { padding: 12px 20px 4px; }
+    .paper { padding: 28px 22px; }
+    .panel-wrap {
+      position: fixed;
+      inset: auto 0 0 0;
+      top: auto;
+      z-index: 40;
+      background: #0d1b33;
+      border-top: 1px solid var(--mint-border-strong);
+      border-radius: 16px 16px 0 0;
+      padding: 14px 20px 26px;
+      transform: translateY(105%);
+      transition: transform 220ms ease;
+      max-height: 72vh;
+      overflow-y: auto;
+    }
+    .panel-wrap.sheet-open { transform: translateY(0); }
+    .sheet-close {
+      display: block;
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: var(--mint);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+    .explainer, .human { display: none; }
+  }
+
+  /* ---- print: paper only, black on white ---- */
+  @media print {
+    :global(.site-nav), :global(.palette-overlay), .no-print { display: none !important; }
+    :global(body) { background: #fff; }
+    .resume-grid { display: block; padding: 0; }
+    .paper {
+      box-shadow: none;
+      border-radius: 0;
+      background: #fff;
+      color: #000;
+      padding: 0;
+    }
+    .claim { color: #000; border-bottom: none; font-weight: 600; background: none; }
+    .claim-hot, .claim.sel { background: none; }
+  }
+</style>

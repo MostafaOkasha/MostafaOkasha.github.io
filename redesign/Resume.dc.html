@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0a192f; }
+    a { color: #B0C6CE; text-decoration: none; }
+    a:hover { color: #64ffda; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; font-family: 'Space Grotesk', sans-serif;">
+  <!-- nav -->
+  <div style="position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 20px 44px; border-bottom: 1px solid rgba(100,255,218,0.18); background: rgba(10,25,47,0.85); backdrop-filter: blur(8px);">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="Home.dc.html" style="display: flex;"><img src="images/m-logo.png" alt="M" style="height: 28px; filter: brightness(10);"></a>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">~/resume</span>
+    </div>
+    <div style="display: flex; gap: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; align-items: center;">
+      <a href="Library.dc.html">library</a>
+      <a href="Workshop.dc.html">workshop</a>
+      <a href="Resume.dc.html" style="color: #64ffda;">resume</a>
+      <a href="Skills.dc.html">skills</a>
+      <span style="border: 1px solid #64ffda; color: #64ffda; border-radius: 6px; padding: 7px 14px; cursor: pointer;" onClick="{{ printResume }}">download PDF</span>
+    </div>
+  </div>
+
+  <div style="padding: 14px 44px 8px 44px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">
+    anything <span style="color: #64ffda; border-bottom: 1px dashed #64ffda;">dashed</span> is clickable — it opens the receipts →
+  </div>
+
+  <div style="display: grid; grid-template-columns: minmax(560px, 720px) minmax(360px, 460px); gap: 36px; padding: 12px 44px 70px 44px; align-items: start;">
+    <!-- the paper -->
+    <div style="background: #f6f3ec; border-radius: 6px; padding: 44px 48px; color: #1c2430; box-shadow: 0 24px 60px rgba(0,0,0,0.5);">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px;">
+        <div style="font-weight: 700; font-size: 32px; letter-spacing: -0.01em;">Mostafa Okasha</div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #5b6474;">mostafa@okasha.me · okasha.me</div>
+      </div>
+      <div style="margin-top: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #5b6474;">Software Engineer — AI applications &amp; consulting</div>
+
+      <div style="margin-top: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a93a5; border-bottom: 1px solid #d9d2c2; padding-bottom: 6px;">EXPERIENCE</div>
+
+      <div style="margin-top: 16px;">
+        <div style="display: flex; justify-content: space-between; font-size: 16px;"><b>Independent — AI products &amp; consulting</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2025 — now</span></div>
+        <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: #333c4a;">
+          <li>Building <span onClick="{{ pAgents }}" style="cursor: pointer; border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">production agent systems</span> for consulting clients</li>
+          <li>Publishing workflows &amp; prompt recipes in the <span onClick="{{ pAilab }}" style="cursor: pointer; border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">AI Lab</span></li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; font-size: 16px;"><b>Meta</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2022 — 2025</span></div>
+        <div style="font-size: 13.5px; color: #454f5f; margin-top: 2px;">Software Engineer</div>
+        <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: #333c4a;">
+          <li>Built internal tooling used by <span onClick="{{ pMeta }}" style="cursor: pointer; border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">2,000+ engineers</span></li>
+          <li>Led reliability work on a tier-1 service</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; font-size: 16px;"><b>Capital One</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2020 — 2022</span></div>
+        <div style="font-size: 13.5px; color: #454f5f; margin-top: 2px;">Software Engineer</div>
+        <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: #333c4a;">
+          <li>Discovered &amp; fixed FX conversion bug saving <span onClick="{{ pTenM }}" style="cursor: pointer; background: rgba(13,138,114,0.14); border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">~$10M/year</span></li>
+          <li>Shipped ML-driven fraud rules to production</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; font-size: 16px;"><b>Ericsson</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2018 — 2020</span></div>
+        <div style="font-size: 13.5px; color: #454f5f; margin-top: 2px;">Software Engineer, 5G RAN</div>
+        <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: #333c4a;">
+          <li>5G scheduler code running on <span onClick="{{ pFiveG }}" style="cursor: pointer; border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">live carrier networks</span></li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a93a5; border-bottom: 1px solid #d9d2c2; padding-bottom: 6px;">PROJECTS</div>
+      <ul style="margin: 12px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: #333c4a;">
+        <li><span onClick="{{ pChess }}" style="cursor: pointer; border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">ChessMate</span> — autonomous chess robot, 99% win rate</li>
+        <li><span onClick="{{ pEyeSee }}" style="cursor: pointer; border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">EyeSee</span> — assistive vision, 1st place @ HackPrinceton</li>
+      </ul>
+
+      <div style="margin-top: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a93a5; border-bottom: 1px solid #d9d2c2; padding-bottom: 6px;">EDUCATION</div>
+      <div style="margin-top: 12px; display: flex; justify-content: space-between; font-size: 14.5px; flex-wrap: wrap;"><span><b>McMaster University</b> — B.Eng, Mechatronics</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2014 — 2019</span></div>
+    </div>
+
+    <!-- proof panel -->
+    <div style="position: sticky; top: 100px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">RECEIPTS — {{ proofLabel }}</div>
+      <div style="border: 1px solid rgba(100,255,218,0.3); background: rgba(17,34,64,0.8); border-radius: 12px; padding: 24px;">
+        <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">{{ proofTitle }}</div>
+        <div style="margin-top: 10px; font-size: 14.5px; line-height: 1.65; color: #B0C6CE;">{{ proofBody }}</div>
+        <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 12px;">
+          <a href="{{ proofHref1 }}" style="border: 1px solid #64ffda; color: #64ffda; border-radius: 999px; padding: 6px 14px;">{{ proofLink1 }}</a>
+          <a href="{{ proofHref2 }}" style="border: 1px solid #495670; color: #8892b0; border-radius: 999px; padding: 6px 14px;">{{ proofLink2 }}</a>
+        </div>
+      </div>
+      <div style="border: 1px dashed rgba(100,255,218,0.3); border-radius: 12px; padding: 18px 22px; font-size: 13.5px; color: #8892b0; line-height: 1.6;">
+        Every dashed phrase opens proof: a story from the Library, a repo, a demo, or a system diagram from the Workshop.
+      </div>
+      <div style="display: flex; gap: 14px; align-items: center; border-top: 1px solid rgba(100,255,218,0.15); padding-top: 16px;">
+        <img src="images/my-photo.jpg" alt="Mostafa" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 50% 20%;">
+        <div style="font-size: 13.5px; color: #8892b0; line-height: 1.5;">Prefer the human version?<br><a href="Home.dc.html" style="color: #64ffda;">→ start at the expedition</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}}">
+class Component extends DCLogic {
+  state = { proof: 'tenm' };
+
+  proofs() {
+    return {
+      tenm: {
+        label: '~$10M/YEAR', title: 'The $10M spreadsheet',
+        body: 'A currency-conversion rounding rule, applied at the wrong step, across millions of daily transactions. Nobody\u2019s job to notice. The full war story \u2014 how I found it, proved it, and what it taught me about auditing money systems.',
+        l1: 'read the story \u2192', h1: 'Library.dc.html', l2: 'system diagram', h2: 'Skills.dc.html'
+      },
+      agents: {
+        label: 'PRODUCTION AGENT SYSTEMS', title: 'Agents that survive real users',
+        body: 'Two-memory scaffolds, eval harnesses, and tool design \u2014 the patterns I use on client work, written up as workflows anyone can copy.',
+        l1: 'agent memory patterns \u2192', h1: 'Library.dc.html', l2: 'ai lab shelf', h2: 'Library.dc.html'
+      },
+      ailab: {
+        label: 'AI LAB', title: '17 workflows, free to steal',
+        body: 'Prompt recipes, eval harnesses, doc-to-deck pipelines \u2014 everything tested in production before it gets published.',
+        l1: 'open the ai lab \u2192', h1: 'Library.dc.html', l2: 'latest recipe', h2: 'Library.dc.html'
+      },
+      meta: {
+        label: '2,000+ ENGINEERS', title: 'Tooling at Meta scale',
+        body: 'Internal developer tooling where the users sit next to you and file bugs in person. What building for engineers taught me about ruthless simplicity.',
+        l1: 'notes on devtools \u2192', h1: 'Library.dc.html', l2: 'reflection: leaving big tech', h2: 'Library.dc.html'
+      },
+      fiveg: {
+        label: 'LIVE CARRIER NETWORKS', title: 'Code with an uptime SLA of always',
+        body: 'Scheduler code in the 5G RAN path \u2014 C++ where a bad branch shows up as dropped calls in a city. The networking notes in the Library came from this.',
+        l1: 'networking notes \u2192', h1: 'Library.dc.html', l2: 'cs curriculum shelf', h2: 'Library.dc.html'
+      },
+      chess: {
+        label: 'CHESSMATE', title: 'A robot that wins at chess',
+        body: 'Vision \u2192 engine \u2192 arm control. Built at McMaster; 99% win rate against humans brave enough to sit down. Full retrospective five years later.',
+        l1: 'see it in the workshop \u2192', h1: 'Workshop.dc.html', l2: 'retrospective', h2: 'Library.dc.html'
+      },
+      eyesee: {
+        label: 'EYESEE', title: 'Assistive vision in 36 hours',
+        body: 'A wearable that narrates the world for low-vision users. Won HackPrinceton. The demo video and build story live in the Workshop.',
+        l1: 'see it in the workshop \u2192', h1: 'Workshop.dc.html', l2: 'build story', h2: 'Library.dc.html'
+      }
+    };
+  }
+
+  renderVals() {
+    const p = this.proofs()[this.state.proof];
+    const set = (k) => () => this.setState({ proof: k });
+    return {
+      proofLabel: p.label, proofTitle: p.title, proofBody: p.body,
+      proofLink1: p.l1, proofHref1: p.h1, proofLink2: p.l2, proofHref2: p.h2,
+      pTenM: set('tenm'), pAgents: set('agents'), pAilab: set('ailab'),
+      pMeta: set('meta'), pFiveG: set('fiveg'), pChess: set('chess'), pEyeSee: set('eyesee'),
+      printResume: () => window.print()
+    };
+  }
+}
+</script>
+</body>
+</html>

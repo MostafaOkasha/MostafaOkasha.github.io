@@ -1,0 +1,120 @@
+---
+/**
+ * Full-viewport "aurora" flow-field background.
+ * Ported verbatim from redesign/Home.dc.html (initAurora).
+ * prefers-reduced-motion → static gradient fallback.
+ */
+---
+
+<div class="aurora-wrap" aria-hidden="true">
+  <canvas data-aurora></canvas>
+  <div class="aurora-vignette"></div>
+</div>
+
+<style>
+  .aurora-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+  .aurora-wrap canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .aurora-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 90% 70% at 30% 20%, transparent 40%, rgba(10, 25, 47, 0.65) 100%);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-wrap canvas { display: none; }
+    .aurora-wrap {
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 15%, rgba(100, 255, 218, 0.06), transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(124, 183, 255, 0.05), transparent 60%),
+        #0a192f;
+    }
+  }
+</style>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-aurora]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (canvas && !reduced) {
+    const ctx = canvas.getContext('2d')!;
+    let W = 0,
+      H = 0;
+    const resize = () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      ctx.fillStyle = '#0a192f';
+      ctx.fillRect(0, 0, W, H);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // fewer particles on phones (per mobile spec)
+    const N = window.innerWidth < 768 ? 150 : 420;
+    const parts = Array.from({ length: N }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      px: 0,
+      py: 0,
+      sp: 0.4 + Math.random() * 0.9,
+    }));
+    let mx = -9999,
+      my = -9999;
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+    const field = (x: number, y: number, t: number) => {
+      const s = 0.0016;
+      return (
+        Math.sin(x * s + t * 0.00022) * 1.6 +
+        Math.cos(y * s * 1.3 - t * 0.00017) * 1.6 +
+        Math.sin((x + y) * s * 0.6 + t * 0.0001) * 0.8
+      );
+    };
+    let raf = 0;
+    const tick = (t: number) => {
+      ctx.fillStyle = 'rgba(10,25,47,0.055)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.lineWidth = 1;
+      for (const p of parts) {
+        p.px = p.x;
+        p.py = p.y;
+        let a = field(p.x, p.y, t);
+        const dx = p.x - mx,
+          dy = p.y - my;
+        if (dx * dx + dy * dy < 22500) a = Math.atan2(dy, dx);
+        p.x += Math.cos(a) * p.sp;
+        p.y += Math.sin(a) * p.sp;
+        if (p.x < -10 || p.x > W + 10 || p.y < -10 || p.y > H + 10) {
+          p.x = Math.random() * W;
+          p.y = Math.random() * H;
+          p.px = p.x;
+          p.py = p.y;
+        }
+        const al = 0.05 + 0.09 * Math.abs(Math.sin(p.x * 0.01 + t * 0.0004));
+        ctx.strokeStyle = 'rgba(100,255,218,' + al.toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(p.px, p.py);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    // pause when the tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else raf = requestAnimationFrame(tick);
+    });
+  }
+</script>

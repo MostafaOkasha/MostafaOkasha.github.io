@@ -1,0 +1,100 @@
+---
+interface Props {
+  /** current page key for active state + ~/path breadcrumb */
+  current?: 'home' | 'library' | 'workshop' | 'resume' | 'skills';
+}
+const { current = 'home' } = Astro.props;
+const isHome = current === 'home';
+const links = [
+  { key: 'library', href: '/library', label: 'library', num: '01.' },
+  { key: 'workshop', href: '/workshop', label: 'workshop', num: '02.' },
+  { key: 'skills', href: '/skills', label: 'skills', num: '03.' },
+] as const;
+---
+
+<nav class={`site-nav ${isHome ? 'site-nav--home' : ''}`}>
+  <div class="brand">
+    <a href="/" style="display: flex;" aria-label="Home"
+      ><img src="/images/m-logo.png" alt="M" /></a
+    >
+    {!isHome && <span class="path">~/{current}</span>}
+  </div>
+  <div class="links">
+    {
+      isHome ? (
+        <>
+          {links.map((l) => (
+            <a href={l.href}>
+              <span class="num">{l.num}</span> {l.label}
+            </a>
+          ))}
+          <a href="/resume" class="btn-mint">
+            résumé
+          </a>
+        </>
+      ) : (
+        <>
+          <a href="/library" class={current === 'library' ? 'active' : ''}>
+            library
+          </a>
+          <a href="/workshop" class={current === 'workshop' ? 'active' : ''}>
+            workshop
+          </a>
+          <a href="/resume" class={current === 'resume' ? 'active' : ''}>
+            resume
+          </a>
+          <a href="/skills" class={current === 'skills' ? 'active' : ''}>
+            skills
+          </a>
+          <slot name="nav-extra" />
+        </>
+      )
+    }
+  </div>
+  <button class="nav-burger" aria-label="Open menu" data-menu-open>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" data-mobile-menu>
+  <div class="close-row">
+    <button class="close-btn" aria-label="Close menu" data-menu-close>×</button>
+  </div>
+  <div class="rows">
+    <a class="row" href="/library">
+      <span class="num">01</span><span class="name">library</span><span class="count">→</span>
+    </a>
+    <a class="row" href="/workshop">
+      <span class="num">02</span><span class="name">workshop</span><span class="count">→</span>
+    </a>
+    <a class="row" href="/skills">
+      <span class="num">03</span><span class="name">skills</span><span class="count">→</span>
+    </a>
+    <a class="row" href="/resume">
+      <span class="num">04</span><span class="name">résumé</span><span class="count">→</span>
+    </a>
+  </div>
+  <div class="foot">
+    <a href="https://github.com/MostafaOkasha" target="_blank" rel="noopener">github</a>
+    <a href="https://www.linkedin.com/in/okashm" target="_blank" rel="noopener">linkedin</a>
+    <a href="mailto:mostafa@okasha.me">email</a>
+    <button
+      data-palette-open
+      style="background: none; border: none; color: #64ffda; font-family: inherit; font-size: inherit; cursor: pointer; padding: 0;"
+      >⌘K search</button
+    >
+  </div>
+</div>
+
+<script>
+  const menu = document.querySelector('[data-mobile-menu]');
+  document.querySelector('[data-menu-open]')?.addEventListener('click', () => {
+    menu?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  document.querySelector('[data-menu-close]')?.addEventListener('click', () => {
+    menu?.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+</script>

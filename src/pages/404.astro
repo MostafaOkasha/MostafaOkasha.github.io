@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Base title="404 | Mostafa Okasha" description="Page not found.">
+  <Nav current="home" />
+  <div class="nf">
+    <div class="code mono">404</div>
+    <div class="msg">this shelf doesn't exist.</div>
+    <div class="row">
+      <a href="/" class="btn-mint">go home</a>
+      <span class="mono hint">or press <kbd>⌘K</kbd> to search</span>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .nf {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    padding: 20px;
+  }
+  .code { font-size: 90px; color: var(--mint); font-weight: 600; }
+  .msg { font-size: 20px; color: var(--text-bright); }
+  .row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+  .hint { color: var(--text-muted); font-size: 14px; }
+</style>

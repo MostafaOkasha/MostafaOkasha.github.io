@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0a192f; }
+    a { color: #B0C6CE; text-decoration: none; }
+    a:hover { color: #64ffda; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.55; } }
+  </style>
+</helmet>
+
+<!-- aurora background -->
+<div style="position: fixed; inset: 0; z-index: 0;">
+  {{ auroraCanvas }}
+  <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 90% 70% at 30% 20%, transparent 40%, rgba(10,25,47,0.65) 100%); pointer-events: none;"></div>
+</div>
+
+<div style="position: relative; z-index: 1; min-height: 100vh; font-family: 'Space Grotesk', sans-serif; display: flex; flex-direction: column;">
+  <!-- nav -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 26px 48px;">
+    <a href="Home.dc.html" style="display: flex;"><img src="images/m-logo.png" alt="M" style="height: 32px; filter: brightness(10);"></a>
+    <div style="display: flex; gap: 30px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; align-items: center;">
+      <a href="Library.dc.html"><span style="color: #64ffda;">01.</span> library</a>
+      <a href="Workshop.dc.html"><span style="color: #64ffda;">02.</span> workshop</a>
+      <a href="Skills.dc.html"><span style="color: #64ffda;">03.</span> skills</a>
+      <a href="Resume.dc.html" style="border: 1px solid #64ffda; color: #64ffda; border-radius: 6px; padding: 8px 18px;">résumé</a>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <div style="flex: 1; display: flex; justify-content: space-between; gap: 56px; padding: 44px 48px 0 48px; flex-wrap: wrap;">
+    <div style="max-width: 720px;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(100,255,218,0.35); border-radius: 999px; padding: 7px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background: #64ffda; animation: pulse 2s ease-in-out infinite;"></span>
+        currently: building AI things · Toronto
+      </div>
+      <div style="margin-top: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #64ffda;">Hi, my name is</div>
+      <div style="margin-top: 12px; font-weight: 700; font-size: 74px; line-height: 1.02; letter-spacing: -0.02em; color: #e6f1ff;">Mostafa Okasha.</div>
+      <div style="margin-top: 8px; font-weight: 700; font-size: 74px; line-height: 1.02; letter-spacing: -0.02em; color: #8892b0; white-space: nowrap;">I build things for fun.</div>
+      <div style="margin-top: 24px; font-size: 18px; line-height: 1.6; color: #B0C6CE; max-width: 540px;">
+        Engineer — ex-Meta, Capital One &amp; Ericsson. These days I build AI applications and consult. Everything I make — code, writing, CAD, prompts, photos — ends up here.
+      </div>
+      <div style="margin-top: 30px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+        <a href="Library.dc.html" style="border: 1px solid #64ffda; color: #64ffda; font-family: 'IBM Plex Mono', monospace; font-size: 15px; padding: 14px 28px; border-radius: 6px;">explore the archive</a>
+        <span style="color: #8892b0; font-family: 'IBM Plex Mono', monospace; font-size: 14px;">or press <span style="border: 1px solid #8892b0; border-radius: 4px; padding: 2px 7px;">⌘K</span></span>
+      </div>
+      <div style="margin-top: 44px; display: flex; align-items: center; gap: 20px;">
+        <div style="width: 92px; height: 92px; flex: none; border-radius: 50%; border: 2px solid rgba(100,255,218,0.6); border-right-color: transparent; border-bottom-color: transparent; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center;">
+          <img src="images/my-photo.jpg" alt="Mostafa" style="width: 74px; height: 74px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; transform: rotate(45deg);">
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0; line-height: 1.7;">
+          mostafa@okasha.me<br>
+          <a href="#">github/MostafaOkasha</a> · <a href="#">linkedin/Okashm</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- latest rail -->
+    <div style="width: 340px; display: flex; flex-direction: column; gap: 14px; padding-top: 8px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; letter-spacing: 0.1em;">LATEST FROM THE ARCHIVE</div>
+      <a href="Library.dc.html" style="border: 1px solid rgba(100,255,218,0.2); background: rgba(17,34,64,0.75); backdrop-filter: blur(4px); border-radius: 8px; padding: 18px 20px; display: block;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">AI LAB · JUL 02</div>
+        <div style="margin-top: 6px; font-size: 16px; font-weight: 600; color: #e6f1ff; line-height: 1.4;">Agent memory patterns that actually work</div>
+      </a>
+      <a href="Library.dc.html" style="border: 1px solid rgba(100,255,218,0.2); background: rgba(17,34,64,0.75); backdrop-filter: blur(4px); border-radius: 8px; padding: 18px 20px; display: block;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">DEEP DIVE · JUL 26</div>
+        <div style="margin-top: 6px; font-size: 16px; font-weight: 600; color: #e6f1ff; line-height: 1.4;">Phone number tracing with software tools</div>
+      </a>
+      <a href="Workshop.dc.html" style="border: 1px solid rgba(100,255,218,0.2); background: rgba(17,34,64,0.75); backdrop-filter: blur(4px); border-radius: 8px; padding: 18px 20px; display: block;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">WORKSHOP · MAY 12</div>
+        <div style="margin-top: 6px; font-size: 16px; font-weight: 600; color: #e6f1ff; line-height: 1.4;">Desktop CNC: designed + machined from scratch</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- section index -->
+  <div style="padding: 40px 48px 44px 48px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+    <a href="Library.dc.html" style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px; display: block;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">01 · WRITING</div>
+      <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">essays &amp; deep dives</div>
+    </a>
+    <a href="Library.dc.html" style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px; display: block;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">02 · AI LAB</div>
+      <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">workflows &amp; prompts</div>
+    </a>
+    <a href="Workshop.dc.html" style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px; display: block;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">03 · PROJECTS</div>
+      <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">robots, hacks, products</div>
+    </a>
+    <a href="Workshop.dc.html" style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px; display: block;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">04 · DESIGN</div>
+      <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">CAD &amp; photography</div>
+    </a>
+    <a href="Resume.dc.html" style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px; display: block;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">05 · RESUME</div>
+      <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">interactive, with receipts</div>
+    </a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    if (!this._canvasEl) {
+      this._canvasEl = React.createElement('canvas', {
+        ref: (el) => this.initAurora(el),
+        style: { position: 'absolute', inset: 0, width: '100%', height: '100%' }
+      });
+    }
+    return { auroraCanvas: this._canvasEl };
+  }
+
+  initAurora(canvas) {
+    if (!canvas || canvas === this._canvas) return;
+    this._canvas = canvas;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0;
+    const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; ctx.fillStyle = '#0a192f'; ctx.fillRect(0, 0, W, H); };
+    resize();
+    this._onResize = resize;
+    window.addEventListener('resize', resize);
+
+    const N = 420;
+    const parts = Array.from({ length: N }, () => ({
+      x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
+      px: 0, py: 0, sp: 0.4 + Math.random() * 0.9
+    }));
+    let mx = -9999, my = -9999;
+    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+    const field = (x, y, t) => {
+      const s = 0.0016;
+      return Math.sin(x * s + t * 0.00022) * 1.6 + Math.cos(y * s * 1.3 - t * 0.00017) * 1.6
+        + Math.sin((x + y) * s * 0.6 + t * 0.0001) * 0.8;
+    };
+    const tick = (t) => {
+      ctx.fillStyle = 'rgba(10,25,47,0.055)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.lineWidth = 1;
+      for (const p of parts) {
+        p.px = p.x; p.py = p.y;
+        let a = field(p.x, p.y, t);
+        const dx = p.x - mx, dy = p.y - my;
+        if (dx * dx + dy * dy < 22500) a = Math.atan2(dy, dx);
+        p.x += Math.cos(a) * p.sp;
+        p.y += Math.sin(a) * p.sp;
+        if (p.x < -10 || p.x > W + 10 || p.y < -10 || p.y > H + 10) {
+          p.x = Math.random() * W; p.y = Math.random() * H;
+          p.px = p.x; p.py = p.y;
+        }
+        const al = 0.05 + 0.09 * Math.abs(Math.sin(p.x * 0.01 + t * 0.0004));
+        ctx.strokeStyle = 'rgba(100,255,218,' + al.toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(p.px, p.py);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    window.removeEventListener('resize', this._onResize);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { getCollection, render } from 'astro:content';
+import { SHELF_TYPES, fmtMeta } from '../../data/shelves';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('library', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const shelf = SHELF_TYPES[entry.data.type];
+const dateStr = entry.data.date
+  .toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+  .toUpperCase();
+const rt = entry.data.readingTime;
+---
+
+<Base title={`${entry.data.title} | Mostafa Okasha`} description={entry.data.description}>
+  <div class="reading-progress" data-progress></div>
+  <Nav current="library" />
+
+  <article class="article">
+    <div class="top-row mono">
+      <a href={`/library?shelf=${entry.data.type}`}>← {shelf.label}</a>
+      {rt && <span data-time-left>{rt} min left</span>}
+    </div>
+
+    <div class="kicker mono" style={`color:${shelf.color};`}>
+      {shelf.badge} · {dateStr}{rt && ` · ${rt} MIN`}
+    </div>
+    <h1 class="title">{entry.data.title}</h1>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div class="foot">
+      <a href="/library" class="chip-mint">← back to the library</a>
+      {
+        entry.data.topics.length > 0 && (
+          <span class="topics mono">
+            {entry.data.topics.map((t) => (
+              <span class="topic">#{t}</span>
+            ))}
+          </span>
+        )
+      }
+    </div>
+  </article>
+</Base>
+
+<script>
+  // reading progress bar + "N min left"
+  const bar = document.querySelector<HTMLElement>('[data-progress]')!;
+  const timeLeft = document.querySelector<HTMLElement>('[data-time-left]');
+  const totalMin = timeLeft ? parseInt(timeLeft.textContent || '0', 10) : 0;
+  const update = () => {
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - window.innerHeight;
+    const p = max > 0 ? Math.min(1, window.scrollY / max) : 1;
+    bar.style.width = `${p * 100}%`;
+    if (timeLeft && totalMin) {
+      const left = Math.max(0, Math.ceil(totalMin * (1 - p)));
+      timeLeft.textContent = left > 0 ? `${left} min left` : 'done ✓';
+    }
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+
+  // one-click copy on code blocks
+  document.querySelectorAll('.prose pre').forEach((pre) => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'copy';
+    btn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(pre.querySelector('code')?.textContent || '');
+      btn.textContent = 'copied ✓';
+      setTimeout(() => (btn.textContent = 'copy'), 1500);
+    });
+    pre.appendChild(btn);
+  });
+</script>
+
+<style>
+  .article {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .top-row a { color: var(--text-muted); }
+  .top-row a:hover { color: var(--mint); }
+  .kicker {
+    margin-top: 30px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .title {
+    margin: 14px 0 26px;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-bright);
+  }
+  .foot {
+    margin-top: 50px;
+    padding-top: 22px;
+    border-top: 1px solid var(--mint-divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .topics { display: flex; gap: 12px; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .title { font-size: 30px; }
+  }
+</style>
