@@ -1,0 +1,233 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Aurora from '../components/Aurora.astro';
+import { getCollection } from 'astro:content';
+import { SHELF_TYPES, fmtKicker } from '../data/shelves';
+
+const latest = (await getCollection('library', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base title="Mostafa Okasha — I build things for fun.">
+  <Aurora />
+
+  <div class="page">
+    <Nav current="home" />
+
+    <!-- hero -->
+    <div class="hero">
+      <div class="hero-left">
+        <div class="status-pill">
+          <span class="dot"></span>
+          currently: building AI things · Toronto
+        </div>
+        <div class="kicker mono">Hi, my name is</div>
+        <h1 class="name">Mostafa Okasha.</h1>
+        <p class="tagline">I build things for fun.</p>
+        <p class="blurb">
+          Engineer — ex-Meta, Capital One &amp; Ericsson. These days I build AI applications and
+          consult. Everything I make — code, writing, CAD, prompts, photos — ends up here.
+        </p>
+        <div class="cta-row">
+          <a href="/library" class="btn-mint cta">explore the archive</a>
+          <span class="mono hint">or press <kbd>⌘K</kbd></span>
+        </div>
+        <div class="me-row">
+          <div class="ring">
+            <img src="/images/my-photo.jpg" alt="Mostafa" />
+          </div>
+          <div class="contact mono">
+            <a href="mailto:mostafa@okasha.me">mostafa@okasha.me</a><br />
+            <a href="https://github.com/MostafaOkasha" target="_blank" rel="noopener"
+              >github/MostafaOkasha</a
+            > · <a href="https://www.linkedin.com/in/okashm" target="_blank" rel="noopener"
+              >linkedin/Okashm</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- latest rail -->
+      <div class="rail">
+        <div class="rail-label mono">LATEST FROM THE ARCHIVE</div>
+        {
+          latest.map((e) => (
+            <a href={`/library/${e.id}`} class="rail-card">
+              <div class="rail-kicker mono">
+                {SHELF_TYPES[e.data.type].badge} · {fmtKicker(e.data.date)}
+              </div>
+              <div class="rail-title">{e.data.title}</div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- section index -->
+    <div class="section-index">
+      <a href="/library">
+        <div class="idx mono">01 · WRITING</div>
+        <div class="sub">essays &amp; deep dives</div>
+      </a>
+      <a href="/library?shelf=ml">
+        <div class="idx mono">02 · AI LAB</div>
+        <div class="sub">workflows &amp; prompts</div>
+      </a>
+      <a href="/workshop">
+        <div class="idx mono">03 · PROJECTS</div>
+        <div class="sub">robots, hacks, products</div>
+      </a>
+      <a href="/workshop#design">
+        <div class="idx mono">04 · DESIGN</div>
+        <div class="sub">CAD &amp; photography</div>
+      </a>
+      <a href="/resume">
+        <div class="idx mono">05 · RESUME</div>
+        <div class="sub">interactive, with receipts</div>
+      </a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 56px;
+    padding: 44px 48px 0;
+    flex-wrap: wrap;
+  }
+  .hero-left { max-width: 720px; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--mint-border-strong);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--mint);
+  }
+  .status-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .kicker { margin-top: 28px; font-size: 16px; color: var(--mint); }
+  .name {
+    margin: 12px 0 0;
+    font-weight: 700;
+    font-size: 74px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--text-bright);
+  }
+  .tagline {
+    margin: 8px 0 0;
+    font-weight: 700;
+    font-size: 74px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .blurb {
+    margin: 24px 0 0;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-body);
+    max-width: 540px;
+  }
+  .cta-row { margin-top: 30px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .cta { font-size: 15px; padding: 14px 28px; }
+  .hint { color: var(--text-muted); font-size: 14px; }
+
+  .me-row { margin-top: 44px; display: flex; align-items: center; gap: 20px; }
+  .ring {
+    width: 92px;
+    height: 92px;
+    flex: none;
+    border-radius: 50%;
+    border: 2px solid rgba(100, 255, 218, 0.6);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring img {
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    transform: rotate(45deg);
+  }
+  .contact { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  .rail { width: 340px; display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
+  .rail-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .rail-card {
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    background: rgba(17, 34, 64, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: block;
+    transition: border-color 150ms ease;
+  }
+  .rail-card:hover { border-color: var(--mint); }
+  .rail-kicker { font-size: 11px; color: var(--mint); text-transform: uppercase; }
+  .rail-title { margin-top: 6px; font-size: 16px; font-weight: 600; color: var(--text-bright); line-height: 1.4; }
+
+  .section-index {
+    padding: 40px 48px 44px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .section-index a {
+    border-top: 1px solid rgba(100, 255, 218, 0.25);
+    padding-top: 12px;
+    display: block;
+  }
+  .section-index .idx { font-size: 12px; color: var(--mint); }
+  .section-index .sub { color: var(--text-body); font-size: 14px; margin-top: 5px; }
+
+  @media (max-width: 900px) {
+    .rail { width: 100%; }
+    .section-index { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 24px 20px 0; gap: 36px; }
+    .name, .tagline { font-size: 40px; }
+    .tagline { white-space: normal; }
+    .blurb { font-size: 16px; }
+    .cta { display: block; width: 100%; text-align: center; }
+    .cta-row { gap: 12px; }
+    .section-index { padding: 32px 20px 36px; grid-template-columns: 1fr; gap: 0; }
+    .section-index a {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .section-index .sub { margin-top: 0; }
+  }
+</style>

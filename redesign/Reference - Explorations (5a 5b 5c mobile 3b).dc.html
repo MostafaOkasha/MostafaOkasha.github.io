@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:wght@400;500&family=Anton&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #101014; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.8; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.55; } }
+    @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes drift { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes riseIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  </style>
+</helmet>
+
+<section style="display: flex; gap: 64px; align-items: flex-start; padding: 48px; flex-wrap: wrap; font-family: 'Space Grotesk', sans-serif;">
+
+  <!-- ============ OPTION 5A — THE LIBRARY ============ -->
+  <div id="5a" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#5a" style="background: #64ffda; color: #0a192f; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">5a</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">THE LIBRARY — one system for ALL 12 content types (blogs, notes, books, papers, reflections, ideas…)</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0a192f; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); font-family: 'Space Grotesk', sans-serif; display: flex; flex-direction: column;">
+      <!-- nav -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 24px 44px; border-bottom: 1px solid rgba(100,255,218,0.18);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 28px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">~/library</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; border: 1px solid rgba(100,255,218,0.3); border-radius: 8px; padding: 9px 16px; width: 380px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">
+          <span style="color: #64ffda;">⌕</span> search 214 entries… <span style="margin-left: auto; border: 1px solid #495670; border-radius: 4px; padding: 1px 6px; font-size: 11px;">⌘K</span>
+        </div>
+        <div style="display: flex; gap: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B0C6CE;">
+          <a href="#5a">workshop</a><a href="#5a">resume</a><a href="#5a">about</a>
+        </div>
+      </div>
+
+      <div style="flex: 1; display: grid; grid-template-columns: 280px 1fr; min-height: 0;">
+        <!-- left rail: shelves -->
+        <div style="border-right: 1px solid rgba(100,255,218,0.15); padding: 28px 0; overflow: hidden;">
+          <div style="padding: 0 28px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">SHELVES</div>
+          <div style="margin-top: 14px; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; background: rgba(100,255,218,0.08); border-left: 2px solid #64ffda; color: #e6f1ff; font-size: 14.5px;"><span>everything</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">214</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>essays &amp; deep dives</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">24</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>CS curriculum</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">38</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>ML / AI notes</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">41</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>book summaries</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">9</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>paper notes</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">27</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>open ideas</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">14</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>reflections</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">32</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>quotes + commentary</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">18</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>spirituality</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">7</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 11px 28px; border-left: 2px solid transparent; color: #B0C6CE; font-size: 14.5px;"><span>resource maps</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">4</span></div>
+          </div>
+        </div>
+
+        <!-- entries -->
+        <div style="padding: 28px 44px; overflow: hidden;">
+          <div style="display: flex; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; flex-wrap: wrap;">
+            <span style="background: rgba(100,255,218,0.12); color: #64ffda; border-radius: 999px; padding: 6px 14px;">topic: ai ×</span>
+            <span style="border: 1px solid #495670; color: #8892b0; border-radius: 999px; padding: 6px 14px;">+ security</span>
+            <span style="border: 1px solid #495670; color: #8892b0; border-radius: 999px; padding: 6px 14px;">+ systems</span>
+            <span style="border: 1px solid #495670; color: #8892b0; border-radius: 999px; padding: 6px 14px;">+ life</span>
+            <span style="margin-left: auto; color: #8892b0;">sort: newest ▾</span>
+          </div>
+
+          <div style="margin-top: 22px; display: flex; flex-direction: column;">
+            <div style="display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: baseline; padding: 17px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda; border: 1px solid rgba(100,255,218,0.4); border-radius: 4px; padding: 3px 8px; text-align: center;">DEEP DIVE</span>
+              <div>
+                <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">Phone number tracing with software tools — the complete guide</div>
+                <div style="margin-top: 4px; font-size: 14px; color: #8892b0;">OSINT from first principles: carriers, SS7, HLR lookups, and what actually works in 2026.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">18 min · jul '26</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: baseline; padding: 17px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #d8a3ff; border: 1px solid rgba(216,163,255,0.4); border-radius: 4px; padding: 3px 8px; text-align: center;">ML NOTES</span>
+              <div>
+                <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">Attention, from scratch, three ways</div>
+                <div style="margin-top: 4px; font-size: 14px; color: #8892b0;">My working notes: numpy → einsum → the KV-cache view. With scribbles.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">12 min · jun '26</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: baseline; padding: 17px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #ffd76b; border: 1px solid rgba(255,215,107,0.4); border-radius: 4px; padding: 3px 8px; text-align: center;">PAPER NOTES</span>
+              <div>
+                <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">"Attention Is All You Need" — annotated, 9 years on</div>
+                <div style="margin-top: 4px; font-size: 14px; color: #8892b0;">The paper that started it, with margin notes on what held up and what didn't.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">8 min · jun '26</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: baseline; padding: 17px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7cb7ff; border: 1px solid rgba(124,183,255,0.4); border-radius: 4px; padding: 3px 8px; text-align: center;">OPEN IDEA</span>
+              <div>
+                <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">Idea #11: an eval marketplace for agent tools</div>
+                <div style="margin-top: 4px; font-size: 14px; color: #8892b0;">Free to build. Why it might work, why it might not, and how I'd start.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">6 min · may '26</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: baseline; padding: 17px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #ff8ba3; border: 1px solid rgba(255,139,163,0.4); border-radius: 4px; padding: 3px 8px; text-align: center;">REFLECTION</span>
+              <div>
+                <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">On leaving big tech twice</div>
+                <div style="margin-top: 4px; font-size: 14px; color: #8892b0;">A short escript on comfort, and the price of it.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">3 min · may '26</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: baseline; padding: 17px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7dead8; border: 1px solid rgba(125,234,216,0.4); border-radius: 4px; padding: 3px 8px; text-align: center;">BOOK</span>
+              <div>
+                <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">The Design of Everyday Things — full summary + margin notes</div>
+                <div style="margin-top: 4px; font-size: 14px; color: #8892b0;">Norman's principles, mapped to software I've actually shipped.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">14 min · apr '26</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">One layout swallows your entire list: every entry is a markdown file with a <b>type</b> (colored badge) and <b>topics</b> (filter chips). Adding "Sora work" or a new shelf later = one new type tag, zero new pages. Search, filters and shelves are all client-side.</div>
+  </div>
+
+  <!-- ============ OPTION 5B — INTERACTIVE RESUME ============ -->
+  <div id="5b" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#5b" style="background: #64ffda; color: #0a192f; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">5b</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">INTERACTIVE RESUME — looks like paper, every line is clickable proof</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0a192f; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); font-family: 'Space Grotesk', sans-serif;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 24px 44px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 28px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">~/resume</span>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">anything <span style="color: #64ffda; border-bottom: 1px dashed #64ffda;">dashed</span> is clickable · <span style="border: 1px solid #64ffda; color: #64ffda; border-radius: 6px; padding: 6px 14px;">download PDF</span></div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 680px 1fr; gap: 36px; padding: 8px 44px;">
+        <!-- the paper -->
+        <div style="background: #f6f3ec; border-radius: 6px; padding: 40px 44px; color: #1c2430; box-shadow: 0 24px 60px rgba(0,0,0,0.5); height: 660px; overflow: hidden;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="font-weight: 700; font-size: 30px; letter-spacing: -0.01em;">Mostafa Okasha</div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #5b6474;">mostafa@okasha.me · okasha.me</div>
+          </div>
+          <div style="margin-top: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #5b6474;">Software Engineer — AI applications &amp; consulting</div>
+
+          <div style="margin-top: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a93a5; border-bottom: 1px solid #d9d2c2; padding-bottom: 6px;">EXPERIENCE</div>
+
+          <div style="margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 15.5px;"><b>Meta</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2022 — 2025</span></div>
+            <div style="font-size: 13.5px; color: #454f5f; margin-top: 2px;">Software Engineer</div>
+            <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.65; color: #333c4a;">
+              <li>Built internal tooling used by <span style="border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">2,000+ engineers</span></li>
+              <li>Led reliability work on a <span style="border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">tier-1 service</span></li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 18px;">
+            <div style="display: flex; justify-content: space-between; font-size: 15.5px;"><b>Capital One</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2020 — 2022</span></div>
+            <div style="font-size: 13.5px; color: #454f5f; margin-top: 2px;">Software Engineer</div>
+            <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.65; color: #333c4a;">
+              <li>Discovered &amp; fixed FX conversion bug saving <span style="background: rgba(13,138,114,0.14); border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">~$10M/year</span></li>
+              <li>Shipped ML-driven fraud rules to production</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 18px;">
+            <div style="display: flex; justify-content: space-between; font-size: 15.5px;"><b>Ericsson</b><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2018 — 2020</span></div>
+            <div style="font-size: 13.5px; color: #454f5f; margin-top: 2px;">Software Engineer, 5G RAN</div>
+            <ul style="margin: 8px 0 0 0; padding-left: 18px; font-size: 13.5px; line-height: 1.65; color: #333c4a;">
+              <li>5G scheduler code running on <span style="border-bottom: 1.5px dashed #0d8a72; color: #0d6e5c; font-weight: 600;">live carrier networks</span></li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a93a5; border-bottom: 1px solid #d9d2c2; padding-bottom: 6px;">EDUCATION</div>
+          <div style="margin-top: 12px; display: flex; justify-content: space-between; font-size: 14.5px;"><span><b>McMaster University</b> — B.Eng, Mechatronics</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5b6474;">2014 — 2019</span></div>
+        </div>
+
+        <!-- proof panel -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">YOU CLICKED: ~$10M/YEAR</div>
+          <div style="border: 1px solid rgba(100,255,218,0.3); background: rgba(17,34,64,0.8); border-radius: 12px; padding: 24px;">
+            <div style="font-size: 19px; font-weight: 600; color: #e6f1ff;">The $10M spreadsheet</div>
+            <div style="margin-top: 10px; font-size: 14.5px; line-height: 1.65; color: #B0C6CE;">A currency-conversion rounding rule, applied at the wrong step, across millions of daily transactions. Nobody's job to notice. The full war story — how I found it, proved it, and what it taught me about auditing money systems.</div>
+            <div style="margin-top: 16px; display: flex; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;">
+              <span style="border: 1px solid #64ffda; color: #64ffda; border-radius: 999px; padding: 6px 14px;">read the story →</span>
+              <span style="border: 1px solid #495670; color: #8892b0; border-radius: 999px; padding: 6px 14px;">system diagram</span>
+            </div>
+          </div>
+          <div style="border: 1px dashed rgba(100,255,218,0.3); border-radius: 12px; padding: 20px 24px; font-size: 14px; color: #8892b0; line-height: 1.6;">
+            Every dashed phrase opens proof: a story from the Library, a repo, a demo, or a system-design diagram from the Workshop. The resume becomes the index of everything else.
+          </div>
+          <div style="margin-top: auto; display: flex; gap: 14px; align-items: center; border-top: 1px solid rgba(100,255,218,0.15); padding-top: 18px;">
+            <img src="images/my-photo.jpg" alt="Mostafa" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 50% 20%;">
+            <div style="font-size: 13.5px; color: #8892b0; line-height: 1.5;">Prefer the human version?<br><span style="color: #64ffda;">→ about me, the long way</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">The resume IS the navigation: pixel-faithful paper layout, but every dashed claim opens its receipts in the side panel — war stories, repos, demos, diagrams. Print/PDF stays one click away.</div>
+  </div>
+
+  <!-- ============ OPTION 5C — SKILLS &amp; SYSTEMS ============ -->
+  <div id="5c" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#5c" style="background: #64ffda; color: #0a192f; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">5c</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">SKILLS &amp; SYSTEMS — click a skill, get the dossier; system-design diagrams live here too</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0a192f; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); font-family: 'Space Grotesk', sans-serif;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 24px 44px; border-bottom: 1px solid rgba(100,255,218,0.18);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 28px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">~/workshop/skills</span>
+        </div>
+        <div style="display: flex; gap: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B0C6CE;">
+          <a href="#5c">projects</a><a href="#5c" style="color: #64ffda;">skills</a><a href="#5c">systems</a><a href="#5c">design</a>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 420px; gap: 0; height: 776px;">
+        <!-- skill icon field -->
+        <div style="padding: 36px 44px;">
+          <div style="font-weight: 700; font-size: 40px; letter-spacing: -0.02em; color: #e6f1ff;">Click a tool.</div>
+          <div style="margin-top: 8px; font-size: 15px; color: #8892b0;">Every icon opens a dossier: years, projects it shipped, and where it lives in the archive.</div>
+          <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+            <div style="border: 1px solid #64ffda; background: rgba(100,255,218,0.1); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #64ffda;">Py</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">Python</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">8 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #7cb7ff;">TS</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">TypeScript</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">6 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #ffd76b;">C++</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">C++</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">4 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #d8a3ff;">λ</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">AWS</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">6 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #ff8ba3;">⚛</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">React</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">6 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #7dead8;">◎</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">LLM / agents</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">3 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #ffb26b;">⚙</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">CAD / NX</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">7 yrs</div>
+            </div>
+            <div style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 18px 14px; text-align: center;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: #B0C6CE;">📷</div>
+              <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">Photography</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">10 yrs</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 34px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">SYSTEM DESIGNS</div>
+          <div style="margin-top: 12px; display: flex; gap: 14px;">
+            <div style="flex: 1; border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 16px 18px; background: rgba(17,34,64,0.6);">
+              <svg width="100%" height="64" viewBox="0 0 220 64">
+                <rect x="4" y="22" width="46" height="22" rx="4" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+                <rect x="88" y="6" width="46" height="22" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+                <rect x="88" y="38" width="46" height="22" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+                <rect x="172" y="22" width="44" height="22" rx="4" fill="none" stroke="#ffd76b" stroke-width="1.2"></rect>
+                <line x1="50" y1="33" x2="88" y2="17" stroke="#495670" stroke-width="1"></line>
+                <line x1="50" y1="33" x2="88" y2="49" stroke="#495670" stroke-width="1"></line>
+                <line x1="134" y1="17" x2="172" y2="33" stroke="#495670" stroke-width="1"></line>
+                <line x1="134" y1="49" x2="172" y2="33" stroke="#495670" stroke-width="1"></line>
+              </svg>
+              <div style="margin-top: 8px; font-size: 14px; font-weight: 600; color: #e6f1ff;">ChessMate pipeline</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">vision → engine → arm control</div>
+            </div>
+            <div style="flex: 1; border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 16px 18px; background: rgba(17,34,64,0.6);">
+              <svg width="100%" height="64" viewBox="0 0 220 64">
+                <circle cx="26" cy="33" r="13" fill="none" stroke="#d8a3ff" stroke-width="1.2"></circle>
+                <rect x="72" y="22" width="46" height="22" rx="11" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+                <rect x="150" y="6" width="60" height="20" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+                <rect x="150" y="40" width="60" height="20" rx="4" fill="none" stroke="#ffd76b" stroke-width="1.2"></rect>
+                <line x1="39" y1="33" x2="72" y2="33" stroke="#495670" stroke-width="1"></line>
+                <line x1="118" y1="30" x2="150" y2="16" stroke="#495670" stroke-width="1"></line>
+                <line x1="118" y1="38" x2="150" y2="50" stroke="#495670" stroke-width="1"></line>
+              </svg>
+              <div style="margin-top: 8px; font-size: 14px; font-weight: 600; color: #e6f1ff;">Fraud-rule serving</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">stream → features → decisions</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- dossier -->
+        <div style="border-left: 1px solid rgba(100,255,218,0.15); padding: 36px 32px; background: rgba(17,34,64,0.4);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">DOSSIER</div>
+          <div style="margin-top: 10px; display: flex; align-items: baseline; gap: 12px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 30px; color: #64ffda;">Py</span>
+            <span style="font-weight: 700; font-size: 26px; color: #e6f1ff;">Python</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">since 2018</span>
+          </div>
+          <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 2px;">
+            <div style="display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; width: 78px; flex: none;">2018–19</span>
+              <span style="font-size: 14px; color: #B0C6CE;">McMaster — robotics control, OpenCV for <span style="color: #64ffda;">ChessMate</span></span>
+            </div>
+            <div style="display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; width: 78px; flex: none;">2020–22</span>
+              <span style="font-size: 14px; color: #B0C6CE;">Capital One — fraud pipelines, the <span style="color: #64ffda;">$10M audit</span></span>
+            </div>
+            <div style="display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; width: 78px; flex: none;">2022–25</span>
+              <span style="font-size: 14px; color: #B0C6CE;">Meta — internal tooling at scale</span>
+            </div>
+            <div style="display: flex; gap: 14px; padding: 12px 0;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; width: 78px; flex: none;">now</span>
+              <span style="font-size: 14px; color: #B0C6CE;">Agent backends for consulting clients — see <span style="color: #64ffda;">AI Lab</span></span>
+            </div>
+          </div>
+          <div style="margin-top: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">SHIPS WITH</div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;">
+            <span style="border: 1px solid #495670; color: #B0C6CE; border-radius: 999px; padding: 5px 12px;">numpy</span>
+            <span style="border: 1px solid #495670; color: #B0C6CE; border-radius: 999px; padding: 5px 12px;">fastapi</span>
+            <span style="border: 1px solid #495670; color: #B0C6CE; border-radius: 999px; padding: 5px 12px;">pytorch</span>
+            <span style="border: 1px solid #495670; color: #B0C6CE; border-radius: 999px; padding: 5px 12px;">opencv</span>
+          </div>
+          <div style="margin-top: 26px; border: 1px dashed rgba(100,255,218,0.35); border-radius: 10px; padding: 16px 18px; font-size: 13.5px; line-height: 1.6; color: #8892b0;">
+            8 entries in the Library are tagged <span style="color: #64ffda;">python</span> — the dossier links straight into them.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Exactly what you described: skills as icons, click → dossier with years, timeline of where each skill shipped, and links into the Library. System-design diagrams sit on the same page as interactive cards (pan/zoom on open).</div>
+  </div>
+
+  <!-- ============ OPTION 4A — THE EXPEDITION ============ -->
+  <div id="4a" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#4a" style="background: #e8d5a3; color: #1a1408; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">4a</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">THE EXPEDITION — a living landscape; click the chapters to fly somewhere else</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); background: #0e1c33;">
+      <canvas width="1280" height="860" ref="{{ expeditionRef }}" style="position: absolute; inset: 0;"></canvas>
+      <div style="position: absolute; inset: 0; background: linear-gradient(rgba(8,12,20,0.42), rgba(8,12,20,0.05) 40%, rgba(8,12,20,0.15) 75%, rgba(8,12,20,0.5));"></div>
+
+      <!-- centered logo, like the original -->
+      <div style="position: absolute; z-index: 3; left: 0; right: 0; top: 34px; display: flex; justify-content: center;">
+        <img src="images/m-logo.png" alt="M" style="height: 74px; filter: brightness(10) drop-shadow(0 4px 18px rgba(0,0,0,0.5));">
+      </div>
+
+      <!-- hello block, left — original voice -->
+      <div style="position: absolute; z-index: 3; left: 64px; top: 170px; width: 560px; font-family: 'IBM Plex Mono', monospace;">
+        <div style="font-size: 20px; color: #f2f4f8; line-height: 1.75;">Hello! 👋</div>
+        <div style="font-size: 20px; color: #f2f4f8; line-height: 1.75;">I'm <span style="color: #7cb7ff;">Mostafa Okasha</span></div>
+        <div style="font-size: 20px; color: #f2f4f8; line-height: 1.75;">Engineer @ <span style="color: #64ffda;">my own thing</span></div>
+        <div style="margin-top: 26px; font-size: 15.5px; color: #ccd6e4; line-height: 1.85; text-shadow: 0 1px 12px rgba(0,0,0,0.5);">
+          Previously at <span style="color: #7cb7ff;">Meta</span>, <span style="color: #64ffda;">Capital One</span> and <span style="color: #ffb26b;">Ericsson</span> — where my 5G code runs for millions. Now I build <span style="color: #d8a3ff;">AI applications</span>, consult, and document all of it here: the code, the <span style="color: #ffd76b;">CAD</span>, the prompts, the <span style="color: #ff8ba3;">photographs</span>.
+        </div>
+      </div>
+
+      <!-- links rail, right — original structure -->
+      <div style="position: absolute; z-index: 3; right: 64px; top: 170px; display: flex; gap: 26px; font-family: 'IBM Plex Mono', monospace;">
+        <div style="width: 1px; background: rgba(240,244,250,0.35);"></div>
+        <div style="display: flex; flex-direction: column; gap: 16px; font-size: 16px;">
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">mostafa@okasha.me</a>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">MostafaOkasha</a>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">Okashm</a>
+          <div style="height: 1px; width: 44px; background: rgba(240,244,250,0.35); margin: 6px 0;"></div>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">resume.pdf</a>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">writing/</a>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">projects/</a>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">ai-lab/</a>
+          <a href="#4a" style="color: #f2f4f8; text-decoration: underline; text-underline-offset: 5px;">photos/</a>
+        </div>
+      </div>
+
+      <!-- photo crescent + typewriter, like the original -->
+      <div style="position: absolute; z-index: 3; left: 64px; bottom: 120px; display: flex; align-items: center; gap: 44px;">
+        <div style="width: 190px; height: 190px; border-radius: 50%; border: 3px solid rgba(242,244,248,0.85); border-right-color: transparent; border-bottom-color: transparent; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center;">
+          <img src="images/my-photo.jpg" alt="Mostafa" style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; transform: rotate(45deg);">
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 34px; color: #f2f4f8; text-shadow: 0 2px 16px rgba(0,0,0,0.6);">{{ typed }}<span style="display: inline-block; width: 3px; height: 34px; background: #f2f4f8; margin-left: 4px; vertical-align: middle; animation: blink 1s step-end infinite;"></span></div>
+      </div>
+
+      <!-- chapter picker -->
+      <div style="position: absolute; z-index: 3; left: 0; right: 0; bottom: 34px; display: flex; justify-content: center; gap: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">
+        <button onClick="{{ goSky }}" style="cursor: pointer; background: {{ skyBg }}; color: {{ skyFg }}; border: 1px solid rgba(242,244,248,0.5); border-radius: 999px; padding: 9px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">01 clouds</button>
+        <button onClick="{{ goOcean }}" style="cursor: pointer; background: {{ oceanBg }}; color: {{ oceanFg }}; border: 1px solid rgba(242,244,248,0.5); border-radius: 999px; padding: 9px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">02 ocean</button>
+        <button onClick="{{ goDunes }}" style="cursor: pointer; background: {{ dunesBg }}; color: {{ dunesFg }}; border: 1px solid rgba(242,244,248,0.5); border-radius: 999px; padding: 9px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">03 dunes</button>
+        <button onClick="{{ goPeaks }}" style="cursor: pointer; background: {{ peaksBg }}; color: {{ peaksFg }}; border: 1px solid rgba(242,244,248,0.5); border-radius: 999px; padding: 9px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">04 himalayas</button>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Your original layout, resurrected — centered M, mono greeting with colored words, links exactly where they were, crescent photo, typewriter — but the background is now a living painted world: drifting clouds, a plane crossing with its contrail, rolling ocean swell, wind-blown dunes, snow-lit peaks. Everything moves with your cursor; the four chapters fly the whole scene somewhere new.</div>
+  </div>
+
+  <!-- ============ OPTION 3A — HOME, original palette ============ -->
+  <div id="3a" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#3a" style="background: #64ffda; color: #0a192f; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">3a</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">HOME — navy + mint (your original palette), calm confidence, mesmerizing sky kept</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0a192f; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <canvas width="1280" height="860" ref="{{ auroraRef }}" style="position: absolute; inset: 0;"></canvas>
+      <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 90% 70% at 30% 20%, transparent 40%, rgba(10,25,47,0.65) 100%);"></div>
+
+      <!-- nav -->
+      <div style="position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 28px 48px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 32px; filter: brightness(10);">
+        </div>
+        <div style="display: flex; gap: 30px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #B0C6CE; align-items: center;">
+          <a href="#3a"><span style="color: #64ffda;">01.</span> writing</a>
+          <a href="#3a"><span style="color: #64ffda;">02.</span> projects</a>
+          <a href="#3a"><span style="color: #64ffda;">03.</span> design</a>
+          <a href="#3a"><span style="color: #64ffda;">04.</span> ai lab</a>
+          <a href="#3a"><span style="color: #64ffda;">05.</span> photos</a>
+          <span style="border: 1px solid #64ffda; color: #64ffda; border-radius: 6px; padding: 8px 18px;">résumé</span>
+        </div>
+      </div>
+
+      <!-- status pill -->
+      <div style="position: absolute; z-index: 3; left: 48px; top: 120px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(100,255,218,0.35); border-radius: 999px; padding: 7px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background: #64ffda; animation: pulse 2s ease-in-out infinite;"></span>
+        currently: building AI things · Toronto
+      </div>
+
+      <!-- hero copy -->
+      <div style="position: absolute; z-index: 3; left: 48px; top: 185px; width: 760px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #64ffda;">Hi, my name is</div>
+        <div style="margin-top: 14px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 78px; line-height: 1.02; letter-spacing: -0.02em; color: #e6f1ff;">Mostafa Okasha.</div>
+        <div style="margin-top: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 74px; line-height: 1.02; letter-spacing: -0.02em; color: #8892b0; white-space: nowrap;">I build things for fun.</div>
+        <div style="margin-top: 24px; font-size: 18px; line-height: 1.6; color: #B0C6CE; max-width: 540px;">
+          Engineer — ex-Meta, Capital One &amp; Ericsson. These days I build AI applications and consult. Everything I make — code, writing, CAD, prompts, photos — ends up here.
+        </div>
+        <div style="margin-top: 30px; display: flex; gap: 14px; align-items: center;">
+          <span style="border: 1px solid #64ffda; color: #64ffda; font-family: 'IBM Plex Mono', monospace; font-size: 15px; padding: 14px 28px; border-radius: 6px;">explore the archive</span>
+          <span style="color: #8892b0; font-family: 'IBM Plex Mono', monospace; font-size: 14px;">or press <span style="border: 1px solid #8892b0; border-radius: 4px; padding: 2px 7px;">⌘K</span></span>
+        </div>
+      </div>
+
+      <!-- right rail: latest -->
+      <div style="position: absolute; z-index: 3; right: 48px; top: 195px; width: 340px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; letter-spacing: 0.1em;">LATEST FROM THE ARCHIVE</div>
+        <div style="border: 1px solid rgba(100,255,218,0.2); background: rgba(17,34,64,0.75); backdrop-filter: blur(4px); border-radius: 8px; padding: 18px 20px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">AI LAB · JUL 02</div>
+          <div style="margin-top: 6px; font-size: 16px; font-weight: 600; color: #e6f1ff; line-height: 1.4;">Agent memory patterns that actually work</div>
+        </div>
+        <div style="border: 1px solid rgba(100,255,218,0.2); background: rgba(17,34,64,0.75); backdrop-filter: blur(4px); border-radius: 8px; padding: 18px 20px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">WRITING · JUN 03</div>
+          <div style="margin-top: 6px; font-size: 16px; font-weight: 600; color: #e6f1ff; line-height: 1.4;">ChessMate, five years later: a retrospective</div>
+        </div>
+        <div style="border: 1px solid rgba(100,255,218,0.2); background: rgba(17,34,64,0.75); backdrop-filter: blur(4px); border-radius: 8px; padding: 18px 20px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">DESIGN · MAY 12</div>
+          <div style="margin-top: 6px; font-size: 16px; font-weight: 600; color: #e6f1ff; line-height: 1.4;">Desktop CNC: designed + machined from scratch</div>
+        </div>
+      </div>
+
+      <!-- bottom section index -->
+      <div style="position: absolute; z-index: 3; left: 48px; right: 48px; bottom: 40px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+        <div style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">01 · WRITING</div>
+          <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">24 essays &amp; notes</div>
+        </div>
+        <div style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">02 · PROJECTS</div>
+          <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">12 shipped</div>
+        </div>
+        <div style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">03 · DESIGN</div>
+          <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">CAD &amp; identity</div>
+        </div>
+        <div style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">04 · AI LAB</div>
+          <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">17 workflows &amp; prompts</div>
+        </div>
+        <div style="border-top: 1px solid rgba(100,255,218,0.25); padding-top: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64ffda;">05 · PHOTOS</div>
+          <div style="color: #B0C6CE; font-size: 14px; margin-top: 5px;">31 stories</div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Your original navy + mint palette, kept. Tone dialed way back — no headshot on the homepage, one status pill (the piece you liked), and an aurora particle-flow canvas behind everything: slow mint ribbons drifting through the navy, reacting gently to the cursor.</div>
+  </div>
+
+  <!-- ============ OPTION 3B — MOBILE ============ -->
+  <div id="3b" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#3b" style="background: #64ffda; color: #0a192f; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">3b</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">MOBILE — home · menu · reading view</span>
+    </div>
+
+    <div style="display: flex; gap: 40px; align-items: flex-start;">
+
+      <!-- phone 1: home -->
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="390px,844px">
+        <div style="width: 100%; height: 100%; background: #0a192f; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; position: relative; overflow: hidden;">
+          <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 120% 50% at 50% 0%, rgba(100,255,218,0.07), transparent 60%);"></div>
+          <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 66px 22px 14px 22px;">
+            <img src="images/m-logo.png" alt="M" style="height: 26px; filter: brightness(10);">
+            <div style="width: 44px; height: 44px; display: flex; flex-direction: column; gap: 5px; align-items: flex-end; justify-content: center;">
+              <span style="width: 26px; height: 2px; background: #64ffda;"></span>
+              <span style="width: 18px; height: 2px; background: #64ffda;"></span>
+            </div>
+          </div>
+          <div style="position: relative; padding: 40px 26px 0 26px; flex: 1;">
+            <div style="display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(100,255,218,0.35); border-radius: 999px; padding: 6px 13px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: #64ffda; animation: pulse 2s ease-in-out infinite;"></span>
+              currently: building AI things
+            </div>
+            <div style="margin-top: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">Hi, my name is</div>
+            <div style="margin-top: 8px; font-weight: 700; font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; color: #e6f1ff;">Mostafa Okasha.</div>
+            <div style="margin-top: 4px; font-weight: 700; font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; color: #8892b0;">I build things for fun.</div>
+            <div style="margin-top: 16px; font-size: 15px; line-height: 1.6; color: #B0C6CE;">Engineer — ex-Meta, Capital One &amp; Ericsson. Code, writing, CAD, prompts, photos: it all lives here.</div>
+            <div style="margin-top: 24px; display: inline-flex; border: 1px solid #64ffda; color: #64ffda; font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 14px 24px; border-radius: 6px;">explore the archive</div>
+            <div style="margin-top: 36px; display: flex; flex-direction: column; gap: 0;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-top: 1px solid rgba(100,255,218,0.2); min-height: 44px;">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #e6f1ff;"><span style="color: #64ffda;">01</span>&nbsp;&nbsp;writing</span>
+                <span style="color: #8892b0; font-size: 13px;">×24 →</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-top: 1px solid rgba(100,255,218,0.2); min-height: 44px;">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #e6f1ff;"><span style="color: #64ffda;">02</span>&nbsp;&nbsp;projects</span>
+                <span style="color: #8892b0; font-size: 13px;">×12 →</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-top: 1px solid rgba(100,255,218,0.2); min-height: 44px;">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #e6f1ff;"><span style="color: #64ffda;">03</span>&nbsp;&nbsp;ai lab</span>
+                <span style="color: #8892b0; font-size: 13px;">×17 →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+
+      <!-- phone 2: menu -->
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="390px,844px">
+        <div style="width: 100%; height: 100%; background: #0d1b33; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; position: relative;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 66px 22px 14px 22px;">
+            <img src="images/m-logo.png" alt="M" style="height: 26px; filter: brightness(10);">
+            <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-end; color: #64ffda; font-size: 26px;">×</div>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 26px; gap: 4px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; padding: 13px 0; min-height: 44px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">01</span>
+              <span style="font-weight: 700; font-size: 38px; letter-spacing: -0.02em; color: #e6f1ff;">writing</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">×24</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 14px; padding: 13px 0; min-height: 44px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">02</span>
+              <span style="font-weight: 700; font-size: 38px; letter-spacing: -0.02em; color: #e6f1ff;">projects</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">×12</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 14px; padding: 13px 0; min-height: 44px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">03</span>
+              <span style="font-weight: 700; font-size: 38px; letter-spacing: -0.02em; color: #e6f1ff;">design</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">×9</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 14px; padding: 13px 0; min-height: 44px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">04</span>
+              <span style="font-weight: 700; font-size: 38px; letter-spacing: -0.02em; color: #64ffda;">ai lab</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">×17</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 14px; padding: 13px 0; min-height: 44px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">05</span>
+              <span style="font-weight: 700; font-size: 38px; letter-spacing: -0.02em; color: #e6f1ff;">photos</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">×31</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 14px; padding: 13px 0; min-height: 44px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">06</span>
+              <span style="font-weight: 700; font-size: 38px; letter-spacing: -0.02em; color: #e6f1ff;">about</span>
+            </div>
+          </div>
+          <div style="padding: 0 26px 30px 26px; display: flex; gap: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">
+            <span>github</span><span>linkedin</span><span>email</span><span style="margin-left: auto; color: #64ffda;">⌘K search</span>
+          </div>
+        </div>
+      </x-import>
+
+      <!-- phone 3: reading view -->
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="390px,844px">
+        <div style="width: 100%; height: 100%; background: #0a192f; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; position: relative; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 66px 22px 14px 22px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">← ai lab</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">4 min left</span>
+          </div>
+          <div style="height: 3px; background: rgba(100,255,218,0.15);"><div style="width: 55%; height: 3px; background: #64ffda;"></div></div>
+          <div style="padding: 30px 26px; overflow: hidden; flex: 1;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">AI LAB · JUL 02 2026 · 9 MIN</div>
+            <div style="margin-top: 12px; font-weight: 700; font-size: 30px; line-height: 1.15; letter-spacing: -0.02em; color: #e6f1ff;">Agent memory patterns that actually work</div>
+            <div style="margin-top: 22px; font-size: 16px; line-height: 1.75; color: #B0C6CE;">Most agent frameworks treat memory as an afterthought — a vector store bolted on at the end. After six months of running agents in production, I've settled on five patterns that survived contact with real users.</div>
+            <div style="margin-top: 18px; font-size: 16px; line-height: 1.75; color: #B0C6CE;">The first: <span style="color: #e6f1ff; font-weight: 600;">scoped scratchpads</span>. Give the agent a place to think that gets wiped per-task, and a much smaller…</div>
+            <div style="margin-top: 24px; border: 1px solid rgba(100,255,218,0.25); border-left: 3px solid #64ffda; border-radius: 8px; padding: 16px 18px; background: rgba(17,34,64,0.6);">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64ffda;">PROMPT RECIPE — copy &amp; steal</div>
+              <div style="margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.6; color: #B0C6CE;">You maintain two memories:<br>1. TASK — wiped after each task<br>2. CORE — 10 facts max, evict oldest…</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">The site as it'll feel on your phone: home with 44px+ tap targets, a full-screen menu in the big-type style, and the reading view with progress bar and copyable prompt-recipe blocks for the AI lab.</div>
+  </div>
+
+  <!-- ============ OPTION 2A — THE VOYAGER (homepage) ============ -->
+  <div id="2a" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#2a" style="background: oklch(0.75 0.15 40); color: #140f0c; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">2a</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">THE VOYAGER — homepage · social, warm, wandering globe</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #14100e; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <canvas width="1280" height="860" ref="{{ globeRef }}" style="position: absolute; inset: 0;"></canvas>
+      <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #14100e 28%, rgba(20,16,14,0.55) 55%, rgba(20,16,14,0.1) 100%);"></div>
+
+      <!-- nav -->
+      <div style="position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 28px 48px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 32px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9b8a8;">okasha.me</span>
+        </div>
+        <div style="display: flex; gap: 30px; font-size: 15px; font-weight: 500; color: #e8dccd;">
+          <a href="#2a">stories</a><a href="#2a">projects</a><a href="#2a">design</a><a href="#2a">ai lab</a><a href="#2a">photos</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; border: 1px solid rgba(232,150,90,0.5); border-radius: 999px; padding: 7px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: oklch(0.8 0.13 50);">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: oklch(0.75 0.15 40); animation: pulse 2s ease-in-out infinite;"></span>
+          currently: Toronto → next: ???
+        </div>
+      </div>
+
+      <!-- hero copy -->
+      <div style="position: absolute; z-index: 3; left: 48px; top: 150px; width: 620px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: oklch(0.8 0.13 50);">// warning: extroverted engineer ahead</div>
+        <div style="margin-top: 16px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 66px; line-height: 1.02; letter-spacing: -0.025em; color: #f3ece2; text-wrap: pretty;">
+          Hey — I'm <span style="color: oklch(0.75 0.15 40);">Mostafa</span>. I make things, then go see the world about it.
+        </div>
+        <div style="margin-top: 20px; font-size: 18px; line-height: 1.55; color: #b3a596; max-width: 540px;">
+          Shipped 5G code to millions, saved a bank ~$10M, taught a robot to win at chess — now building AI products and photographing everything in between.
+        </div>
+        <div style="margin-top: 26px; display: flex; gap: 14px; align-items: center;">
+          <span style="background: oklch(0.75 0.15 40); color: #17110d; font-weight: 600; font-size: 16px; padding: 14px 26px; border-radius: 999px;">come say hi →</span>
+          <span style="border: 1px solid rgba(230,210,190,0.35); color: #e8dccd; font-size: 16px; padding: 13px 26px; border-radius: 999px;">the good stuff ↓</span>
+        </div>
+        <div style="margin-top: 28px; display: flex; gap: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8d8073;">
+          <span>github/MostafaOkasha</span><span>·</span><span>linkedin/Okashm</span><span>·</span><span>mostafa@okasha.me</span>
+        </div>
+      </div>
+
+      <!-- polaroid stack -->
+      <div style="position: absolute; z-index: 3; right: 88px; top: 190px; width: 330px; height: 480px;">
+        <div style="position: absolute; top: 150px; left: -60px; transform: rotate(6deg); background: #f5efe6; padding: 10px 10px 40px 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.45);">
+          <img src="images/projects/ChessMate/chessmate1.jpg" alt="ChessMate robot" style="width: 190px; height: 150px; object-fit: cover; display: block;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5c5348; margin-top: 10px;">chessmate, 99% win rate</div>
+        </div>
+        <div style="position: absolute; top: 280px; left: 130px; transform: rotate(4deg); background: #f5efe6; padding: 10px 10px 40px 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.45);">
+          <img src="images/projects/EyeSee/EyeSee2.jpg" alt="EyeSee at HackPrinceton" style="width: 190px; height: 150px; object-fit: cover; display: block;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5c5348; margin-top: 10px;">hackprinceton, 1st place</div>
+        </div>
+        <div style="position: absolute; top: 0; left: 40px; transform: rotate(-5deg); background: #f5efe6; padding: 12px 12px 48px 12px; box-shadow: 0 24px 50px rgba(0,0,0,0.5);">
+          <img src="images/my-photo.jpg" alt="Mostafa" style="width: 240px; height: 240px; object-fit: cover; object-position: 50% 20%; display: block;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5c5348; margin-top: 12px;">me + camera, inseparable</div>
+        </div>
+      </div>
+
+      <!-- bottom ticker -->
+      <div style="position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; border-top: 1px solid rgba(232,150,90,0.25); padding: 16px 0; overflow: hidden; white-space: nowrap; background: rgba(20,16,14,0.7); backdrop-filter: blur(6px);">
+        <div style="display: inline-flex; gap: 44px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #c9b8a8; animation: marquee 26s linear infinite;">
+          <span>✈ 14 countries</span><span style="color: oklch(0.75 0.15 40);">●</span><span>📷 31 photo stories</span><span style="color: oklch(0.75 0.15 40);">●</span><span>⌘ 12 projects shipped</span><span style="color: oklch(0.75 0.15 40);">●</span><span>✍ 24 essays</span><span style="color: oklch(0.75 0.15 40);">●</span><span>🤖 17 AI workflows</span><span style="color: oklch(0.75 0.15 40);">●</span>
+          <span>✈ 14 countries</span><span style="color: oklch(0.75 0.15 40);">●</span><span>📷 31 photo stories</span><span style="color: oklch(0.75 0.15 40);">●</span><span>⌘ 12 projects shipped</span><span style="color: oklch(0.75 0.15 40);">●</span><span>✍ 24 essays</span><span style="color: oklch(0.75 0.15 40);">●</span><span>🤖 17 AI workflows</span><span style="color: oklch(0.75 0.15 40);">●</span>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">A living wireframe globe spins behind the hero — arcs fire between cities you've been, particles orbit, it reacts to the cursor. Your face front-and-center in a polaroid stack. Loud, warm, and personal.</div>
+  </div>
+
+  <!-- ============ OPTION 2B — SKILLS PAGE ============ -->
+  <div id="2b" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#2b" style="background: oklch(0.75 0.15 40); color: #140f0c; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">2b</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">SKILLS PAGE — "the toolkit", same voyager voice</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #14100e; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <!-- nav -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 28px 48px; border-bottom: 1px solid rgba(232,150,90,0.2);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 32px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9b8a8;">~/skills</span>
+        </div>
+        <div style="display: flex; gap: 30px; font-size: 15px; font-weight: 500; color: #e8dccd;">
+          <a href="#2b">stories</a><a href="#2b">projects</a><a href="#2b">design</a><a href="#2b" style="color: oklch(0.75 0.15 40);">skills</a><a href="#2b">photos</a>
+        </div>
+      </div>
+
+      <div style="padding: 48px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: oklch(0.8 0.13 50);">// the toolkit</div>
+        <div style="margin-top: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 58px; letter-spacing: -0.02em; color: #f3ece2;">Things I'm dangerous with.</div>
+
+        <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+          <!-- software -->
+          <div style="border: 1px solid rgba(232,150,90,0.25); border-radius: 16px; padding: 28px; background: rgba(255,235,215,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; color: #f3ece2;">01 · Software</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50);">day job</div>
+            </div>
+            <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 14px;">
+              <div><div style="display: flex; justify-content: space-between; font-size: 14px; color: #d8cbbb;"><span>Python</span><span style="font-family: 'IBM Plex Mono', monospace; color: #8d8073;">8 yrs</span></div><div style="margin-top: 6px; height: 6px; border-radius: 3px; background: rgba(232,150,90,0.15);"><div style="width: 95%; height: 6px; border-radius: 3px; background: oklch(0.75 0.15 40);"></div></div></div>
+              <div><div style="display: flex; justify-content: space-between; font-size: 14px; color: #d8cbbb;"><span>TypeScript / React</span><span style="font-family: 'IBM Plex Mono', monospace; color: #8d8073;">6 yrs</span></div><div style="margin-top: 6px; height: 6px; border-radius: 3px; background: rgba(232,150,90,0.15);"><div style="width: 85%; height: 6px; border-radius: 3px; background: oklch(0.75 0.15 40);"></div></div></div>
+              <div><div style="display: flex; justify-content: space-between; font-size: 14px; color: #d8cbbb;"><span>C++ (5G radio)</span><span style="font-family: 'IBM Plex Mono', monospace; color: #8d8073;">4 yrs</span></div><div style="margin-top: 6px; height: 6px; border-radius: 3px; background: rgba(232,150,90,0.15);"><div style="width: 70%; height: 6px; border-radius: 3px; background: oklch(0.75 0.15 40);"></div></div></div>
+              <div><div style="display: flex; justify-content: space-between; font-size: 14px; color: #d8cbbb;"><span>AWS / infra</span><span style="font-family: 'IBM Plex Mono', monospace; color: #8d8073;">6 yrs</span></div><div style="margin-top: 6px; height: 6px; border-radius: 3px; background: rgba(232,150,90,0.15);"><div style="width: 80%; height: 6px; border-radius: 3px; background: oklch(0.75 0.15 40);"></div></div></div>
+            </div>
+            <div style="margin-top: 20px; font-size: 14px; line-height: 1.5; color: #b3a596;">Used by millions at Ericsson, trusted with the money at Capital One.</div>
+          </div>
+
+          <!-- ai -->
+          <div style="border: 1px solid rgba(232,150,90,0.25); border-radius: 16px; padding: 28px; background: linear-gradient(160deg, rgba(232,150,90,0.10), rgba(255,235,215,0.02)); transform: rotate(0.4deg);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; color: #f3ece2;">02 · AI</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50);">obsession</div>
+            </div>
+            <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+              <span style="border: 1px solid rgba(232,150,90,0.45); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: #e8dccd;">agent design</span>
+              <span style="border: 1px solid rgba(232,150,90,0.45); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: #e8dccd; transform: rotate(-2deg);">prompt engineering</span>
+              <span style="border: 1px solid rgba(232,150,90,0.45); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: #e8dccd;">RAG pipelines</span>
+              <span style="border: 1px solid rgba(232,150,90,0.45); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: #e8dccd; transform: rotate(1.5deg);">evals</span>
+              <span style="border: 1px solid rgba(232,150,90,0.45); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: #e8dccd;">fine-tuning</span>
+              <span style="background: oklch(0.75 0.15 40); border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #17110d; transform: rotate(-1deg);">shipping, actually</span>
+            </div>
+            <div style="margin-top: 22px; font-size: 14px; line-height: 1.5; color: #b3a596;">Currently building AI applications &amp; consulting for teams that want LLMs in production, not in decks. The <a href="#2b" style="color: oklch(0.8 0.13 50); text-decoration: underline;">AI Lab</a> has the receipts — 17 workflows &amp; prompt recipes, free to steal.</div>
+          </div>
+
+          <!-- hardware -->
+          <div style="border: 1px solid rgba(232,150,90,0.25); border-radius: 16px; padding: 28px; background: rgba(255,235,215,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; color: #f3ece2;">03 · Atoms</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50);">mechatronics degree</div>
+            </div>
+            <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; gap: 12px; align-items: center;"><img src="images/design/Iphone_cable.png" alt="CAD" style="width: 64px; height: 44px; object-fit: cover; border-radius: 8px;"><div style="font-size: 14px; color: #d8cbbb;">CAD &amp; product design <span style="color: #8d8073;">— NX, SolidWorks</span></div></div>
+              <div style="display: flex; gap: 12px; align-items: center;"><img src="images/design/CNC_TOP.png" alt="CNC" style="width: 64px; height: 44px; object-fit: cover; border-radius: 8px;"><div style="font-size: 14px; color: #d8cbbb;">Robotics &amp; CNC <span style="color: #8d8073;">— built, not bought</span></div></div>
+              <div style="display: flex; gap: 12px; align-items: center;"><img src="images/projects/EyeSee/EyeSee4.jpg" alt="VR" style="width: 64px; height: 44px; object-fit: cover; border-radius: 8px;"><div style="font-size: 14px; color: #d8cbbb;">Embedded &amp; sensors <span style="color: #8d8073;">— OpenCV, Pi, Arduino</span></div></div>
+            </div>
+            <div style="margin-top: 20px; font-size: 14px; line-height: 1.5; color: #b3a596;">Software is easy to undo. Hardware keeps you honest.</div>
+          </div>
+        </div>
+
+        <!-- human skills strip -->
+        <div style="margin-top: 24px; border: 1px dashed rgba(232,150,90,0.4); border-radius: 16px; padding: 22px 28px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; color: #f3ece2;">04 · People <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 13px; color: oklch(0.8 0.13 50);">— the real stack</span></div>
+          <div style="display: flex; gap: 12px; font-size: 14px; color: #e8dccd;">
+            <span style="background: rgba(232,150,90,0.12); border-radius: 999px; padding: 7px 16px;">taught 200+ students</span>
+            <span style="background: rgba(232,150,90,0.12); border-radius: 999px; padding: 7px 16px;">3 languages</span>
+            <span style="background: rgba(232,150,90,0.12); border-radius: 999px; padding: 7px 16px;">will befriend your barista</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Skills reframed as "the toolkit" — honest meters, sticker chips, real photos of the hardware work, and a wink of personality in the copy.</div>
+  </div>
+
+  <!-- ============ OPTION 2C — DESIGN GALLERY PAGE ============ -->
+  <div id="2c" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#2c" style="background: oklch(0.75 0.15 40); color: #140f0c; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">2c</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">DESIGN GALLERY — "made real", drafting-table energy</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #14100e; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(232,150,90,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(232,150,90,0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
+      <!-- nav -->
+      <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 28px 48px; border-bottom: 1px solid rgba(232,150,90,0.2);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 32px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9b8a8;">~/design</span>
+        </div>
+        <div style="display: flex; gap: 30px; font-size: 15px; font-weight: 500; color: #e8dccd;">
+          <a href="#2c">stories</a><a href="#2c">projects</a><a href="#2c" style="color: oklch(0.75 0.15 40);">design</a><a href="#2c">skills</a><a href="#2c">photos</a>
+        </div>
+      </div>
+
+      <div style="position: relative; padding: 40px 48px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: oklch(0.8 0.13 50);">// made real</div>
+            <div style="margin-top: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 58px; letter-spacing: -0.02em; color: #f3ece2;">If I can draw it, I can build it.</div>
+          </div>
+          <div style="display: flex; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">
+            <span style="background: oklch(0.75 0.15 40); color: #17110d; border-radius: 999px; padding: 7px 16px;">all</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 7px 16px;">CAD</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 7px 16px;">robotics</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 7px 16px;">graphics</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 26px; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 158px; gap: 16px;">
+          <div style="grid-row: span 2; position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(232,150,90,0.25); background: #f2ede4;">
+            <img src="images/design/landing-gear.png" alt="Landing gear CAD" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 18px; background: linear-gradient(transparent, rgba(15,10,8,0.85)); color: #f3ece2;">
+              <div style="font-weight: 600; font-size: 17px;">Aircraft landing gear</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #c9b8a8; margin-top: 4px;">NX · kinematic simulation</div>
+            </div>
+          </div>
+          <div style="position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(232,150,90,0.25); background: #f2ede4;">
+            <img src="images/design/Iphone_cable.png" alt="iPhone cable redesign" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px; background: linear-gradient(transparent, rgba(15,10,8,0.85)); color: #f3ece2;">
+              <div style="font-weight: 600; font-size: 15px;">Rotating Lightning cable</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #c9b8a8; margin-top: 2px;">product concept</div>
+            </div>
+          </div>
+          <div style="grid-row: span 2; position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(232,150,90,0.25); background: #f2ede4;">
+            <img src="images/design/Final_Assembly1.png" alt="Final assembly" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 18px; background: linear-gradient(transparent, rgba(15,10,8,0.85)); color: #f3ece2;">
+              <div style="font-weight: 600; font-size: 17px;">SCARA arm assembly</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #c9b8a8; margin-top: 4px;">full mechanical design</div>
+            </div>
+          </div>
+          <div style="position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(232,150,90,0.25); background: #f2ede4;">
+            <img src="images/design/CNC_TOP.png" alt="CNC machine" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px; background: linear-gradient(transparent, rgba(15,10,8,0.85)); color: #f3ece2;">
+              <div style="font-weight: 600; font-size: 15px;">Desktop CNC</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #c9b8a8; margin-top: 2px;">designed + machined</div>
+            </div>
+          </div>
+          <div style="position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(232,150,90,0.25); background: #f2ede4;">
+            <img src="images/design/epipencase.png" alt="EpiPen case" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px; background: linear-gradient(transparent, rgba(15,10,8,0.85)); color: #f3ece2;">
+              <div style="font-weight: 600; font-size: 15px;">EpiPen carry case</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #c9b8a8; margin-top: 2px;">3D-printed, in use daily</div>
+            </div>
+          </div>
+          <div style="position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(232,150,90,0.25); background: #f2ede4;">
+            <img src="images/design/Chair_redesign.png" alt="Chair redesign" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px; background: linear-gradient(transparent, rgba(15,10,8,0.85)); color: #f3ece2;">
+              <div style="font-weight: 600; font-size: 15px;">Chair redesign</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #c9b8a8; margin-top: 2px;">ergonomics study</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; justify-content: center;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: oklch(0.8 0.13 50); border-bottom: 1px solid oklch(0.8 0.13 50); padding-bottom: 3px;">+ 23 more on the drafting table →</span>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Blueprint-grid background, real CAD renders from your archive, filterable by discipline. Hover lifts each card and reveals the story behind it.</div>
+  </div>
+
+  <!-- ============ OPTION 2D — FIELD NOTES (blog) ============ -->
+  <div id="2d" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#2d" style="background: oklch(0.75 0.15 40); color: #140f0c; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">2d</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">FIELD NOTES — blog as a travel journal</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #14100e; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <!-- nav -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 28px 48px; border-bottom: 1px solid rgba(232,150,90,0.2);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="images/m-logo.png" alt="M" style="height: 32px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9b8a8;">~/stories</span>
+        </div>
+        <div style="display: flex; gap: 30px; font-size: 15px; font-weight: 500; color: #e8dccd;">
+          <a href="#2d" style="color: oklch(0.75 0.15 40);">stories</a><a href="#2d">projects</a><a href="#2d">design</a><a href="#2d">skills</a><a href="#2d">photos</a>
+        </div>
+      </div>
+
+      <div style="padding: 40px 48px; display: grid; grid-template-columns: 1fr 360px; gap: 48px;">
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: oklch(0.8 0.13 50);">// field notes</div>
+          <div style="margin-top: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 54px; letter-spacing: -0.02em; color: #f3ece2;">Notes from the field.</div>
+
+          <div style="margin-top: 18px; display: flex; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">
+            <span style="background: oklch(0.75 0.15 40); color: #17110d; border-radius: 999px; padding: 6px 14px;">all ×24</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 6px 14px;">engineering</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 6px 14px;">ai lab</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 6px 14px;">travel</span>
+            <span style="border: 1px solid rgba(232,150,90,0.4); color: #c9b8a8; border-radius: 999px; padding: 6px 14px;">life</span>
+          </div>
+
+          <div style="margin-top: 28px; display: flex; flex-direction: column;">
+            <div style="display: grid; grid-template-columns: 110px 1fr auto; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid rgba(232,150,90,0.18);">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8d8073;">jul 02 '26</div>
+              <div>
+                <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; color: #f3ece2;">Agent memory patterns that actually work</div>
+                <div style="margin-top: 6px; font-size: 15px; color: #b3a596;">Six months of production agents, distilled into 5 patterns.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50); border: 1px solid rgba(232,150,90,0.4); border-radius: 999px; padding: 4px 12px;">ai lab</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 110px 1fr auto; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid rgba(232,150,90,0.18);">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8d8073;">jun 18 '26</div>
+              <div>
+                <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; color: #f3ece2;">Cairo, code &amp; carrying a camera everywhere</div>
+                <div style="margin-top: 6px; font-size: 15px; color: #b3a596;">Working remotely from the city my parents left. Notes + 38 photos.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50); border: 1px solid rgba(232,150,90,0.4); border-radius: 999px; padding: 4px 12px;">travel</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 110px 1fr auto; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid rgba(232,150,90,0.18);">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8d8073;">jun 03 '26</div>
+              <div>
+                <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; color: #f3ece2;">ChessMate, five years later: a retrospective</div>
+                <div style="margin-top: 6px; font-size: 15px; color: #b3a596;">What building a chess robot taught me about shipping AI products.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50); border: 1px solid rgba(232,150,90,0.4); border-radius: 999px; padding: 4px 12px;">engineering</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 110px 1fr auto; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid rgba(232,150,90,0.18);">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8d8073;">may 21 '26</div>
+              <div>
+                <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; color: #f3ece2;">The $10M spreadsheet: a banking war story</div>
+                <div style="margin-top: 6px; font-size: 15px; color: #b3a596;">How currency conversion losses hide in plain sight.</div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.8 0.13 50); border: 1px solid rgba(232,150,90,0.4); border-radius: 999px; padding: 4px 12px;">engineering</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- sidebar -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="background: #f5efe6; padding: 12px 12px 44px 12px; transform: rotate(2.5deg); box-shadow: 0 20px 44px rgba(0,0,0,0.45); align-self: center; margin-top: 30px;">
+            <img src="images/my-photo.jpg" alt="Mostafa" style="width: 250px; height: 210px; object-fit: cover; object-position: 50% 20%; display: block;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5c5348; margin-top: 12px;">your correspondent, on location</div>
+          </div>
+          <div style="border: 1px dashed rgba(232,150,90,0.4); border-radius: 14px; padding: 22px;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: oklch(0.8 0.13 50);">// now</div>
+            <div style="margin-top: 10px; font-size: 15px; line-height: 1.6; color: #d8cbbb;">Building an AI consulting practice · learning film photography · plotting the next trip · reading "The Design of Everyday Things" (again)</div>
+          </div>
+          <div style="border: 1px solid rgba(232,150,90,0.25); border-radius: 14px; padding: 22px; background: rgba(255,235,215,0.03);">
+            <div style="font-size: 15px; color: #d8cbbb; line-height: 1.6;">Get new notes by email — no spam, ~1/month.</div>
+            <div style="margin-top: 14px; display: flex; gap: 8px;">
+              <span style="flex: 1; border: 1px solid rgba(232,150,90,0.4); border-radius: 999px; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8d8073;">you@email.com</span>
+              <span style="background: oklch(0.75 0.15 40); color: #17110d; font-weight: 600; border-radius: 999px; padding: 10px 18px; font-size: 14px;">join</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Blog as a travel journal: dated entries, category filters (engineering / ai lab / travel / life), a "now" card, and your polaroid as the correspondent. Markdown files drop straight into this layout.</div>
+  </div>
+
+  <!-- ============ OPTION 1A — THE OBSERVATORY ============ -->
+  <div id="1a" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#1a" style="background: oklch(0.82 0.11 210); color: #0a0c12; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">1a</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">THE OBSERVATORY — generative night sky, editorial serif</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0a0c12; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <canvas width="1280" height="860" ref="{{ skyRef }}" style="position: absolute; inset: 0;"></canvas>
+      <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(90,140,190,0.18), transparent 60%);"></div>
+
+      <!-- nav -->
+      <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 32px 48px;">
+        <img src="images/m-logo.png" alt="M" style="height: 34px; filter: brightness(10);">
+        <div style="display: flex; gap: 36px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #c3cbd8;">
+          <a href="#1a">writing</a><a href="#1a">projects</a><a href="#1a">design</a><a href="#1a">ai&nbsp;lab</a><a href="#1a">photos</a><a href="#1a">now</a>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: oklch(0.82 0.11 210);">⌘K to explore</div>
+      </div>
+
+      <!-- hero copy -->
+      <div style="position: relative; padding: 84px 48px 0 48px; max-width: 900px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: oklch(0.82 0.11 210); margin-bottom: 20px;">okasha.me — est. 2019, rebuilt 2026</div>
+        <div style="font-family: 'Instrument Serif', serif; font-size: 84px; line-height: 1.02; color: #eef1f6; text-wrap: pretty;">
+          Mostafa Okasha builds <em style="color: oklch(0.82 0.11 210);">software</em>, <em style="color: oklch(0.82 0.11 210);">machines</em> &amp; the occasional <em style="color: oklch(0.82 0.11 210);">bad idea</em> that works.
+        </div>
+        <div style="margin-top: 26px; font-size: 18px; line-height: 1.55; color: #9aa3b2; max-width: 560px;">
+          Engineer, ex-Meta &amp; Capital One. Currently building AI applications, consulting, and collecting everything I make in one place — right here.
+        </div>
+      </div>
+
+      <!-- bottom index strip -->
+      <div style="position: absolute; left: 48px; right: 48px; bottom: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        <div style="border-top: 1px solid rgba(195,203,216,0.25); padding-top: 14px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.82 0.11 210);">01 · WRITING</div>
+          <div style="color: #c3cbd8; font-size: 15px; margin-top: 6px;">Essays, engineering notes, AI experiments</div>
+        </div>
+        <div style="border-top: 1px solid rgba(195,203,216,0.25); padding-top: 14px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.82 0.11 210);">02 · PROJECTS</div>
+          <div style="color: #c3cbd8; font-size: 15px; margin-top: 6px;">ChessMate, EyeSee, and what's next</div>
+        </div>
+        <div style="border-top: 1px solid rgba(195,203,216,0.25); padding-top: 14px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.82 0.11 210);">03 · AI LAB</div>
+          <div style="color: #c3cbd8; font-size: 15px; margin-top: 6px;">Workflows, prompts &amp; agent recipes</div>
+        </div>
+        <div style="border-top: 1px solid rgba(195,203,216,0.25); padding-top: 14px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: oklch(0.82 0.11 210);">04 · DESIGN</div>
+          <div style="color: #c3cbd8; font-size: 15px; margin-top: 6px;">CAD, identity &amp; photography</div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Live particle sky drifts slowly and reacts to the cursor. Serif headline gives it an editorial, confident voice — the "observatory" where all your work is catalogued.</div>
+  </div>
+
+  <!-- ============ OPTION 1B — THE GARDEN ============ -->
+  <div id="1b" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#1b" style="background: oklch(0.82 0.11 150); color: #0a0f0b; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">1b</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">THE GARDEN — a living map of everything you make</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0b0e0c; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+      <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(140,180,150,0.10) 1px, transparent 1px); background-size: 28px 28px;"></div>
+
+      <!-- nav -->
+      <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 32px 48px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="images/m-logo.png" alt="M" style="height: 30px; filter: brightness(10);">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #aeb8ae;">the garden of mostafa okasha</span>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: oklch(0.82 0.11 150);">78 things growing · last planted 2d ago</div>
+      </div>
+
+      <!-- left copy -->
+      <div style="position: absolute; left: 48px; top: 200px; width: 360px; z-index: 2;">
+        <div style="font-size: 54px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; color: #e9efe9;">Everything I make lives on this map.</div>
+        <div style="margin-top: 20px; font-size: 17px; line-height: 1.6; color: #8b968b;">Essays, code, CAD, prompts, photographs — each one a node. Click anything. Follow the threads between them.</div>
+        <div style="margin-top: 28px; display: flex; gap: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">
+          <span style="border: 1px solid oklch(0.82 0.11 150); color: oklch(0.82 0.11 150); padding: 8px 16px; border-radius: 999px;">wander →</span>
+          <span style="border: 1px solid rgba(140,150,140,0.4); color: #8b968b; padding: 8px 16px; border-radius: 999px;">search /</span>
+        </div>
+      </div>
+
+      <!-- the map -->
+      <svg width="1280" height="860" viewBox="0 0 1280 860" style="position: absolute; inset: 0;">
+        <line x1="820" y1="430" x2="640" y2="230" stroke="rgba(150,200,160,0.25)" stroke-width="1"></line>
+        <line x1="820" y1="430" x2="1050" y2="250" stroke="rgba(150,200,160,0.25)" stroke-width="1"></line>
+        <line x1="820" y1="430" x2="1110" y2="480" stroke="rgba(150,200,160,0.25)" stroke-width="1"></line>
+        <line x1="820" y1="430" x2="980" y2="680" stroke="rgba(150,200,160,0.25)" stroke-width="1"></line>
+        <line x1="820" y1="430" x2="640" y2="640" stroke="rgba(150,200,160,0.25)" stroke-width="1"></line>
+        <line x1="820" y1="430" x2="540" y2="440" stroke="rgba(150,200,160,0.25)" stroke-width="1"></line>
+        <line x1="640" y1="230" x2="1050" y2="250" stroke="rgba(150,200,160,0.12)" stroke-width="1"></line>
+        <line x1="980" y1="680" x2="1110" y2="480" stroke="rgba(150,200,160,0.12)" stroke-width="1"></line>
+        <line x1="640" y1="640" x2="540" y2="440" stroke="rgba(150,200,160,0.12)" stroke-width="1"></line>
+      </svg>
+
+      <!-- center node -->
+      <div style="position: absolute; left: 820px; top: 430px; transform: translate(-50%,-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <div style="width: 92px; height: 92px; border-radius: 50%; background: #101511; border: 1px solid oklch(0.82 0.11 150); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(120,220,150,0.25);">
+          <img src="images/m-logo.png" alt="M" style="height: 40px; filter: brightness(10);">
+        </div>
+      </div>
+
+      <!-- satellite nodes -->
+      <div style="position: absolute; left: 640px; top: 230px; transform: translate(-50%,-50%); z-index: 2; text-align: center; animation: drift 7s ease-in-out infinite;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: oklch(0.82 0.11 150); margin: 0 auto; animation: pulse 3s ease-in-out infinite;"></div>
+        <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #d7e2d7;">writing <span style="color: #6f7a6f;">×24</span></div>
+      </div>
+      <div style="position: absolute; left: 1050px; top: 250px; transform: translate(-50%,-50%); z-index: 2; text-align: center; animation: drift 9s ease-in-out infinite;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: oklch(0.82 0.11 150); margin: 0 auto; animation: pulse 4s ease-in-out infinite;"></div>
+        <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #d7e2d7;">projects <span style="color: #6f7a6f;">×12</span></div>
+      </div>
+      <div style="position: absolute; left: 1110px; top: 480px; transform: translate(-50%,-50%); z-index: 2; text-align: center; animation: drift 8s ease-in-out infinite;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: oklch(0.82 0.11 150); margin: 0 auto; animation: pulse 3.5s ease-in-out infinite;"></div>
+        <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #d7e2d7;">ai lab <span style="color: #6f7a6f;">×17</span></div>
+      </div>
+      <div style="position: absolute; left: 980px; top: 680px; transform: translate(-50%,-50%); z-index: 2; text-align: center; animation: drift 6s ease-in-out infinite;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: oklch(0.82 0.11 150); margin: 0 auto; animation: pulse 4.5s ease-in-out infinite;"></div>
+        <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #d7e2d7;">photos <span style="color: #6f7a6f;">×31</span></div>
+      </div>
+      <div style="position: absolute; left: 640px; top: 640px; transform: translate(-50%,-50%); z-index: 2; text-align: center; animation: drift 10s ease-in-out infinite;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: oklch(0.82 0.11 150); margin: 0 auto; animation: pulse 5s ease-in-out infinite;"></div>
+        <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #d7e2d7;">design <span style="color: #6f7a6f;">×9</span></div>
+      </div>
+      <div style="position: absolute; left: 540px; top: 440px; transform: translate(-50%,-50%); z-index: 2; text-align: center; animation: drift 8.5s ease-in-out infinite;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: oklch(0.82 0.11 150); margin: 0 auto; animation: pulse 3.8s ease-in-out infinite;"></div>
+        <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #d7e2d7;">docs <span style="color: #6f7a6f;">×6</span></div>
+      </div>
+
+      <!-- footer hint -->
+      <div style="position: absolute; left: 48px; bottom: 36px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6f7a6f;">recently planted: "agent memory patterns" · "chessmate retrospective" · sinai trip photos</div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">The homepage IS the sitemap — a force-directed graph you can drag, zoom, and click. New content grows new nodes. Deeply personal, endlessly explorable, and unlike any portfolio out there.</div>
+  </div>
+
+  <!-- ============ OPTION 1C — KINETIC ============ -->
+  <div id="1c" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <a href="#1c" style="background: oklch(0.82 0.14 80); color: #12100a; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px;">1c</a>
+      <span style="color: #9aa3b2; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">KINETIC — the type is the show, terminal soul</span>
+    </div>
+
+    <div style="width: 1280px; height: 860px; background: #0e0d0b; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); display: flex; flex-direction: column;">
+      <!-- nav -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 28px 48px; border-bottom: 1px solid rgba(230,220,200,0.12);">
+        <img src="images/m-logo.png" alt="M" style="height: 30px; filter: brightness(10);">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #b5ad9c; display: flex; gap: 8px; align-items: center;">
+          <span style="color: oklch(0.82 0.14 80);">~/okasha</span><span>$</span><span>explore --all</span><span style="display: inline-block; width: 9px; height: 18px; background: oklch(0.82 0.14 80); animation: blink 1s step-end infinite;"></span>
+        </div>
+      </div>
+
+      <!-- giant type -->
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 48px; gap: 0;">
+        <div style="font-family: 'Anton', sans-serif; font-size: 148px; line-height: 0.98; color: #f0ebe0; letter-spacing: 0.01em; animation: riseIn 0.8s ease-out both;">MOSTAFA</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 148px; line-height: 0.98; letter-spacing: 0.01em; color: transparent; -webkit-text-stroke: 2px #f0ebe0; animation: riseIn 0.8s 0.1s ease-out both;">OKASHA</div>
+        <div style="display: flex; align-items: center; gap: 28px; animation: riseIn 0.8s 0.2s ease-out both;">
+          <div style="font-family: 'Anton', sans-serif; font-size: 148px; line-height: 0.98; color: oklch(0.82 0.14 80); letter-spacing: 0.01em;">MAKES</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; line-height: 1.5; color: #b5ad9c; max-width: 420px;">software · robots · AI workflows · photographs · and this website, from scratch, twice</div>
+        </div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 148px; line-height: 0.98; color: #f0ebe0; letter-spacing: 0.01em; animation: riseIn 0.8s 0.3s ease-out both;">THINGS<span style="color: oklch(0.82 0.14 80);">.</span></div>
+      </div>
+
+      <!-- marquee -->
+      <div style="border-top: 1px solid rgba(230,220,200,0.12); padding: 18px 0; overflow: hidden; white-space: nowrap;">
+        <div style="display: inline-flex; gap: 48px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #b5ad9c; animation: marquee 22s linear infinite;">
+          <span>WRITING ×24</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>PROJECTS ×12</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>AI LAB ×17</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>DESIGN ×9</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>PHOTOS ×31</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>DOCS ×6</span><span style="color: oklch(0.82 0.14 80);">✦</span>
+          <span>WRITING ×24</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>PROJECTS ×12</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>AI LAB ×17</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>DESIGN ×9</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>PHOTOS ×31</span><span style="color: oklch(0.82 0.14 80);">✦</span><span>DOCS ×6</span><span style="color: oklch(0.82 0.14 80);">✦</span>
+        </div>
+      </div>
+    </div>
+    <div style="color: #6d7481; font-size: 14px; max-width: 1280px; line-height: 1.5;">Zero images, all voice. Loads instantly, scales perfectly to mobile (the type just reflows), and the terminal prompt doubles as a real command palette. The boldest and lightest of the three.</div>
+  </div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { chapter: 0, typed: '' };
+  componentDidMount() {
+    const msg = 'Get To Know Me!';
+    let i = 0, dir = 1;
+    this._typeTimer = setInterval(() => {
+      i += dir;
+      if (i >= msg.length + 14) { dir = -1; i = msg.length; }
+      if (i <= 0) { dir = 1; i = 0; }
+      const n = Math.max(0, Math.min(msg.length, i));
+      if (this.state.typed.length !== n) this.setState({ typed: msg.slice(0, n) });
+    }, 130);
+  }
+  renderVals() {
+    const ch = this.state.chapter;
+    const names = ['sky', 'ocean', 'dunes', 'peaks'];
+    const vals = {
+      typed: this.state.typed,
+      goSky: () => this.setChapter(0),
+      goOcean: () => this.setChapter(1),
+      goDunes: () => this.setChapter(2),
+      goPeaks: () => this.setChapter(3)
+    };
+    names.forEach((n, i) => {
+      vals[n + 'Bg'] = ch === i ? 'rgba(242,244,248,0.92)' : 'rgba(10,14,22,0.35)';
+      vals[n + 'Fg'] = ch === i ? '#141a26' : '#f2f4f8';
+    });
+    return Object.assign(vals, {
+      skyRef: (el) => this.initSky(el),
+      expeditionRef: (el) => this.initExpedition(el),
+      auroraRef: (el) => this.initAurora(el),
+      globeRef: (el) => this.initGlobe(el)
+    });
+  }
+  setChapter(i) {
+    this.setState({ chapter: i });
+    this._chapterTarget = i;
+  }
+  initExpedition(canvas) {
+    if (!canvas || canvas === this._expCanvas) return;
+    this._expCanvas = canvas;
+    if (this._expRaf) cancelAnimationFrame(this._expRaf);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    this._chapterTarget = this.state.chapter || 0;
+
+    // ---- palettes: [skyTop, skyMid, horizonGlow, farRidge, midRidge, foreground, water] as rgb arrays
+    const P = [
+      // 01 clouds — dawn flight above cloud sea
+      [[24,36,66],[86,74,110],[236,150,110],[52,60,96],[38,46,78],[22,28,50],[70,78,120]],
+      // 02 ocean — deep teal swell
+      [[8,30,44],[16,62,78],[120,220,200],[14,52,66],[10,42,56],[6,26,36],[18,84,96]],
+      // 03 dunes — dusk sahara
+      [[38,22,40],[112,52,52],[244,166,92],[92,50,54],[62,34,48],[30,16,28],[150,90,70]],
+      // 04 himalayas — cold moonlit
+      [[8,16,34],[22,36,64],[150,190,240],[64,84,120],[40,56,90],[14,20,38],[60,80,116]]
+    ];
+    // current palette (mutable, lerped)
+    const cur = P[this._chapterTarget].map(c => c.slice());
+    const rgb = (c, a) => 'rgba(' + (c[0]|0) + ',' + (c[1]|0) + ',' + (c[2]|0) + ',' + (a == null ? 1 : a) + ')';
+
+    // per-chapter scene params, lerped: cloudAmt, waveAmt, duneAmt, peakAmt, snow, waterY(0-1), starAmt
+    const S = [
+      { cloud: 1.0, wave: 0.15, dune: 0.0, peak: 0.35, snow: 0.0, water: 0.80, star: 0.25 },
+      { cloud: 0.35, wave: 1.0, dune: 0.0, peak: 0.15, snow: 0.0, water: 0.58, star: 0.15 },
+      { cloud: 0.15, wave: 0.0, dune: 1.0, peak: 0.20, snow: 0.0, water: 0.99, star: 0.55 },
+      { cloud: 0.30, wave: 0.0, dune: 0.0, peak: 1.0, snow: 1.0, water: 0.99, star: 0.9 }
+    ];
+    const cs = Object.assign({}, S[this._chapterTarget]);
+
+    let mx = 0.5, my = 0.5;
+    canvas.parentElement.addEventListener('mousemove', (e) => {
+      const b = canvas.getBoundingClientRect();
+      mx = (e.clientX - b.left) / b.width;
+      my = (e.clientY - b.top) / b.height;
+    });
+
+    // clouds
+    const clouds = Array.from({ length: 16 }, (_, i) => ({
+      x: Math.random() * (W + 400) - 200,
+      y: 90 + Math.random() * 420,
+      s: 0.5 + Math.random() * 1.5,
+      v: 0.08 + Math.random() * 0.22,
+      seed: Math.random() * 10
+    }));
+    // stars
+    const stars = Array.from({ length: 110 }, () => ({
+      x: Math.random() * W, y: Math.random() * H * 0.5, r: Math.random() * 1.3 + 0.3, tw: Math.random() * 6.28
+    }));
+    // birds
+    const flock = Array.from({ length: 7 }, (_, i) => ({ o: i * 26, ph: i * 0.7 }));
+
+    const ridge = (x, t, base, amp, f1, f2, ph, jag) => {
+      let y = base + Math.sin(x * f1 + ph) * amp + Math.sin(x * f2 + ph * 2.7) * amp * 0.45 + Math.sin(x * f1 * 3.1 + ph * 1.3) * amp * 0.18;
+      if (jag > 0.02) {
+        // sharp alpine cusps: subtracted |sin| terms create pointed summits
+        y -= jag * amp * (0.85 * Math.abs(Math.sin(x * 0.011 + ph * 1.9))
+          + 0.38 * Math.abs(Math.sin(x * 0.031 + ph * 3.4))
+          + 0.16 * Math.abs(Math.sin(x * 0.083 + ph * 5.2)))
+          - jag * amp * 0.55; // recenter
+      }
+      return y;
+    };
+
+    const drawRidge = (t, base, amp, f1, f2, ph, color, snowAmt, px, jag) => {
+      jag = jag || 0;
+      ctx.beginPath();
+      ctx.moveTo(-20, H);
+      for (let x = -20; x <= W + 20; x += 6) {
+        ctx.lineTo(x, ridge(x + px, t, base, amp, f1, f2, ph, jag));
+      }
+      ctx.lineTo(W + 20, H);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      if (snowAmt > 0.05) {
+        // snow: fill a band below the crest, deeper on the lit side of each peak
+        const band = 16 + snowAmt * 34;
+        const g = ctx.createLinearGradient(0, base - amp * 1.4, 0, base + band);
+        g.addColorStop(0, 'rgba(235,243,255,' + (0.85 * snowAmt).toFixed(2) + ')');
+        g.addColorStop(1, 'rgba(235,243,255,0)');
+        ctx.beginPath();
+        for (let x = -20; x <= W + 20; x += 6) {
+          const y = ridge(x + px, t, base, amp, f1, f2, ph, jag);
+          if (x === -20) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        for (let x = W + 20; x >= -20; x -= 6) {
+          const y = ridge(x + px, t, base, amp, f1, f2, ph, jag);
+          // snow reaches further down in the concave bowls just under summits
+          ctx.lineTo(x, y + band * (0.4 + 0.6 * Math.abs(Math.sin(x * 0.011 + ph * 1.9))));
+        }
+        ctx.closePath();
+        ctx.fillStyle = g;
+        ctx.fill();
+      }
+    };
+
+    const puff = (cx, cy, s, alpha, lit) => {
+      const g = ctx.createRadialGradient(cx, cy, 4 * s, cx, cy, 90 * s);
+      g.addColorStop(0, 'rgba(' + lit + ',' + alpha.toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + lit + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 90 * s, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    let planeX = -220, planeY = 190;
+    const tick = (t) => {
+      // lerp palette + params toward target chapter
+      const tgtP = P[this._chapterTarget], tgtS = S[this._chapterTarget];
+      for (let i = 0; i < cur.length; i++)
+        for (let j = 0; j < 3; j++) cur[i][j] += (tgtP[i][j] - cur[i][j]) * 0.03;
+      for (const k in cs) cs[k] += (tgtS[k] - cs[k]) * 0.03;
+
+      const px = (mx - 0.5); // parallax factor
+      const py = (my - 0.5);
+
+      // sky
+      const sky = ctx.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, rgb(cur[0]));
+      sky.addColorStop(0.55, rgb(cur[1]));
+      sky.addColorStop(0.78, rgb(cur[2], 0.65));
+      sky.addColorStop(1, rgb(cur[5]));
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, W, H);
+
+      // sun / moon glow
+      const gx = W * 0.62 - px * 60, gy = H * 0.52 - py * 30;
+      const glow = ctx.createRadialGradient(gx, gy, 10, gx, gy, 340);
+      glow.addColorStop(0, rgb(cur[2], 0.5));
+      glow.addColorStop(1, rgb(cur[2], 0));
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, W, H);
+
+      // stars
+      if (cs.star > 0.05) {
+        for (const s of stars) {
+          const a = cs.star * (0.25 + 0.4 * Math.abs(Math.sin(t / 1100 + s.tw)));
+          ctx.beginPath();
+          ctx.arc(s.x - px * 20, s.y - py * 12, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(235,242,255,' + a.toFixed(3) + ')';
+          ctx.fill();
+        }
+      }
+
+      // far ridge (peaks)
+      const peakAmp = 30 + cs.peak * 150;
+      const jag = cs.snow * 1.0 + cs.peak * 0.25;
+      drawRidge(t, H * 0.58 + py * -14, peakAmp, 0.006, 0.017, 1.7, rgb(cur[3]), cs.snow, px * -40 + t * 0.004, jag);
+      drawRidge(t, H * 0.68 + py * -8, peakAmp * 0.72, 0.008, 0.021, 4.1, rgb(cur[4]), cs.snow * 0.75, px * -70 + t * 0.007, jag * 0.85);
+
+      // water band
+      const wy = H * cs.water;
+      if (wy < H - 4) {
+        const wat = ctx.createLinearGradient(0, wy, 0, H);
+        wat.addColorStop(0, rgb(cur[6], 0.95));
+        wat.addColorStop(1, rgb(cur[5]));
+        ctx.fillStyle = wat;
+        ctx.fillRect(0, wy, W, H - wy);
+        // glow path on water
+        const shine = ctx.createLinearGradient(0, wy, 0, H);
+        shine.addColorStop(0, rgb(cur[2], 0.35));
+        shine.addColorStop(1, rgb(cur[2], 0));
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(gx - 40, wy);
+        ctx.lineTo(gx + 40, wy);
+        ctx.lineTo(gx + 190, H);
+        ctx.lineTo(gx - 190, H);
+        ctx.closePath();
+        ctx.fillStyle = shine;
+        ctx.fill();
+        ctx.restore();
+        // waves
+        if (cs.wave > 0.05) {
+          for (let r = 0; r < 7; r++) {
+            const yy = wy + 14 + r * ((H - wy) / 7.5);
+            ctx.beginPath();
+            for (let x = -20; x <= W + 20; x += 10) {
+              const y2 = yy + Math.sin(x * 0.016 + t * 0.0012 + r * 1.8) * (3 + r * 2.2) * cs.wave
+                + Math.sin(x * 0.041 - t * 0.0017 + r) * 2 * cs.wave;
+              if (x === -20) ctx.moveTo(x, y2); else ctx.lineTo(x, y2);
+            }
+            ctx.strokeStyle = 'rgba(220,245,240,' + (0.05 + r * 0.022).toFixed(3) + ')';
+            ctx.lineWidth = 1.4;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // dunes foreground
+      if (cs.dune > 0.05) {
+        const d1 = ctx.createLinearGradient(0, H * 0.66, 0, H);
+        d1.addColorStop(0, rgb([cur[2][0] * 0.55, cur[2][1] * 0.42, cur[2][2] * 0.38]));
+        d1.addColorStop(1, rgb(cur[5]));
+        ctx.beginPath();
+        ctx.moveTo(-20, H);
+        for (let x = -20; x <= W + 20; x += 10) {
+          const y = H * 0.74 + Math.sin(x * 0.0035 + 1.2 + px * 0.5) * 55 * cs.dune + Math.sin(x * 0.011 + 3.3) * 18 * cs.dune;
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(W + 20, H);
+        ctx.closePath();
+        ctx.globalAlpha = cs.dune;
+        ctx.fillStyle = d1;
+        ctx.fill();
+        // dune crest light
+        ctx.beginPath();
+        for (let x = -20; x <= W + 20; x += 10) {
+          const y = H * 0.74 + Math.sin(x * 0.0035 + 1.2 + px * 0.5) * 55 * cs.dune + Math.sin(x * 0.011 + 3.3) * 18 * cs.dune;
+          if (x === -20) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = rgb(cur[2], 0.5 * cs.dune);
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+        // drifting sand particles
+        for (let i = 0; i < 40; i++) {
+          const sx = ((i * 97 + t * 0.09 * (1 + (i % 3))) % (W + 40)) - 20;
+          const sy = H * 0.72 + Math.sin(i * 3.1) * 60 + Math.sin(t * 0.001 + i) * 8;
+          ctx.beginPath();
+          ctx.arc(sx, sy, 1.1, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,214,150,' + (0.25 * cs.dune).toFixed(3) + ')';
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // near-black foreground silhouette
+      drawRidge(t, H * 0.90 + py * 10, 26 + cs.peak * 30 + cs.dune * 10, 0.005, 0.013, 8.3, rgb(cur[5]), 0, px * -120, jag * 0.5);
+
+      // clouds (front layer, above ridges when low)
+      const lit = (cur[2][0] * 0.5 + 120 | 0) + ',' + (cur[2][1] * 0.5 + 120 | 0) + ',' + (cur[2][2] * 0.5 + 125 | 0);
+      for (const c of clouds) {
+        c.x += c.v * (0.6 + c.s * 0.4);
+        if (c.x > W + 260) c.x = -260;
+        const cy2 = c.y + Math.sin(t * 0.0004 + c.seed) * 10 - py * 26 * c.s;
+        const a = (0.05 + 0.11 * cs.cloud) * (0.5 + c.s * 0.4);
+        puff(c.x - px * 40 * c.s, cy2, c.s, a, lit);
+        puff(c.x - px * 40 * c.s + 55 * c.s, cy2 + 12 * c.s, c.s * 0.7, a * 0.85, lit);
+        puff(c.x - px * 40 * c.s - 60 * c.s, cy2 + 16 * c.s, c.s * 0.6, a * 0.8, lit);
+      }
+
+      // airplane + contrail
+      planeX += 0.55;
+      if (planeX > W + 240) { planeX = -240; planeY = 130 + Math.random() * 180; }
+      const pxx = planeX, pyy = planeY + Math.sin(t * 0.0006) * 8 - py * 18;
+      ctx.save();
+      // contrail
+      const trail = ctx.createLinearGradient(pxx - 320, pyy, pxx, pyy);
+      trail.addColorStop(0, 'rgba(240,246,255,0)');
+      trail.addColorStop(1, 'rgba(240,246,255,0.4)');
+      ctx.strokeStyle = trail;
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(pxx - 320, pyy + 3);
+      ctx.quadraticCurveTo(pxx - 160, pyy + 7, pxx - 14, pyy + 2);
+      ctx.stroke();
+      // silhouette
+      ctx.translate(pxx, pyy);
+      ctx.fillStyle = 'rgba(242,246,255,0.92)';
+      ctx.beginPath();
+      ctx.moveTo(18, 0); ctx.lineTo(-8, -3); ctx.lineTo(-16, -14); ctx.lineTo(-12, -2);
+      ctx.lineTo(-18, -1); ctx.lineTo(-22, -6); ctx.lineTo(-20, 1); ctx.lineTo(-12, 3);
+      ctx.lineTo(-4, 14); ctx.lineTo(2, 3); ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // birds
+      for (const b of flock) {
+        const bx = ((t * 0.045 + b.o * 9) % (W + 300)) - 150;
+        const by = H * 0.36 + Math.sin(bx * 0.01 + b.ph) * 26 + b.o * 1.4 - py * 20;
+        const flap = Math.sin(t * 0.012 + b.ph) * 5;
+        ctx.strokeStyle = 'rgba(20,24,34,0.75)';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(bx - 7, by - flap);
+        ctx.quadraticCurveTo(bx, by + 3, bx + 7, by - flap);
+        ctx.stroke();
+      }
+
+      this._expRaf = requestAnimationFrame(tick);
+    };
+    this._expRaf = requestAnimationFrame(tick);
+  }
+  initAurora(canvas) {
+    if (!canvas || canvas === this._auroraCanvas) return;
+    this._auroraCanvas = canvas;
+    if (this._auroraRaf) cancelAnimationFrame(this._auroraRaf);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    // flow-field particles leaving mint trails on navy
+    const N = 420;
+    const parts = Array.from({ length: N }, () => ({
+      x: Math.random() * W, y: Math.random() * H, px: 0, py: 0, sp: 0.4 + Math.random() * 0.9
+    }));
+    let mx = -9999, my = -9999;
+    canvas.parentElement.addEventListener('mousemove', (e) => {
+      const b = canvas.getBoundingClientRect();
+      mx = (e.clientX - b.left) * (W / b.width);
+      my = (e.clientY - b.top) * (H / b.height);
+    });
+    ctx.fillStyle = '#0a192f';
+    ctx.fillRect(0, 0, W, H);
+    const field = (x, y, t) => {
+      const s = 0.0016;
+      return Math.sin(x * s + t * 0.00022) * 1.6 + Math.cos(y * s * 1.3 - t * 0.00017) * 1.6
+        + Math.sin((x + y) * s * 0.6 + t * 0.0001) * 0.8;
+    };
+    const tick = (t) => {
+      ctx.fillStyle = 'rgba(10,25,47,0.055)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.lineWidth = 1;
+      for (const p of parts) {
+        p.px = p.x; p.py = p.y;
+        let a = field(p.x, p.y, t);
+        // gentle cursor repulsion
+        const dx = p.x - mx, dy = p.y - my;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 22500) {
+          a = Math.atan2(dy, dx);
+        }
+        p.x += Math.cos(a) * p.sp;
+        p.y += Math.sin(a) * p.sp;
+        if (p.x < -10 || p.x > W + 10 || p.y < -10 || p.y > H + 10) {
+          p.x = Math.random() * W; p.y = Math.random() * H;
+          p.px = p.x; p.py = p.y;
+        }
+        const al = 0.05 + 0.09 * Math.abs(Math.sin(p.x * 0.01 + t * 0.0004));
+        ctx.strokeStyle = 'rgba(100,255,218,' + al.toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(p.px, p.py);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+      this._auroraRaf = requestAnimationFrame(tick);
+    };
+    this._auroraRaf = requestAnimationFrame(tick);
+  }
+  initGlobe(canvas) {
+    if (!canvas || canvas === this._globeCanvas) return;
+    this._globeCanvas = canvas;
+    if (this._globeRaf) cancelAnimationFrame(this._globeRaf);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const CX = 930, CY = 460, R = 330;
+    // points distributed on a sphere (fibonacci)
+    const N = 900;
+    const pts = [];
+    const ga = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2;
+      const rad = Math.sqrt(1 - y * y);
+      const th = ga * i;
+      pts.push({ x: Math.cos(th) * rad, y, z: Math.sin(th) * rad });
+    }
+    // arc endpoints (visited cities, roughly)
+    const cities = [
+      [0.76, 0.44], [0.52, -0.31], [0.31, 0.87], [-0.42, 0.60], [-0.18, -0.75], [0.05, 0.10], [0.9, -0.1], [-0.7, -0.2]
+    ].map(([lat, lon]) => ({
+      x: Math.cos(lat) * Math.cos(lon), y: Math.sin(lat), z: Math.cos(lat) * Math.sin(lon)
+    }));
+    const arcs = [[0,3],[1,4],[2,5],[0,6],[3,7],[1,5]];
+    let mx = 0.5;
+    canvas.parentElement.addEventListener('mousemove', (e) => {
+      const b = canvas.getBoundingClientRect();
+      mx = (e.clientX - b.left) / b.width;
+    });
+    let rotTarget = 0, rot = 0;
+    const rotX = -0.35;
+    const project = (p, rY) => {
+      const cX = Math.cos(rY), sX = Math.sin(rY);
+      let x = p.x * cX + p.z * sX;
+      let z = -p.x * sX + p.z * cX;
+      const cT = Math.cos(rotX), sT = Math.sin(rotX);
+      let y = p.y * cT - z * sT;
+      z = p.y * sT + z * cT;
+      return { sx: CX + x * R, sy: CY + y * R, z };
+    };
+    const tick = (t) => {
+      ctx.clearRect(0, 0, W, H);
+      rotTarget = t / 14000 + (mx - 0.5) * 1.2;
+      rot += (rotTarget - rot) * 0.04;
+      // dust ring
+      for (let i = 0; i < 60; i++) {
+        const a = (i / 60) * Math.PI * 2 + t / 9000;
+        const rr = R * 1.28 + Math.sin(i * 7.3) * 26;
+        const px = CX + Math.cos(a) * rr;
+        const py = CY + Math.sin(a) * rr * 0.42;
+        const al = 0.10 + 0.10 * Math.sin(t / 700 + i);
+        ctx.beginPath();
+        ctx.arc(px, py, 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(240,180,130,' + al.toFixed(2) + ')';
+        ctx.fill();
+      }
+      // sphere points
+      for (const p of pts) {
+        const q = project(p, rot);
+        const a = q.z > 0 ? 0.55 + q.z * 0.3 : 0.06;
+        const sz = q.z > 0 ? 1.5 + q.z : 0.8;
+        ctx.beginPath();
+        ctx.arc(q.sx, q.sy, sz, 0, Math.PI * 2);
+        ctx.fillStyle = q.z > 0 ? 'rgba(242,178,122,' + a.toFixed(2) + ')' : 'rgba(180,140,110,' + a.toFixed(2) + ')';
+        ctx.fill();
+      }
+      // arcs with travelling pulse
+      arcs.forEach((pair, i) => {
+        const A = project(cities[pair[0]], rot);
+        const B = project(cities[pair[1]], rot);
+        if (A.z < -0.2 && B.z < -0.2) return;
+        const mxp = (A.sx + B.sx) / 2, myp = (A.sy + B.sy) / 2;
+        const d = Math.hypot(B.sx - A.sx, B.sy - A.sy);
+        const cx2 = mxp + (myp - CY) * 0.001 * d, cy2 = myp - d * 0.35;
+        ctx.beginPath();
+        ctx.moveTo(A.sx, A.sy);
+        ctx.quadraticCurveTo(cx2, cy2, B.sx, B.sy);
+        ctx.strokeStyle = 'rgba(255,160,90,0.28)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        // pulse
+        const u = ((t / 2200) + i * 0.37) % 1;
+        const iu = 1 - u;
+        const px = iu * iu * A.sx + 2 * iu * u * cx2 + u * u * B.sx;
+        const py = iu * iu * A.sy + 2 * iu * u * cy2 + u * u * B.sy;
+        ctx.beginPath();
+        ctx.arc(px, py, 2.6, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,190,120,0.95)';
+        ctx.fill();
+        // city dots
+        [A, B].forEach((q) => {
+          if (q.z > -0.2) {
+            ctx.beginPath();
+            ctx.arc(q.sx, q.sy, 3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,200,140,0.9)';
+            ctx.fill();
+          }
+        });
+      });
+      this._globeRaf = requestAnimationFrame(tick);
+    };
+    this._globeRaf = requestAnimationFrame(tick);
+  }
+  initSky(canvas) {
+    if (!canvas || canvas === this._canvas) return;
+    this._canvas = canvas;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const stars = Array.from({ length: 160 }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.6 + 0.3,
+      vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,
+      tw: Math.random() * Math.PI * 2
+    }));
+    let mx = W / 2, my = H / 2;
+    canvas.parentElement.addEventListener('mousemove', (e) => {
+      const b = canvas.getBoundingClientRect();
+      mx = (e.clientX - b.left) * (W / b.width);
+      my = (e.clientY - b.top) * (H / b.height);
+    });
+    const tick = (t) => {
+      ctx.clearRect(0, 0, W, H);
+      for (const s of stars) {
+        s.x += s.vx; s.y += s.vy;
+        if (s.x < 0) s.x += W; if (s.x > W) s.x -= W;
+        if (s.y < 0) s.y += H; if (s.y > H) s.y -= H;
+        const a = 0.35 + 0.45 * Math.sin(t / 900 + s.tw);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(190,215,240,' + a.toFixed(2) + ')';
+        ctx.fill();
+      }
+      // connect stars near the cursor
+      ctx.strokeStyle = 'rgba(140,190,230,0.18)';
+      for (const s of stars) {
+        const d = Math.hypot(s.x - mx, s.y - my);
+        if (d < 160) {
+          ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(s.x, s.y); ctx.stroke();
+        }
+      }
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._globeRaf) cancelAnimationFrame(this._globeRaf);
+    if (this._auroraRaf) cancelAnimationFrame(this._auroraRaf);
+    if (this._expRaf) cancelAnimationFrame(this._expRaf);
+    if (this._typeTimer) clearInterval(this._typeTimer);
+  }
+}
+</script>
+</body>
+</html>

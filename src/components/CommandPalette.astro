@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import { SHELF_TYPES, fmtMeta } from '../data/shelves';
+
+const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const items = [
+  ...entries.map((e) => ({
+    title: e.data.title,
+    badge: SHELF_TYPES[e.data.type].badge,
+    color: SHELF_TYPES[e.data.type].color,
+    meta: fmtMeta(e.data.date, e.data.readingTime),
+    url: `/library/${e.id}`,
+    haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
+  })),
+  { title: 'The Library', badge: 'PAGE', color: '#8892b0', meta: 'all shelves', url: '/library', haystack: 'library shelves writing essays notes' },
+  { title: 'The Workshop', badge: 'PAGE', color: '#8892b0', meta: 'projects · CAD', url: '/workshop', haystack: 'workshop projects system designs cad photography' },
+  { title: 'Resume — with receipts', badge: 'PAGE', color: '#8892b0', meta: 'interactive', url: '/resume', haystack: 'resume cv experience receipts pdf' },
+  { title: 'Skills', badge: 'PAGE', color: '#8892b0', meta: 'dossiers', url: '/skills', haystack: 'skills tools python typescript aws dossier' },
+];
+---
+
+<div class="palette-overlay" data-palette>
+  <div class="palette" role="dialog" aria-label="Search">
+    <div class="input-row">
+      <span class="glyph">⌕</span>
+      <input type="text" placeholder="search everything…" data-palette-input autocomplete="off" />
+      <kbd>esc</kbd>
+    </div>
+    <div class="results" data-palette-results></div>
+    <div class="hint-row">
+      <span>↑↓ navigate</span>
+      <span>↵ open</span>
+      <span>esc close</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ items }}>
+  (() => {
+    const overlay = document.querySelector('[data-palette]');
+    const input = overlay.querySelector('[data-palette-input]');
+    const resultsEl = overlay.querySelector('[data-palette-results]');
+    let sel = 0;
+    let shown = [];
+
+    const render = () => {
+      const q = input.value.trim().toLowerCase();
+      shown = q ? items.filter((i) => i.haystack.includes(q) || i.title.toLowerCase().includes(q)) : items.slice(0, 8);
+      sel = Math.min(sel, Math.max(0, shown.length - 1));
+      resultsEl.innerHTML = shown.length
+        ? shown
+            .map(
+              (i, idx) => `
+        <div class="result ${idx === sel ? 'sel' : ''}" data-url="${i.url}">
+          <span class="badge" style="color:${i.color}; border:1px solid ${i.color}66;">${i.badge}</span>
+          <span class="r-title">${i.title}</span>
+          <span class="r-meta">${i.meta}</span>
+        </div>`
+            )
+            .join('')
+        : `<div class="empty">nothing on the shelves matches "${input.value}"</div>`;
+      resultsEl.querySelectorAll('.result').forEach((el, idx) => {
+        el.addEventListener('click', () => (window.location.href = el.dataset.url));
+        el.addEventListener('mousemove', () => {
+          if (sel !== idx) { sel = idx; render(); }
+        });
+      });
+    };
+
+    const open = () => {
+      overlay.classList.add('open');
+      input.value = '';
+      sel = 0;
+      render();
+      setTimeout(() => input.focus(), 0);
+    };
+    const close = () => overlay.classList.remove('open');
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        overlay.classList.contains('open') ? close() : open();
+      } else if (e.key === 'Escape') close();
+      else if (overlay.classList.contains('open')) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(sel + 1, shown.length - 1); render(); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(sel - 1, 0); render(); }
+        else if (e.key === 'Enter' && shown[sel]) window.location.href = shown[sel].url;
+      }
+    });
+    input.addEventListener('input', () => { sel = 0; render(); });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.querySelectorAll('[data-palette-open]').forEach((btn) => btn.addEventListener('click', open));
+  })();
+</script>

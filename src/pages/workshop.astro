@@ -1,0 +1,337 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+
+const projects = [
+  {
+    name: 'MapSight',
+    year: '2024 — now',
+    desc: 'Geospatial analytics platform — drive-time analysis and location intelligence for auto-parts businesses.',
+    img: null,
+    links: [
+      { label: 'system design', href: '#systems', mint: true },
+      { label: 'write-up soon', href: '/library', mint: false },
+    ],
+  },
+  {
+    name: 'ChessMate',
+    year: '2019',
+    desc: 'Autonomous chess robot — vision, engine, SCARA arm. 99% win rate.',
+    img: '/images/webp/projects/ChessMate/chessmate1.webp',
+    links: [
+      { label: 'system design', href: '#systems', mint: true },
+      { label: 'retrospective soon', href: '/library', mint: false },
+    ],
+  },
+  {
+    name: 'EyeSee',
+    year: '1st @ HackPrinceton',
+    desc: 'Wearable assistive vision — narrates threats and surroundings for low-vision users in real-time AR.',
+    img: '/images/webp/projects/EyeSee/EyeSee2.webp',
+    links: [
+      { label: 'photos', href: '#photos', mint: true },
+      { label: 'build story soon', href: '/library', mint: false },
+    ],
+  },
+  {
+    name: 'GlassTasks',
+    year: '2018',
+    desc: 'Restaurant order management on Google Glass — hands-free heads-up display for kitchen staff.',
+    img: '/images/webp/projects/GlassTasks/GlassTasks1.webp',
+    links: [
+      { label: 'github', href: 'https://github.com/MostafaOkasha', mint: true },
+      { label: 'write-up soon', href: '/library', mint: false },
+    ],
+  },
+];
+
+const cad = [
+  { img: '/images/webp/design/landing-gear.webp', title: 'Aircraft landing gear', cap: 'NX · kinematic simulation', feature: true },
+  { img: '/images/webp/design/Iphone_cable.webp', title: 'Rotating Lightning cable', cap: null, feature: false },
+  { img: '/images/webp/design/Final_Assembly1.webp', title: 'SCARA arm assembly', cap: 'full mechanical design', feature: true },
+  { img: '/images/webp/design/CNC_TOP.webp', title: 'Desktop CNC', cap: null, feature: false },
+  { img: '/images/webp/design/epipencase.webp', title: 'EpiPen carry case', cap: null, feature: false },
+  { img: '/images/webp/design/Chair_redesign.webp', title: 'Chair redesign', cap: null, feature: false },
+];
+---
+
+<Base title="Workshop | Mostafa Okasha" description="Projects with demos, the CAD archive, system-design diagrams, and photographs. Atoms and bits, side by side.">
+  <Nav current="workshop" />
+
+  <div class="wrap">
+    <h1 class="page-title">The Workshop.</h1>
+    <p class="page-sub">
+      Projects with demos, the CAD archive, system-design diagrams, and photographs. Atoms and
+      bits, side by side.
+    </p>
+
+    <!-- PROJECTS -->
+    <div class="section-label sec">01 · PROJECTS</div>
+    <div class="grid-3">
+      {
+        projects.map((p) => (
+          <div class="card proj">
+            {p.img ? (
+              <img src={p.img} alt={p.name} class="cover" loading="lazy" />
+            ) : (
+              <div class="cover cover-map" aria-hidden="true">
+                <svg viewBox="0 0 300 190" width="100%" height="100%">
+                  <path d="M0 140 Q60 100 120 130 T300 110" fill="none" stroke="#1d3a5f" stroke-width="1.5" />
+                  <path d="M0 90 Q80 60 150 85 T300 60" fill="none" stroke="#1d3a5f" stroke-width="1.5" />
+                  <path d="M0 40 Q70 25 140 45 T300 20" fill="none" stroke="#1d3a5f" stroke-width="1.5" />
+                  <circle cx="150" cy="88" r="26" fill="none" stroke="#64ffda" stroke-width="1.4" stroke-dasharray="4 5" />
+                  <path d="M150 70 c-9 0 -15 7 -15 15 c0 11 15 26 15 26 s15 -15 15 -26 c0 -8 -6 -15 -15 -15 z" fill="none" stroke="#64ffda" stroke-width="1.6" />
+                  <circle cx="150" cy="85" r="4.5" fill="#64ffda" />
+                  <circle cx="70" cy="130" r="3" fill="#7cb7ff" />
+                  <circle cx="230" cy="60" r="3" fill="#7cb7ff" />
+                  <circle cx="255" cy="125" r="3" fill="#ffd76b" />
+                </svg>
+              </div>
+            )}
+            <div class="body">
+              <div class="head-row">
+                <div class="pname">{p.name}</div>
+                <span class="year mono">{p.year}</span>
+              </div>
+              <div class="pdesc">{p.desc}</div>
+              <div class="chips">
+                {p.links.map((l) => (
+                  <a href={l.href} class={l.mint ? 'chip-mint' : 'chip-slate'}>
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- SYSTEM DESIGNS -->
+    <div class="section-label sec" id="systems">02 · SYSTEM DESIGNS</div>
+    <div class="grid-3">
+      <div class="card diagram" data-zoom>
+        <svg width="100%" height="110" viewBox="0 0 300 110">
+          <rect x="6" y="40" width="62" height="28" rx="5" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
+          <text x="37" y="58" fill="#64ffda" font-size="10" text-anchor="middle" font-family="monospace">camera</text>
+          <rect x="120" y="8" width="62" height="28" rx="5" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+          <text x="151" y="26" fill="#7cb7ff" font-size="10" text-anchor="middle" font-family="monospace">board CV</text>
+          <rect x="120" y="72" width="62" height="28" rx="5" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+          <text x="151" y="90" fill="#7cb7ff" font-size="10" text-anchor="middle" font-family="monospace">stockfish</text>
+          <rect x="232" y="40" width="62" height="28" rx="5" fill="none" stroke="#ffd76b" stroke-width="1.3"></rect>
+          <text x="263" y="58" fill="#ffd76b" font-size="10" text-anchor="middle" font-family="monospace">arm ctrl</text>
+          <line x1="68" y1="54" x2="120" y2="22" stroke="#495670" stroke-width="1"></line>
+          <line x1="68" y1="54" x2="120" y2="86" stroke="#495670" stroke-width="1"></line>
+          <line x1="182" y1="22" x2="232" y2="54" stroke="#495670" stroke-width="1"></line>
+          <line x1="182" y1="86" x2="232" y2="54" stroke="#495670" stroke-width="1"></line>
+        </svg>
+        <div class="dtitle">ChessMate pipeline</div>
+        <div class="dcap mono">vision → engine → arm · click to zoom</div>
+      </div>
+
+      <div class="card diagram" data-zoom>
+        <svg width="100%" height="110" viewBox="0 0 300 110">
+          <circle cx="34" cy="54" r="18" fill="none" stroke="#d8a3ff" stroke-width="1.3"></circle>
+          <text x="34" y="58" fill="#d8a3ff" font-size="10" text-anchor="middle" font-family="monospace">txns</text>
+          <rect x="100" y="40" width="62" height="28" rx="14" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
+          <text x="131" y="58" fill="#64ffda" font-size="10" text-anchor="middle" font-family="monospace">features</text>
+          <rect x="212" y="8" width="80" height="26" rx="5" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+          <text x="252" y="25" fill="#7cb7ff" font-size="10" text-anchor="middle" font-family="monospace">rule engine</text>
+          <rect x="212" y="76" width="80" height="26" rx="5" fill="none" stroke="#ffd76b" stroke-width="1.3"></rect>
+          <text x="252" y="93" fill="#ffd76b" font-size="10" text-anchor="middle" font-family="monospace">ML scoring</text>
+          <line x1="52" y1="54" x2="100" y2="54" stroke="#495670" stroke-width="1"></line>
+          <line x1="162" y1="48" x2="212" y2="21" stroke="#495670" stroke-width="1"></line>
+          <line x1="162" y1="60" x2="212" y2="89" stroke="#495670" stroke-width="1"></line>
+        </svg>
+        <div class="dtitle">Fraud-rule serving</div>
+        <div class="dcap mono">stream → features → decisions · click to zoom</div>
+      </div>
+
+      <div class="card diagram" data-zoom>
+        <svg width="100%" height="110" viewBox="0 0 300 110">
+          <rect x="6" y="8" width="72" height="26" rx="5" fill="none" stroke="#7dead8" stroke-width="1.3"></rect>
+          <text x="42" y="25" fill="#7dead8" font-size="10" text-anchor="middle" font-family="monospace">task mem</text>
+          <rect x="6" y="76" width="72" height="26" rx="5" fill="none" stroke="#7dead8" stroke-width="1.3"></rect>
+          <text x="42" y="93" fill="#7dead8" font-size="10" text-anchor="middle" font-family="monospace">core mem</text>
+          <rect x="130" y="40" width="66" height="28" rx="14" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
+          <text x="163" y="58" fill="#64ffda" font-size="10" text-anchor="middle" font-family="monospace">agent</text>
+          <rect x="248" y="40" width="46" height="28" rx="5" fill="none" stroke="#ff8ba3" stroke-width="1.3"></rect>
+          <text x="271" y="58" fill="#ff8ba3" font-size="10" text-anchor="middle" font-family="monospace">tools</text>
+          <line x1="78" y1="21" x2="130" y2="48" stroke="#495670" stroke-width="1"></line>
+          <line x1="78" y1="89" x2="130" y2="60" stroke="#495670" stroke-width="1"></line>
+          <line x1="196" y1="54" x2="248" y2="54" stroke="#495670" stroke-width="1"></line>
+        </svg>
+        <div class="dtitle">Agent memory scaffold</div>
+        <div class="dcap mono">two memories → llm · click to zoom</div>
+      </div>
+    </div>
+
+    <!-- DESIGN / CAD -->
+    <div class="section-label sec" id="design">03 · DESIGN — MADE REAL</div>
+    <div class="cad-grid">
+      {
+        cad.map((c) => (
+          <div class={`cad ${c.feature ? 'feature' : ''}`}>
+            <img src={c.img} alt={c.title} loading="lazy" />
+            <div class="overlay">
+              <div class="ctitle">{c.title}</div>
+              {c.cap && <div class="ccap mono">{c.cap}</div>}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="section-label sec" id="photos">04 · PHOTOGRAPHS</div>
+    <p class="photos-sub">A photo section is coming — favorites from 10 years of travel and street shots.</p>
+    <div class="photo-grid">
+      {
+        [1, 2, 3, 4].map(() => (
+          <div class="photo-slot mono">photo<br />coming soon</div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- diagram zoom lightbox -->
+  <div class="zoom-overlay" data-zoom-overlay>
+    <button class="zoom-close mono" data-zoom-close>esc ×</button>
+    <div class="zoom-stage" data-zoom-stage></div>
+  </div>
+</Base>
+
+<script>
+  const overlay = document.querySelector<HTMLElement>('[data-zoom-overlay]')!;
+  const stage = document.querySelector<HTMLElement>('[data-zoom-stage]')!;
+  document.querySelectorAll('[data-zoom]').forEach((card) => {
+    card.addEventListener('click', () => {
+      const svg = card.querySelector('svg')!.cloneNode(true) as SVGElement;
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100%');
+      stage.innerHTML = '';
+      stage.appendChild(svg);
+      overlay.classList.add('open');
+    });
+  });
+  const close = () => overlay.classList.remove('open');
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  document.querySelector('[data-zoom-close]')?.addEventListener('click', close);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+</script>
+
+<style>
+  .wrap { padding: 40px 44px 70px; max-width: 1240px; margin: 0 auto; }
+  .sec { margin-top: 48px; }
+  .sec:first-of-type { margin-top: 44px; }
+
+  .grid-3 {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .proj { overflow: hidden; }
+  .proj .cover { width: 100%; height: 190px; object-fit: cover; display: block; }
+  .cover-map { height: 190px; background: rgba(10, 25, 47, 0.7); display: flex; }
+  .proj .body { padding: 18px 20px; }
+  .head-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .pname { font-size: 19px; font-weight: 600; color: var(--text-bright); }
+  .year { font-size: 11px; color: var(--mint); white-space: nowrap; }
+  .pdesc { margin-top: 6px; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+  .chips { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .diagram { padding: 20px 22px; cursor: zoom-in; transition: border-color 150ms ease; }
+  .diagram:hover { border-color: var(--mint); }
+  .dtitle { margin-top: 10px; font-size: 15px; font-weight: 600; color: var(--text-bright); }
+  .dcap { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+
+  .cad-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 170px;
+    gap: 16px;
+  }
+  .cad {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--mint-border);
+    background: #f2ede4;
+  }
+  .cad.feature { grid-row: span 2; }
+  .cad img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cad .overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 14px 18px;
+    background: linear-gradient(transparent, rgba(10, 25, 47, 0.9));
+    color: var(--text-bright);
+  }
+  .ctitle { font-weight: 600; font-size: 16px; }
+  .ccap { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+
+  .photos-sub { margin-top: 8px; font-size: 14px; color: var(--text-muted); }
+  .photo-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .photo-slot {
+    height: 220px;
+    border: 1px dashed rgba(100, 255, 218, 0.3);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .zoom-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(4, 12, 24, 0.9);
+    padding: 6vh 6vw;
+  }
+  .zoom-overlay.open { display: block; }
+  .zoom-stage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .zoom-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: 1px solid var(--mint-border);
+    color: var(--mint);
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    z-index: 81;
+  }
+
+  @media (max-width: 1000px) {
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .wrap { padding: 28px 20px 56px; }
+    .grid-3, .cad-grid { grid-template-columns: 1fr; }
+    .cad.feature { grid-row: span 2; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-slot { height: 160px; }
+  }
+</style>

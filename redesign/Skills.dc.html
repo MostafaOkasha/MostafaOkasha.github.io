@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0a192f; }
+    a { color: #B0C6CE; text-decoration: none; }
+    a:hover { color: #64ffda; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; font-family: 'Space Grotesk', sans-serif;">
+  <!-- nav -->
+  <div style="position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 20px 44px; border-bottom: 1px solid rgba(100,255,218,0.18); background: rgba(10,25,47,0.85); backdrop-filter: blur(8px);">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="Home.dc.html" style="display: flex;"><img src="images/m-logo.png" alt="M" style="height: 28px; filter: brightness(10);"></a>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8892b0;">~/skills</span>
+    </div>
+    <div style="display: flex; gap: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 13px;">
+      <a href="Library.dc.html">library</a>
+      <a href="Workshop.dc.html">workshop</a>
+      <a href="Resume.dc.html">resume</a>
+      <a href="Skills.dc.html" style="color: #64ffda;">skills</a>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 440px; min-height: calc(100vh - 69px);">
+    <!-- skill field -->
+    <div style="padding: 40px 44px 60px 44px;">
+      <div style="font-weight: 700; font-size: 44px; letter-spacing: -0.02em; color: #e6f1ff;">Click a tool.</div>
+      <div style="margin-top: 8px; font-size: 15px; color: #8892b0; max-width: 520px;">Every icon opens a dossier: years, the projects it shipped, and where it lives in the Library.</div>
+
+      <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 14px; max-width: 720px;">
+        <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="8">
+          <div onClick="{{ sk.go }}" style="cursor: pointer; border: 1px solid {{ sk.border }}; background: {{ sk.bg }}; border-radius: 12px; padding: 18px 14px; text-align: center;" style-hover="border-color: #64ffda;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 20px; color: {{ sk.color }};">{{ sk.glyph }}</div>
+            <div style="margin-top: 6px; font-size: 13px; color: #e6f1ff;">{{ sk.name }}</div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">{{ sk.yrs }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top: 44px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">SYSTEM DESIGNS</div>
+      <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(2, minmax(260px, 1fr)); gap: 14px; max-width: 720px;">
+        <a href="Workshop.dc.html" style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 16px 18px; background: rgba(17,34,64,0.6); display: block;">
+          <svg width="100%" height="64" viewBox="0 0 220 64">
+            <rect x="4" y="22" width="46" height="22" rx="4" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+            <rect x="88" y="6" width="46" height="22" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+            <rect x="88" y="38" width="46" height="22" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+            <rect x="172" y="22" width="44" height="22" rx="4" fill="none" stroke="#ffd76b" stroke-width="1.2"></rect>
+            <line x1="50" y1="33" x2="88" y2="17" stroke="#495670" stroke-width="1"></line>
+            <line x1="50" y1="33" x2="88" y2="49" stroke="#495670" stroke-width="1"></line>
+            <line x1="134" y1="17" x2="172" y2="33" stroke="#495670" stroke-width="1"></line>
+            <line x1="134" y1="49" x2="172" y2="33" stroke="#495670" stroke-width="1"></line>
+          </svg>
+          <div style="margin-top: 8px; font-size: 14px; font-weight: 600; color: #e6f1ff;">ChessMate pipeline</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">vision → engine → arm control</div>
+        </a>
+        <a href="Workshop.dc.html" style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 16px 18px; background: rgba(17,34,64,0.6); display: block;">
+          <svg width="100%" height="64" viewBox="0 0 220 64">
+            <circle cx="26" cy="33" r="13" fill="none" stroke="#d8a3ff" stroke-width="1.2"></circle>
+            <rect x="72" y="22" width="46" height="22" rx="11" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+            <rect x="150" y="6" width="60" height="20" rx="4" fill="none" stroke="#7cb7ff" stroke-width="1.2"></rect>
+            <rect x="150" y="40" width="60" height="20" rx="4" fill="none" stroke="#ffd76b" stroke-width="1.2"></rect>
+            <line x1="39" y1="33" x2="72" y2="33" stroke="#495670" stroke-width="1"></line>
+            <line x1="118" y1="30" x2="150" y2="16" stroke="#495670" stroke-width="1"></line>
+            <line x1="118" y1="38" x2="150" y2="50" stroke="#495670" stroke-width="1"></line>
+          </svg>
+          <div style="margin-top: 8px; font-size: 14px; font-weight: 600; color: #e6f1ff;">Fraud-rule serving</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">stream → features → decisions</div>
+        </a>
+        <a href="Workshop.dc.html" style="border: 1px solid rgba(100,255,218,0.25); border-radius: 12px; padding: 16px 18px; background: rgba(17,34,64,0.6); display: block;">
+          <svg width="100%" height="64" viewBox="0 0 220 64">
+            <rect x="4" y="6" width="52" height="20" rx="4" fill="none" stroke="#7dead8" stroke-width="1.2"></rect>
+            <rect x="4" y="38" width="52" height="20" rx="4" fill="none" stroke="#7dead8" stroke-width="1.2"></rect>
+            <rect x="96" y="22" width="52" height="22" rx="11" fill="none" stroke="#64ffda" stroke-width="1.2"></rect>
+            <rect x="184" y="22" width="32" height="22" rx="4" fill="none" stroke="#ff8ba3" stroke-width="1.2"></rect>
+            <line x1="56" y1="16" x2="96" y2="30" stroke="#495670" stroke-width="1"></line>
+            <line x1="56" y1="48" x2="96" y2="38" stroke="#495670" stroke-width="1"></line>
+            <line x1="148" y1="33" x2="184" y2="33" stroke="#495670" stroke-width="1"></line>
+          </svg>
+          <div style="margin-top: 8px; font-size: 14px; font-weight: 600; color: #e6f1ff;">Agent memory scaffold</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8892b0;">task + core memories → llm</div>
+        </a>
+        <a href="Workshop.dc.html" style="border: 1px dashed rgba(100,255,218,0.35); border-radius: 12px; padding: 16px 18px; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64ffda;">
+          all diagrams in the workshop →
+        </a>
+      </div>
+    </div>
+
+    <!-- dossier -->
+    <div style="border-left: 1px solid rgba(100,255,218,0.15); padding: 40px 32px; background: rgba(17,34,64,0.4);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">DOSSIER</div>
+      <div style="margin-top: 10px; display: flex; align-items: baseline; gap: 12px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 30px; color: {{ dColor }};">{{ dGlyph }}</span>
+        <span style="font-weight: 700; font-size: 26px; color: #e6f1ff;">{{ dName }}</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0;">{{ dSince }}</span>
+      </div>
+      <div style="margin-top: 18px; display: flex; flex-direction: column;">
+        <sc-for list="{{ dTimeline }}" as="row" hint-placeholder-count="4">
+          <div style="display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(100,255,218,0.12);">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8892b0; width: 78px; flex: none;">{{ row.when }}</span>
+            <span style="font-size: 14px; color: #B0C6CE;">{{ row.what }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #8892b0;">SHIPS WITH</div>
+      <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;">
+        <sc-for list="{{ dChips }}" as="chip" hint-placeholder-count="4">
+          <span style="border: 1px solid #495670; color: #B0C6CE; border-radius: 999px; padding: 5px 12px;">{{ chip.name }}</span>
+        </sc-for>
+      </div>
+      <a href="Library.dc.html" style="display: block; margin-top: 26px; border: 1px dashed rgba(100,255,218,0.35); border-radius: 10px; padding: 16px 18px; font-size: 13.5px; line-height: 1.6; color: #8892b0;">
+        {{ dLibNote }} <span style="color: #64ffda;">→ open the library</span>
+      </a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}}">
+class Component extends DCLogic {
+  state = { skill: 'py' };
+
+  skills() {
+    return [
+      { k: 'py', glyph: 'Py', color: '#64ffda', name: 'Python', yrs: '8 yrs', since: 'since 2018',
+        timeline: [
+          { when: '2018\u201319', what: 'McMaster \u2014 robotics control, OpenCV for ChessMate' },
+          { when: '2020\u201322', what: 'Capital One \u2014 fraud pipelines, the $10M audit' },
+          { when: '2022\u201325', what: 'Meta \u2014 internal tooling at scale' },
+          { when: 'now', what: 'Agent backends for consulting clients \u2014 see AI Lab' }
+        ],
+        chips: ['numpy', 'fastapi', 'pytorch', 'opencv'],
+        lib: '8 entries in the Library are tagged python.' },
+      { k: 'ts', glyph: 'TS', color: '#7cb7ff', name: 'TypeScript', yrs: '6 yrs', since: 'since 2020',
+        timeline: [
+          { when: '2020\u201322', what: 'Capital One \u2014 internal dashboards & review tools' },
+          { when: '2022\u201325', what: 'Meta \u2014 devtool frontends for 2,000+ engineers' },
+          { when: 'now', what: 'Every client prototype starts here' }
+        ],
+        chips: ['react', 'node', 'vite', 'd3'],
+        lib: '5 entries in the Library are tagged typescript.' },
+      { k: 'cpp', glyph: 'C++', color: '#ffd76b', name: 'C++', yrs: '4 yrs', since: 'since 2018',
+        timeline: [
+          { when: '2018\u201320', what: 'Ericsson \u2014 5G RAN scheduler, code on live networks' },
+          { when: '2019', what: 'ChessMate \u2014 real-time arm control loop' }
+        ],
+        chips: ['embedded', 'rtos', 'protobuf'],
+        lib: 'The networking notes come straight from this era.' },
+      { k: 'aws', glyph: '\u03bb', color: '#d8a3ff', name: 'AWS', yrs: '6 yrs', since: 'since 2020',
+        timeline: [
+          { when: '2020\u201322', what: 'Capital One \u2014 lambda + step functions in prod' },
+          { when: 'now', what: 'Client deployments: ECS, bedrock, the boring parts done right' }
+        ],
+        chips: ['lambda', 'ecs', 's3', 'bedrock'],
+        lib: '3 workflow write-ups cover the deployment patterns.' },
+      { k: 'react', glyph: '\u269b', color: '#ff8ba3', name: 'React', yrs: '6 yrs', since: 'since 2020',
+        timeline: [
+          { when: '2020\u201325', what: 'Dashboards, devtools, this website (twice)' },
+          { when: 'now', what: 'Prototyping AI product UIs weekly' }
+        ],
+        chips: ['hooks', 'canvas', 'webgl'],
+        lib: 'The site rebuild write-up is a react deep dive.' },
+      { k: 'llm', glyph: '\u25ce', color: '#7dead8', name: 'LLM / agents', yrs: '3 yrs', since: 'since 2023',
+        timeline: [
+          { when: '2023\u201324', what: 'First production RAG + eval harnesses' },
+          { when: '2025', what: 'Agent systems for consulting clients' },
+          { when: 'now', what: '17 published workflows in the AI Lab' }
+        ],
+        chips: ['agents', 'evals', 'rag', 'fine-tuning'],
+        lib: 'The AI Lab shelf is entirely this skill.' },
+      { k: 'cad', glyph: '\u2699', color: '#ffb26b', name: 'CAD / NX', yrs: '7 yrs', since: 'since 2014',
+        timeline: [
+          { when: '2014\u201319', what: 'McMaster \u2014 landing gear, SCARA arm, CNC machine' },
+          { when: 'always', what: 'EpiPen case & other 3D-printed daily drivers' }
+        ],
+        chips: ['nx', 'solidworks', '3d printing', 'cnc'],
+        lib: 'All CAD work is in the Workshop design gallery.' },
+      { k: 'photo', glyph: '\u25a3', color: '#B0C6CE', name: 'Photography', yrs: '10 yrs', since: 'since 2016',
+        timeline: [
+          { when: '2016\u2013now', what: '14 countries, 31 photo stories' },
+          { when: 'now', what: 'Learning film \u2014 slower is better' }
+        ],
+        chips: ['travel', 'street', 'film'],
+        lib: 'Photo stories live in the Workshop.' }
+    ];
+  }
+
+  renderVals() {
+    const all = this.skills();
+    const cur = all.find(s => s.k === this.state.skill) || all[0];
+    return {
+      skills: all.map(s => ({
+        glyph: s.glyph, color: s.color, name: s.name, yrs: s.yrs,
+        border: s.k === cur.k ? '#64ffda' : 'rgba(100,255,218,0.25)',
+        bg: s.k === cur.k ? 'rgba(100,255,218,0.1)' : 'transparent',
+        go: () => this.setState({ skill: s.k })
+      })),
+      dGlyph: cur.glyph, dColor: cur.color, dName: cur.name, dSince: cur.since,
+      dTimeline: cur.timeline,
+      dChips: cur.chips.map(name => ({ name })),
+      dLibNote: cur.lib
+    };
+  }
+}
+</script>
+</body>
+</html>
