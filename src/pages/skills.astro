@@ -2,6 +2,33 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import { SKILLS } from '../data/skills';
+
+// The full toolbox — every icon from the original site, same groupings.
+const icon = (f: string, name: string) => ({ src: `/images/webp/skills/${f}.webp`, name });
+const TOOLBOX = [
+  {
+    group: '01 · SOFTWARE',
+    rows: [
+      { label: 'My TOP 3 programming languages', icons: [icon('python', 'Python'), icon('cpp', 'C++'), icon('java', 'Java')] },
+      { label: "I'm also confident using", icons: [icon('matlab', 'Matlab'), icon('clanguage', 'C'), icon('bash', 'Bash'), icon('opencv', 'OpenCV'), icon('aws', 'AWS'), icon('javascript', 'JavaScript'), icon('jquery', 'jQuery'), icon('html5', 'HTML5'), icon('css3', 'CSS3')] },
+      { label: 'And have previously worked with', icons: [icon('linux', 'Linux'), icon('git', 'Git'), icon('mysql', 'MySQL'), icon('numpy', 'NumPy'), icon('matplotlib', 'Matplotlib'), icon('boto3', 'Boto3'), icon('nasm', 'NASM'), icon('eclipse', 'Eclipse')] },
+    ],
+  },
+  {
+    group: '02 · MECHATRONICS',
+    rows: [
+      { label: 'During my studies, I learnt about', icons: [icon('robotics', 'Robotics'), icon('fpga', 'FPGA'), icon('arm', 'Arm Cortex'), icon('stm32', 'STM32'), icon('verilog', 'SystemVerilog')] },
+      { label: 'I also had design experience using', icons: [icon('inventor', 'AutoDesk Inventor'), icon('autocad', 'AutoCAD'), icon('fusion360', 'Fusion 360'), icon('nx', 'Siemens NX')] },
+      { label: "Can't forget about electricity", icons: [icon('labview', 'LabVIEW'), icon('plcs', 'PLCs'), icon('circuitry', 'Circuitry')] },
+    ],
+  },
+  {
+    group: '03 · OTHER',
+    rows: [
+      { label: 'Skills I picked up over the years', icons: [icon('photoshop', 'Photoshop'), icon('3dprinting', '3D Printing'), icon('lasercutting', 'Laser Cutting')] },
+    ],
+  },
+];
 ---
 
 <Base title="Skills | Mostafa Okasha" description="Every icon opens a dossier: years, the projects it shipped, and where it lives in the Library.">
@@ -71,6 +98,30 @@ import { SKILLS } from '../data/skills';
           <div class="scap mono">task + core memories → llm</div>
         </a>
         <a href="/workshop#systems" class="sysd dashed mono">all diagrams in the workshop →</a>
+      </div>
+
+      <div class="section-label section-label--muted sysd-label">THE FULL TOOLBOX</div>
+      <div class="toolbox">
+        {
+          TOOLBOX.map((g) => (
+            <div class="tb-group">
+              <div class="tb-title mono">{g.group}</div>
+              {g.rows.map((row) => (
+                <div class="tb-row">
+                  <div class="tb-label">{row.label}</div>
+                  <div class="tb-icons">
+                    {row.icons.map((i) => (
+                      <span class="tb-icon" title={i.name}>
+                        <img src={i.src} alt={i.name} loading="lazy" />
+                        <span class="tb-name mono">{i.name}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))
+        }
       </div>
     </div>
 
@@ -175,6 +226,36 @@ import { SKILLS } from '../data/skills';
     font-size: 13px;
     color: var(--mint);
     min-height: 120px;
+  }
+
+  .toolbox { margin-top: 14px; max-width: 720px; }
+  .tb-group { margin-bottom: 26px; }
+  .tb-title { font-size: 12px; color: var(--mint); letter-spacing: 0.1em; }
+  .tb-row { margin-top: 14px; }
+  .tb-label { font-size: 13.5px; color: var(--text-muted); }
+  .tb-icons { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .tb-icon {
+    width: 74px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--mint-border-soft);
+    border-radius: 10px;
+    padding: 10px 6px 8px;
+    transition: border-color 150ms ease;
+  }
+  .tb-icon:hover { border-color: var(--mint); }
+  .tb-icon img { width: 38px; height: 38px; object-fit: contain; }
+  .tb-name {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
 
   .dossier {

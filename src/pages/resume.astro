@@ -6,7 +6,10 @@ import { RECEIPTS } from '../data/receipts';
 
 <Base title="Resume | Mostafa Okasha" description="The paper resume, but every claim opens its receipts — stories, diagrams, and artifacts.">
   <Nav current="resume">
-    <button slot="nav-extra" class="btn-mint" style="padding: 7px 14px;" data-print>download PDF</button>
+    <span slot="nav-extra" style="display: inline-flex; gap: 10px; align-items: center;">
+      <a class="btn-mint" style="padding: 7px 14px;" href="/resume/resume.pdf" download="Mostafa_Okasha_Resume.pdf">download PDF</a>
+      <button class="mono print-link" data-print title="Print this page">print</button>
+    </span>
   </Nav>
 
   <div class="hint mono no-print">
@@ -80,7 +83,16 @@ import { RECEIPTS } from '../data/receipts';
       <div class="p-sec mono">EDUCATION &amp; CERTIFICATIONS</div>
       <div class="edu">
         <div class="j-head"><span><b>McMaster University</b> — B.Eng, Mechatronics &amp; Co-op (software focus)</span><span class="j-date mono">June 2019</span></div>
-        <div class="j-head" style="margin-top: 8px;"><span>AWS <b>Solutions Architect</b> — Associate</span><span class="j-date mono">Dec 2023</span></div>
+        <div class="courses">
+          {
+            [
+              'Algorithms and Data Structures', 'Databases', 'Distributed Systems', 'Networks and Security',
+              'Operating Systems', 'Software Optimization', 'Scientific Computation', 'Control Theory',
+              'Embedded Systems', 'Real-Time Systems', 'Robotics', 'Signal Processing',
+            ].map((c) => <span class="course mono">{c}</span>)
+          }
+        </div>
+        <div class="j-head" style="margin-top: 12px;"><span>AWS <b>Solutions Architect</b> — Associate</span><span class="j-date mono">Dec 2023</span></div>
       </div>
 
       <div class="p-sec mono">SKILLS</div>
@@ -106,7 +118,7 @@ import { RECEIPTS } from '../data/receipts';
       </div>
       <div class="human no-print">
         <img src="/images/my-photo.jpg" alt="Mostafa" />
-        <div>Prefer the human version?<br /><a href="/">→ start at the beginning</a></div>
+        <div>Prefer the human version?<br /><a href="/about">→ read the about page</a></div>
       </div>
     </div>
   </div>
@@ -144,6 +156,15 @@ import { RECEIPTS } from '../data/receipts';
 
 <style>
   .hint { padding: 14px 44px 8px; font-size: 13px; color: var(--text-muted); }
+  .print-link {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .print-link:hover { color: var(--mint); }
   .dash-demo { color: var(--mint); border-bottom: 1px dashed var(--mint); }
 
   .resume-grid {
@@ -183,6 +204,14 @@ import { RECEIPTS } from '../data/receipts';
   .projects { margin-top: 12px; }
   .edu { margin-top: 12px; font-size: 14.5px; }
   .edu .j-head { font-size: 14.5px; }
+  .courses { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .course {
+    font-size: 10.5px;
+    color: var(--paper-secondary);
+    border: 1px solid var(--paper-rule);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
   .skills-line { margin-top: 12px; font-size: 13px; line-height: 1.9; color: #333c4a; }
 
   .claim {
