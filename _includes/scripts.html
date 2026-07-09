@@ -8,5 +8,5 @@
 <!-- Typewriter effect in the hero -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/1.0.0/typewriter.min.js" integrity="sha256-0GG30XmRuHKTD54lbTLEd01reloWjlnefU09UzmFpzc=" crossorigin="anonymous"></script>
 
-<!-- Site scripts -->
-<script defer src="/javascripts/main.js"></script>
+<!-- Site scripts (versioned by commit, same reason as the stylesheet) -->
+<script defer src="/javascripts/main.js?v={{ site.github.build_revision | default: site.time | slice: 0, 7 }}"></script>

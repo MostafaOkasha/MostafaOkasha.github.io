@@ -20,8 +20,9 @@
 <link rel="preload" href="/images/webp/DSC_0027.webp" as="image" type="image/webp">
 <link rel="preload" href="/fonts/sf_mono/SFMono-Light.woff2" as="font" type="font/woff2" crossorigin>
 
-<!-- Import CSS StyleSheet -->
-<link href="/css/stylesheet.css" rel="stylesheet" type="text/css">
+<!-- Import CSS StyleSheet (versioned by commit so CDN caches never serve
+     a stale stylesheet against fresh HTML) -->
+<link href="/css/stylesheet.css?v={{ site.github.build_revision | default: site.time | slice: 0, 7 }}" rel="stylesheet" type="text/css">
 
 <!-- GLightbox (image galleries) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
