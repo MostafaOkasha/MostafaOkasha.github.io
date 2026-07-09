@@ -1,7 +1,7 @@
 ---
 interface Props {
   /** current page key for active state + ~/path breadcrumb */
-  current?: 'home' | 'library' | 'workshop' | 'resume' | 'skills';
+  current?: 'home' | 'library' | 'workshop' | 'resume' | 'skills' | 'about';
 }
 const { current = 'home' } = Astro.props;
 const isHome = current === 'home';
@@ -46,6 +46,9 @@ const links = [
           <a href="/skills" class={current === 'skills' ? 'active' : ''}>
             skills
           </a>
+          <a href="/about" class={current === 'about' ? 'active' : ''}>
+            about
+          </a>
           <slot name="nav-extra" />
         </>
       )
@@ -73,6 +76,9 @@ const links = [
     </a>
     <a class="row" href="/resume">
       <span class="num">04</span><span class="name">résumé</span><span class="count">→</span>
+    </a>
+    <a class="row" href="/about">
+      <span class="num">05</span><span class="name">about</span><span class="count">→</span>
     </a>
   </div>
   <div class="foot">

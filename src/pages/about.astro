@@ -1,0 +1,246 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+
+// The complete journey — every stop from the original site, nothing lost.
+const journey = [
+  {
+    org: 'Meta (Reality Labs)', role: 'Software Engineer', when: 'Nov 2024 — Feb 2026', badge: '∞', color: '#64ffda',
+    bullets: [
+      'Led the migration of a distributed ML platform, fully rebuilding compute, storage, and networking infrastructure',
+      'Rewrote CPU-bound image preprocessing into GPU kernels to achieve a 350x speedup with <1% output drift',
+      'Contributed to real-time contextual AI experiences on XR devices by integrating perception & decision models',
+    ],
+  },
+  {
+    org: 'MapSight', role: 'Founder', when: 'Apr 2024 — Present', badge: 'MS', color: '#64ffda',
+    bullets: [
+      'Built a geospatial analytics web app that finds optimal distribution locations for auto parts businesses by analyzing driving time metrics (AWS, React, Python, Flask, DynamoDB)',
+      'Used Cosine Similarity, FuzzyWuzzy & Agglomerative Clustering with an LLM to categorize industry locations',
+      'Designed an Industry Locations API to ensure all locations within an area stay up to date',
+    ],
+  },
+  {
+    org: 'Scale AI', role: 'Software Engineer, AI Training', when: 'Jan 2024 — Nov 2024', badge: 'S', color: '#64ffda',
+    bullets: [
+      'Wrote 30+ DSA coding problems & solutions and reviewed 230+ submissions (Python, Java, C++)',
+      'Worked on 12 LLM RLHF projects across languages & frameworks including C#, .NET, Laravel, Ruby on Rails, Kotlin, Dart & Flutter',
+      "Assisted with the RLHF training of Google Gemini's external API capabilities for the trip planning feature",
+    ],
+  },
+  {
+    org: 'Capital One', role: 'Senior Software Engineer', when: 'Nov 2019 — Sep 2022', logo: '/images/webp/capitalone.webp',
+    bullets: [
+      'Analyzed 95 fraud & dispute case states with currency conversion issues and designed full-scale solutions, leading to reduced losses by $2M+/year',
+      'Led the Foreign Transaction Fee Enhancement project to cut operational losses by around $1.5M/year',
+      'Developed scalable ECS clusters on AWS integrated with CI/CD pipelines, and collaborated on features & REST APIs throughout 10+ Java Spring Boot microservices',
+    ],
+  },
+  {
+    org: 'Ericsson', role: 'Software Developer Intern', when: 'Jan — Aug 2018', logo: '/images/webp/ericsson.webp',
+    bullets: [
+      'Developed 5G Radio features in C++ that helped increase LTE data throughput by 400%',
+      'Designed an interactive Bash script that reduced time spent debugging mobile connection logs by 50%',
+      'Integrated script with Python Remote Desktop Protocols to automate mobile testing and triple capacity',
+    ],
+  },
+  {
+    org: 'McMaster University', role: 'Instructional Assistant Intern', when: 'Aug — Dec 2017', logo: '/images/webp/mcmaster.webp',
+    bullets: [
+      'Received recognition for highest Instructional Assistant rating voted by all students — 4.6/5',
+      'Conducted Engineering Design and Ethics tutorials for 1000+ 1st year students with a team of 3',
+      'Mentored students building a project for a disabled client through the Product Development Life Cycle',
+    ],
+  },
+  {
+    org: 'QKids Tech.', role: 'Business Development Intern', when: 'May — Aug 2017', logo: '/images/webp/qkids.webp',
+    bullets: [
+      'Developed a Python based ATS using SQLite and SQL Server that filtered over 5000 candidates',
+      'Integrated with Gmail API to automate messaging which saved over 160 hours of sending emails',
+      'Optimized string matching algorithms by improving the buffer comparison operations',
+    ],
+  },
+  {
+    org: 'King Faisal Hospital', role: 'Biomedical Engineering Intern', when: 'May — Aug 2016', logo: '/images/webp/kfsh.webp',
+    bullets: [
+      'Analyzed medical equipment with an Oscilloscope to find and repair minor defective components',
+      'Composed an Arduino and Circuitry training program for freshmen interns to learn programming',
+      'Performed 13 training labs in PLC and FPGA design and documented the labs for future interns',
+    ],
+  },
+];
+---
+
+<Base title="About | Mostafa Okasha" description="Who am I? Values, goals, interests, and the whole journey — from a hospital oscilloscope to Reality Labs.">
+  <Nav current="about" />
+
+  <div class="wrap">
+    <h1 class="page-title">Hello again!</h1>
+    <p class="page-sub">The human version — who I am, what I believe, and the whole journey.</p>
+
+    <div class="bio">
+      <img class="me" src="/images/webp/profile-pic.webp" alt="Mostafa Okasha" />
+      <div class="bio-text">
+        <p>
+          I'm <b>Mostafa Okasha</b>, a Mechatronics graduate turned <b>Software Engineer</b> living
+          in the Greater Toronto Area (GTA) who enjoys building things and working on projects that
+          bring different technologies together to do something awesome. I especially love writing
+          code and designing my creative ideas.
+        </p>
+        <p>
+          I have a deep passion for <b>Robotics, Task Automation, and Emerging Tech</b>. I have
+          experience in several fields and many skills that can be brought together to provide a
+          unique, outside-the-box perspective. From building complex circuitry to integrating
+          software on servers, I embraced the true meaning of Mechatronics — learning several
+          skills and bringing them together to create beautiful, emerging tech.
+        </p>
+        <p>
+          I've been developing an extreme interest in leadership and public speaking ever since my
+          internship as an Instructional Assistant at McMaster University. It made me realize the
+          satisfaction of helping others and making positive impacts on any community — so I've set
+          out to take on any role that helps me accomplish this.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-label sec">01 · VALUES</div>
+    <ul class="values">
+      <li>To always be honest and respectful to everyone that I cross paths with.</li>
+      <li>To always help those in need and to support my friends and family to the best of my ability.</li>
+      <li>To always put in 100% effort into everything that I make.</li>
+    </ul>
+
+    <div class="section-label sec">02 · GOALS</div>
+    <div class="goals">
+      <p>
+        Whenever I asked myself what my goals in life were, I always came to the same answer:
+        <b>to change the world.</b> I never quite rationalized the scale of this goal until a few
+        years back, when I realized it would take several lifetimes to do so. Given the shortness
+        of life, I picked the problems I thought were most dire and decided to take it from there:
+      </p>
+      <ul class="values">
+        <li>
+          Fix the horrible health system we currently have in place. More than 90% of fellow humans
+          do not receive the health treatment and attention that every human deserves. With current
+          technological advances, the world is capable of taking care of everyone.
+        </li>
+        <li class="tbd mono">02 — still being written. <a href="mailto:mostafa@okasha.me">ask me about it →</a></li>
+        <li class="tbd mono">03 — still being written. <a href="mailto:mostafa@okasha.me">ask me about it →</a></li>
+      </ul>
+    </div>
+
+    <div class="section-label sec">03 · INTERESTS</div>
+    <div class="chips">
+      {
+        ['Piano', 'Ukulele', 'Photography', 'Archery', 'Painting', 'Swimming', 'Soccer', 'Designing', 'Ridiculously good Google Reviews', 'Anime'].map(
+          (i) => <span class="chip-slate">{i}</span>
+        )
+      }
+    </div>
+
+    <div class="section-label sec">04 · THE WHOLE JOURNEY</div>
+    <div class="journey">
+      {
+        journey.map((j) => (
+          <div class="stop">
+            <div class="stop-head">
+              {j.logo ? (
+                <img src={j.logo} alt={`${j.org} logo`} loading="lazy" />
+              ) : (
+                <span class="lettermark mono" style={`color:${j.color}; border-color:${j.color};`}>{j.badge}</span>
+              )}
+              <div>
+                <div class="stop-role">{j.role} <span class="at">@ {j.org}</span></div>
+                <div class="stop-when mono">{j.when}</div>
+              </div>
+            </div>
+            <ul>
+              {j.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="epilogue">
+      <blockquote>
+        "Everyone thinks of changing the world, but no one thinks of changing himself."
+        <span class="who">— Leo Tolstoy</span>
+      </blockquote>
+      <div class="sign mono">
+        Never stop improving.
+        <img src="/images/my-signature.png" alt="Signature" />
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .wrap { padding: 40px 44px 70px; max-width: 880px; margin: 0 auto; }
+  .sec { margin-top: 48px; }
+
+  .bio { margin-top: 30px; display: flex; gap: 32px; align-items: flex-start; }
+  .me {
+    width: 190px;
+    flex: none;
+    border-radius: 14px;
+    border: 1px solid var(--mint-border);
+  }
+  .bio-text p { font-size: 16px; line-height: 1.7; color: var(--text-body); margin: 0 0 16px; }
+  .bio-text b { color: var(--text-bright); font-weight: 600; }
+
+  .values { margin: 16px 0 0; padding-left: 0; list-style: none; }
+  .values li {
+    padding: 12px 0 12px 26px;
+    border-bottom: 1px solid var(--mint-divider);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-body);
+    position: relative;
+  }
+  .values li::before { content: '▹'; position: absolute; left: 2px; color: var(--mint); }
+  .values li.tbd { font-size: 12.5px; color: var(--text-muted); }
+  .values li.tbd a { color: var(--mint); }
+
+  .goals p { margin: 16px 0 0; font-size: 16px; line-height: 1.7; color: var(--text-body); }
+  .goals b { color: var(--text-bright); }
+
+  .chips { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--font-mono); font-size: 12px; }
+
+  .journey { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .stop { border-bottom: 1px solid var(--mint-divider); padding: 20px 0; }
+  .stop-head { display: flex; gap: 16px; align-items: center; }
+  .stop-head img { width: 52px; height: 52px; object-fit: contain; flex: none; }
+  .lettermark {
+    width: 52px; height: 52px; flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1.5px solid; border-radius: 12px;
+    font-size: 20px; font-weight: 600;
+  }
+  .stop-role { font-size: 17px; font-weight: 600; color: rgb(204, 214, 246); }
+  .stop-role .at { color: var(--mint); }
+  .stop-when { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .stop ul { margin: 12px 0 0; padding-left: 20px; }
+  .stop li { font-size: 14.5px; line-height: 1.65; color: var(--text-body); margin: 6px 0; }
+
+  .epilogue { margin-top: 56px; text-align: center; }
+  .epilogue blockquote {
+    margin: 0 auto;
+    max-width: 560px;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--text-bright);
+    line-height: 1.6;
+  }
+  .epilogue .who { display: block; margin-top: 10px; font-size: 14px; font-style: normal; color: var(--text-muted); }
+  .sign { margin-top: 30px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .sign img { display: block; margin: 14px auto 0; width: 130px; filter: invert(1) brightness(1.4); opacity: 0.85; }
+
+  @media (max-width: 768px) {
+    .wrap { padding: 28px 20px 56px; }
+    .bio { flex-direction: column; }
+    .me { width: 55%; margin: 0 auto; }
+  }
+</style>
