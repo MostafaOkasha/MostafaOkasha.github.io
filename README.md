@@ -2,6 +2,8 @@
 ## Personal archive — writing, projects, CAD, system designs, and an interactive resume
 ### Live at: https://www.okasha.me
 
+[![Deploy to GitHub Pages](https://github.com/MostafaOkasha/MostafaOkasha.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/MostafaOkasha/MostafaOkasha.github.io/actions/workflows/deploy.yml)
+
 Rebuilt from scratch in 2026: **Astro 5** + content collections + vanilla-JS islands,
 deployed to **GitHub Pages** via Actions. Designed dark-only in the site's original
 navy (`#0a192f`) + mint (`#64ffda`) palette. The design handoff lives in [`redesign/`](redesign/).
