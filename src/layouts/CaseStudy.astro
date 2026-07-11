@@ -1,0 +1,32 @@
+---
+import Base from './Base.astro';
+import Nav from '../components/Nav.astro';
+
+interface Props {
+  title: string;
+  kicker: string;
+  summary: string;
+  meta: { k: string; v: string }[];
+  ogDescription?: string;
+}
+const { title, kicker, summary, meta, ogDescription } = Astro.props;
+---
+
+<Base title={`${title} | Mostafa Okasha`} description={ogDescription ?? summary}>
+  <Nav current="workshop" />
+  <article class="case">
+    <a href="/workshop#systems" class="case-back mono">← back to the workshop</a>
+    <div class="case-kicker">{kicker}</div>
+    <h1 class="case-title">{title}</h1>
+    <p class="case-summary">{summary}</p>
+    <div class="case-meta">
+      {meta.map((m) => <span class="m"><b>{m.k}</b> · {m.v}</span>)}
+    </div>
+    <slot />
+    <p class="sanitize-note">
+      Written to be public-safe: internal project names, service codenames, colleagues, and
+      partners are generalized to their technical essence. Nothing confidential here — just the
+      engineering.
+    </p>
+  </article>
+</Base>

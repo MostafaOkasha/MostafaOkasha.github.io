@@ -125,7 +125,46 @@ const cad = [
 
     <!-- SYSTEM DESIGNS -->
     <div class="section-label sec" id="systems">02 · SYSTEM DESIGNS</div>
+    <p class="sys-sub">Two are full case studies — context, architecture, tradeoffs, and what I'd change at 100×.</p>
     <div class="grid-3">
+      <a class="card diagram link" href="/workshop/systems/edge-gateway">
+        <svg width="100%" height="110" viewBox="0 0 300 110">
+          <text x="34" y="26" fill="#ff8ba3" font-size="9" text-anchor="middle" font-family="monospace">clients</text>
+          <line x1="10" y1="40" x2="60" y2="40" stroke="#ff8ba3" stroke-width="1"></line>
+          <line x1="10" y1="54" x2="60" y2="54" stroke="#ff8ba3" stroke-width="1"></line>
+          <line x1="10" y1="68" x2="60" y2="68" stroke="#ff8ba3" stroke-width="1"></line>
+          <rect x="60" y="38" width="66" height="34" rx="6" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
+          <text x="93" y="58" fill="#64ffda" font-size="9" text-anchor="middle" font-family="monospace">gateway</text>
+          <line x1="126" y1="55" x2="176" y2="55" stroke="#e6f1ff" stroke-width="1.6"></line>
+          <text x="151" y="48" fill="#e6f1ff" font-size="7.5" text-anchor="middle" font-family="monospace">1 TLS</text>
+          <rect x="176" y="30" width="80" height="50" rx="6" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+          <text x="216" y="49" fill="#7cb7ff" font-size="8" text-anchor="middle" font-family="monospace">HTTP/2</text>
+          <text x="216" y="62" fill="#7cb7ff" font-size="8" text-anchor="middle" font-family="monospace">N streams</text>
+          <line x1="256" y1="55" x2="292" y2="55" stroke="#495670" stroke-width="1"></line>
+          <text x="286" y="80" fill="#ffd76b" font-size="9" text-anchor="middle" font-family="monospace">origin</text>
+        </svg>
+        <div class="dtitle">Edge gateway + ingress controller</div>
+        <div class="dcap mono">Meta · 2× throughput · read the case study →</div>
+      </a>
+
+      <a class="card diagram link" href="/workshop/systems/currency-conversion">
+        <svg width="100%" height="110" viewBox="0 0 300 110">
+          <circle cx="30" cy="55" r="17" fill="none" stroke="#d8a3ff" stroke-width="1.3"></circle>
+          <text x="30" y="58" fill="#d8a3ff" font-size="9" text-anchor="middle" font-family="monospace">95 states</text>
+          <rect x="98" y="41" width="64" height="28" rx="6" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
+          <text x="130" y="58" fill="#64ffda" font-size="9" text-anchor="middle" font-family="monospace">FX logic</text>
+          <rect x="212" y="10" width="80" height="26" rx="5" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+          <text x="252" y="27" fill="#7cb7ff" font-size="9" text-anchor="middle" font-family="monospace">ledgers</text>
+          <rect x="212" y="74" width="80" height="26" rx="5" fill="none" stroke="#ffd76b" stroke-width="1.3"></rect>
+          <text x="252" y="91" fill="#ffd76b" font-size="9" text-anchor="middle" font-family="monospace">card network</text>
+          <line x1="47" y1="55" x2="98" y2="55" stroke="#495670" stroke-width="1"></line>
+          <line x1="162" y1="49" x2="212" y2="23" stroke="#495670" stroke-width="1"></line>
+          <line x1="162" y1="61" x2="212" y2="87" stroke="#495670" stroke-width="1"></line>
+        </svg>
+        <div class="dtitle">Currency-conversion audit</div>
+        <div class="dcap mono">Capital One · $10M · read the case study →</div>
+      </a>
+
       <div class="card diagram" data-zoom>
         <svg width="100%" height="110" viewBox="0 0 300 110">
           <rect x="6" y="40" width="62" height="28" rx="5" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
@@ -143,24 +182,6 @@ const cad = [
         </svg>
         <div class="dtitle">ChessMate pipeline</div>
         <div class="dcap mono">vision → engine → arm · click to zoom</div>
-      </div>
-
-      <div class="card diagram" data-zoom>
-        <svg width="100%" height="110" viewBox="0 0 300 110">
-          <circle cx="34" cy="54" r="18" fill="none" stroke="#d8a3ff" stroke-width="1.3"></circle>
-          <text x="34" y="58" fill="#d8a3ff" font-size="10" text-anchor="middle" font-family="monospace">txns</text>
-          <rect x="100" y="40" width="62" height="28" rx="14" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
-          <text x="131" y="58" fill="#64ffda" font-size="10" text-anchor="middle" font-family="monospace">features</text>
-          <rect x="212" y="8" width="80" height="26" rx="5" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
-          <text x="252" y="25" fill="#7cb7ff" font-size="10" text-anchor="middle" font-family="monospace">rule engine</text>
-          <rect x="212" y="76" width="80" height="26" rx="5" fill="none" stroke="#ffd76b" stroke-width="1.3"></rect>
-          <text x="252" y="93" fill="#ffd76b" font-size="10" text-anchor="middle" font-family="monospace">ML scoring</text>
-          <line x1="52" y1="54" x2="100" y2="54" stroke="#495670" stroke-width="1"></line>
-          <line x1="162" y1="48" x2="212" y2="21" stroke="#495670" stroke-width="1"></line>
-          <line x1="162" y1="60" x2="212" y2="89" stroke="#495670" stroke-width="1"></line>
-        </svg>
-        <div class="dtitle">Fraud-rule serving</div>
-        <div class="dcap mono">stream → features → decisions · click to zoom</div>
       </div>
 
       <div class="card diagram" data-zoom>
@@ -274,10 +295,14 @@ const cad = [
   .pdesc { margin-top: 6px; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
   .chips { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
 
-  .diagram { padding: 20px 22px; cursor: zoom-in; transition: border-color 150ms ease; }
+  .sys-sub { margin: 6px 0 16px; font-size: 14px; color: var(--text-muted); }
+  .diagram { padding: 20px 22px; cursor: zoom-in; transition: border-color 150ms ease; display: block; }
   .diagram:hover { border-color: var(--mint); }
-  .dtitle { margin-top: 10px; font-size: 15px; font-weight: 600; color: var(--text-bright); }
+  .diagram.link { cursor: pointer; }
+  .diagram.link:hover .dtitle { color: var(--mint); }
+  .dtitle { margin-top: 10px; font-size: 15px; font-weight: 600; color: var(--text-bright); transition: color 150ms ease; }
   .dcap { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+  .diagram.link .dcap { color: var(--mint); }
 
   .cad-grid {
     margin-top: 16px;

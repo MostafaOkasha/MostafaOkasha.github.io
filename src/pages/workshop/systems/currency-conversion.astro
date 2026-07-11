@@ -1,0 +1,174 @@
+---
+import CaseStudy from '../../../layouts/CaseStudy.astro';
+---
+
+<CaseStudy
+  title="The $10M currency-conversion gap"
+  kicker="System design · Capital One · Fraud & Disputes"
+  summary="A rounding-and-timing gap in cross-border dispute settlement quietly lost money on a subset of cases. Finding it meant reverse-engineering a 95-state dispute lifecycle; fixing it meant a change that spanned 30+ services and four organizations."
+  meta={[
+    { k: 'role', v: 'lead engineer + de-facto PO' },
+    { k: 'span', v: '~2 years' },
+    { k: 'stack', v: 'Java · Spring Boot · SQL · AWS' },
+    { k: 'impact', v: '$2M+/yr · $10M+/5yr' },
+  ]}
+  ogDescription="How a fresh-grad bug turned into a two-year, $10M currency-conversion fix spanning a 95-state dispute lifecycle and four organizations."
+>
+  <h2>Context</h2>
+  <p class="lead">
+    When you dispute a card charge across a border, money doesn't just move once. It moves through a
+    <b>chargeback lifecycle</b> — provisional credit, first chargeback, merchant response, second
+    chargeback, pre-arbitration, representment — and at several of those steps the bank debits or
+    credits internal ledgers. When the transaction settled in one currency but the customer was
+    billed in another, a <b>foreign-transaction fee and a currency conversion</b> had to be applied
+    at exactly the right steps.
+  </p>
+  <p>
+    The platform had been built for a market that <b>doesn't charge a foreign-transaction fee</b>, so
+    that logic simply didn't exist. Ported to a market that does, the gap meant the bank was eating
+    conversion losses on a slice of every cross-border dispute — money that was
+    <span class="mint">nobody's job to notice</span>.
+  </p>
+
+  <h2>How it surfaced</h2>
+  <p>
+    It started as a small bug I picked up as a fresh grad. Fixing it revealed the bug was a symptom:
+    the same missing concept was absent across <b>10–20 services</b>. Prior attempts to tackle the
+    root cause had been shelved as too hard — the knowledge was spread across applications and
+    external dependencies (a card network, an external mainframe settlement partner, the fraud/dispute
+    case-status system, the accounting ledgers, and the ledger-execution engine), and no single person
+    held the whole map.
+  </p>
+
+  <h2>Step 1 — recover the state machine</h2>
+  <p>
+    You can't fix a lifecycle you can't see. There were <b>95 distinct case states</b> and transitions
+    an agent could walk a dispute through, and the "spec" was really just behavior spread across
+    services and millions of historical cases (2–3M in one market alone). So I wrote a program that
+    crawled the case data, inferred every state-to-state relationship, and <b>auto-generated a finite-state
+    machine</b> of the actual business logic — turning tribal knowledge into a diagram everyone could
+    argue about.
+  </p>
+
+  <figure>
+    <div class="diagram-box">
+      <svg width="100%" height="210" viewBox="0 0 640 210" role="img" aria-label="Chargeback lifecycle state machine">
+        <!-- states -->
+        <rect x="10" y="86" width="96" height="34" rx="6" fill="none" stroke="#64ffda" stroke-width="1.3"></rect>
+        <text x="58" y="107" fill="#64ffda" font-size="10" text-anchor="middle">provisional</text>
+        <rect x="150" y="86" width="104" height="34" rx="6" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+        <text x="202" y="102" fill="#7cb7ff" font-size="10" text-anchor="middle">1st chargeback</text>
+        <text x="202" y="114" fill="#7cb7ff" font-size="8.5" text-anchor="middle">±FX applied</text>
+        <rect x="300" y="30" width="104" height="34" rx="6" fill="none" stroke="#d8a3ff" stroke-width="1.3"></rect>
+        <text x="352" y="47" fill="#d8a3ff" font-size="10" text-anchor="middle">merchant resp.</text>
+        <text x="352" y="59" fill="#d8a3ff" font-size="8.5" text-anchor="middle">received</text>
+        <rect x="300" y="142" width="104" height="34" rx="6" fill="none" stroke="#7cb7ff" stroke-width="1.3"></rect>
+        <text x="352" y="163" fill="#7cb7ff" font-size="10" text-anchor="middle">2nd chargeback</text>
+        <rect x="452" y="30" width="104" height="34" rx="6" fill="none" stroke="#ffd76b" stroke-width="1.3"></rect>
+        <text x="504" y="47" fill="#ffd76b" font-size="10" text-anchor="middle">pre-arbitration</text>
+        <text x="504" y="59" fill="#ffd76b" font-size="8.5" text-anchor="middle">representment</text>
+        <rect x="452" y="142" width="104" height="34" rx="6" fill="none" stroke="#7dead8" stroke-width="1.3"></rect>
+        <text x="504" y="159" fill="#7dead8" font-size="10" text-anchor="middle">resolved</text>
+        <text x="504" y="171" fill="#7dead8" font-size="8.5" text-anchor="middle">ledger reconciled</text>
+        <!-- edges -->
+        <line x1="106" y1="103" x2="150" y2="103" stroke="#495670" stroke-width="1"></line>
+        <line x1="254" y1="98" x2="300" y2="55" stroke="#495670" stroke-width="1"></line>
+        <line x1="254" y1="108" x2="300" y2="155" stroke="#495670" stroke-width="1"></line>
+        <line x1="404" y1="47" x2="452" y2="47" stroke="#495670" stroke-width="1"></line>
+        <line x1="404" y1="159" x2="452" y2="159" stroke="#495670" stroke-width="1"></line>
+        <line x1="504" y1="64" x2="504" y2="142" stroke="#495670" stroke-width="1" stroke-dasharray="3 3"></line>
+        <text x="326" y="200" fill="#8892b0" font-size="9" text-anchor="middle">…one path of 95. every ± is a place the conversion could silently go wrong.</text>
+      </svg>
+    </div>
+    <figcaption>Reverse-engineered chargeback lifecycle — the "spec" nobody had written down.</figcaption>
+  </figure>
+
+  <h2>Step 2 — design the fix, get four teams to yes</h2>
+  <p>
+    The change had to <b>propagate FX-fee and conversion fields through the entire lifecycle</b> and
+    correct how the ledger-execution engine moved money at each step. That touched <b>30+ services</b>
+    owned by different teams. With no formal mandate, I effectively wore the product-owner hat:
+    defining intent, laying out the pros and cons of each path when there was no obvious answer, and
+    getting explicit buy-in from four organizations before writing the migration.
+  </p>
+  <ul>
+    <li><b>Accounting / ledgers</b> — reconcile to the cent; they had been eating write-offs manually.</li>
+    <li><b>The card network</b> — align on representment rules so a fix didn't create a dispute-risk hole.</li>
+    <li><b>Case-status team</b> — propagate the new fields through their state model.</li>
+    <li><b>Ledger-execution team</b> — the service that actually debits/credits customer ledgers.</li>
+  </ul>
+
+  <h2>Requirements that shaped it</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="col-h">Functional</div>
+      <ul>
+        <li>Apply FX + conversion at the correct lifecycle steps only</li>
+        <li>Handle every one of the 95 states, including in-flight cases</li>
+        <li>Rebill customers to the exact amount they paid</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="col-h">Non-functional</div>
+      <ul>
+        <li><b>Correctness</b>: money must reconcile — this is a ledger</li>
+        <li><b>Auditability</b>: every adjustment traceable (later, SR&amp;ED-grade)</li>
+        <li><b>Backward-compatible</b>: no breakage for open disputes</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout">
+    <b>The customer-first call.</b> Because customers were rebilled in the settled amount, some
+    international fraud cases came back a few cents to a few dollars short. I pushed to always return
+    customers <span class="mint">to the dollar they paid</span> — which opened a wider set of edge
+    cases and needed its own round of stakeholder buy-in. It was the right thing to do, and the
+    harder thing to build.
+  </div>
+
+  <h2>Testing</h2>
+  <p>
+    A ledger bug doesn't get a second chance in production, so I was obsessive about coverage —
+    <b>90+ end-to-end scenarios</b> across the state machine, run in dev and again in production
+    verification, with stakeholders kept in the loop at every gate. The release went out clean.
+  </p>
+
+  <h2>Results</h2>
+  <div class="stats">
+    <div class="stat"><div class="v">$2M+<span style="font-size:14px">/yr</span></div><div class="k">recovered losses</div></div>
+    <div class="stat"><div class="v">$10M+</div><div class="k">projected over 5 years</div></div>
+    <div class="stat"><div class="v">$300K+</div><div class="k">SR&amp;ED tax incentive</div></div>
+    <div class="stat"><div class="v">30+</div><div class="k">services touched</div></div>
+  </div>
+  <p>
+    It earned company-wide recognition and a promotion to <b>Senior Software Engineer</b>. The
+    research narrative also qualified for a <b>$300K+ SR&amp;ED</b> tax incentive.
+  </p>
+
+  <h2>What I'd do differently</h2>
+  <ul>
+    <li>
+      <b>Ask for help earlier.</b> I took on too much alone at the start. The state-machine extraction
+      and the stakeholder alignment were two full-time jobs; splitting them sooner would have shaved
+      months.
+    </li>
+    <li>
+      <b>Make the FSM a shared service, not a one-off script.</b> The generated state machine was
+      gold — it should have lived as a queryable source of truth other teams could build on, not a
+      tool I ran.
+    </li>
+    <li>
+      <b>Continuous reconciliation monitoring.</b> The whole class of bug is invisible without a
+      job that watches for money that doesn't reconcile. That alarm should exist by default.
+    </li>
+  </ul>
+
+  <h2>Scaling it 10× / 100×</h2>
+  <p>
+    At 10× volume the FSM-driven decisioning holds — it's stateless per case and parallelizes across
+    the dispute stream. The pressure points are the <b>external partners</b> (the card network and
+    settlement mainframe have their own throughput and batch windows) and the <b>ledger-execution</b>
+    path, which must stay strongly consistent. At 100× I'd move conversion decisioning behind an
+    event log for replay and audit, batch ledger adjustments idempotently, and treat the
+    reconciliation monitor as a first-class SLO rather than an afterthought.
+  </p>
+</CaseStudy>
