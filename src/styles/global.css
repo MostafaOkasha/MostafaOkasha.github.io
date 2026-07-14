@@ -291,6 +291,13 @@ kbd {
 .palette .result.sel { background: rgba(100, 255, 218, 0.07); }
 .palette .result .r-title { font-size: 14.5px; font-weight: 600; color: var(--text-bright); }
 .palette .result .r-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+/* On mobile the fixed badge column + meta squeezed titles into ~2 words per
+   line; drop the auto badge column and hide the date so titles breathe. */
+@media (max-width: 768px) {
+  .palette .result { grid-template-columns: auto 1fr; gap: 12px; }
+  .palette .result .r-meta { display: none; }
+}
 .palette .empty {
   padding: 22px 18px;
   font-family: var(--font-mono);
