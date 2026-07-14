@@ -501,4 +501,9 @@ kbd {
   .case { padding: 8px 20px 70px; }
   .case-title { font-size: 30px; }
   .case .cols { grid-template-columns: 1fr; }
+  /* keep wide diagrams legible: render at a readable width and let the box
+     scroll horizontally instead of shrinking labels to ~5px */
+  .case .diagram-box { -webkit-overflow-scrolling: touch; }
+  .case .diagram-box svg { min-width: 600px; }
+  .case figcaption::after { content: ' · scroll →'; color: var(--mint); }
 }
