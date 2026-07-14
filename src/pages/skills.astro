@@ -168,10 +168,24 @@ const TOOLBOX = [
     if (openSheet && isMobile()) dossier.classList.add('sheet-open');
   }
 
+  const closeSheet = () => dossier.classList.remove('sheet-open');
+
   document.querySelectorAll('.tile').forEach((t) =>
     t.addEventListener('click', () => show(t.dataset.skill, true))
   );
-  document.querySelector('[data-sheet-close]')?.addEventListener('click', () => dossier.classList.remove('sheet-open'));
+  document.querySelector('[data-sheet-close]')?.addEventListener('click', closeSheet);
+
+  // On mobile the dossier is a bottom sheet — tapping anywhere outside it
+  // (or pressing Escape) closes it, not just the × button.
+  document.addEventListener('click', (e) => {
+    if (!dossier.classList.contains('sheet-open')) return;
+    if (dossier.contains(e.target) || e.target.closest('.tile')) return;
+    closeSheet();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSheet();
+  });
+
   show(skills[0].k, false);
 </script>
 

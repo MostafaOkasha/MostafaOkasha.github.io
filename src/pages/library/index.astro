@@ -141,7 +141,9 @@ const rows = entries.map((e) => ({
     min-height: calc(100vh - 69px);
   }
 
-  .shelves { border-right: 1px solid var(--mint-border-soft); padding: 28px 0; }
+  /* min-width: 0 stops the horizontally-scrolling shelf row from blowing the
+     grid column out past the viewport (which broke the mobile menu overlay) */
+  .shelves { border-right: 1px solid var(--mint-border-soft); padding: 28px 0; min-width: 0; }
   .shelves-title { padding: 0 28px; }
   .shelf-list { margin-top: 14px; display: flex; flex-direction: column; }
   .shelf {
