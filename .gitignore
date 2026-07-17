@@ -2,6 +2,7 @@ _site
 .sass-cache
 .jekyll-metadata
 .git-metadata
+.DS_Store
 
 # Astro
 node_modules

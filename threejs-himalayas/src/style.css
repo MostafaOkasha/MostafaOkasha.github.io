@@ -1,0 +1,85 @@
+:root {
+  color: rgba(255,255,255,.82);
+  background: #050a12;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+canvas { display: block; width: 100%; height: 100%; }
+
+.hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  color: rgba(235,240,246,.66);
+  letter-spacing: .22em;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(0,0,0,.45);
+}
+.altitude { position: absolute; top: 5.2%; left: 2.6%; line-height: 1.65; }
+.altitude strong { color: rgba(255,255,255,.78); font-weight: 500; }
+.left-rail {
+  position: absolute;
+  top: 29%; left: 3%;
+  display: grid; gap: 30px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(255,255,255,.18);
+}
+.left-rail span { position: relative; }
+.left-rail span::before {
+  content: "";
+  position: absolute;
+  width: 4px; height: 4px; border-radius: 50%;
+  left: -23px; top: 5px;
+  background: rgba(255,255,255,.48);
+}
+.left-rail .active { color: white; font-weight: 650; }
+.left-rail .active::before {
+  width: 6px; height: 6px; left: -24px; top: 4px;
+  background: #ffd08a;
+  box-shadow: 0 0 12px 4px rgba(255,164,75,.55);
+}
+.center-mark {
+  position: absolute;
+  left: 30%; top: 43%;
+  min-width: 230px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,.68);
+}
+.center-mark i,
+.center-mark i::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background: rgba(255,255,255,.25);
+}
+.center-mark i { width: 44px; height: 1px; left: calc(50% - 22px); top: 50px; }
+.center-mark i::before { width: 1px; height: 44px; left: 22px; top: -22px; }
+.conditions { position: absolute; left: 3%; bottom: 5%; font-size: 9px; }
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  animation: grain .24s steps(2) infinite;
+  mix-blend-mode: soft-light;
+}
+@keyframes grain {
+  0% { transform: translate3d(-1%, 1%, 0); }
+  25% { transform: translate3d(2%, -1%, 0); }
+  50% { transform: translate3d(-2%, 2%, 0); }
+  75% { transform: translate3d(1%, -2%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+@media (max-width: 760px) {
+  .left-rail, .center-mark, .conditions { display: none; }
+  .altitude { top: 24px; left: 22px; }
+}
