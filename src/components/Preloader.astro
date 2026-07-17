@@ -1,0 +1,241 @@
+---
+/**
+ * Cinematic intro: a spinning spiral galaxy that warps into its core to
+ * reveal the homepage. Loading indicator + minimum 2s hold (even if the
+ * page is ready sooner). Shows once per browser session; honours
+ * prefers-reduced-motion. Self-contained canvas, no dependencies.
+ */
+---
+
+<div class="preloader" data-preloader aria-hidden="true">
+  <canvas data-galaxy></canvas>
+  <div class="intro-ui">
+    <div class="intro-label mono">entering the archive</div>
+    <div class="bar"><div class="bar-fill" data-bar></div></div>
+    <div class="intro-pct mono" data-pct>0%</div>
+  </div>
+</div>
+
+<style>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #04040d;
+    overflow: hidden;
+    transform-origin: 50% 44%;
+    will-change: transform, opacity;
+  }
+  .preloader canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .preloader.warp {
+    animation: warp 1200ms cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  }
+  @keyframes warp {
+    to { transform: scale(9); opacity: 0; }
+  }
+  .preloader.gone { display: none; }
+
+  .intro-ui {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    transition: opacity 400ms ease;
+  }
+  .preloader.warp .intro-ui { opacity: 0; }
+  .intro-label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #b8a6ff;
+    opacity: 0.85;
+  }
+  .bar {
+    width: 220px;
+    max-width: 60vw;
+    height: 1px;
+    background: rgba(184, 166, 255, 0.18);
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #6b42eb, #48d9d9);
+    box-shadow: 0 0 10px rgba(100, 217, 255, 0.7);
+  }
+  .intro-pct {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #7a86b8;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .preloader.warp { animation: fadeout 500ms ease forwards; }
+    @keyframes fadeout { to { opacity: 0; } }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var el = document.querySelector('[data-preloader]');
+    if (!el) return;
+
+    // once per session — skip instantly on later navigations (no flash)
+    if (sessionStorage.getItem('okIntroSeen')) {
+      el.parentNode && el.parentNode.removeChild(el);
+      return;
+    }
+    sessionStorage.setItem('okIntroSeen', '1');
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.style.overflow = 'hidden';
+
+    var canvas = el.querySelector('[data-galaxy]');
+    var ctx = canvas.getContext('2d');
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, cx = 0, cy = 0, maxR = 0;
+
+    function resize() {
+      W = canvas.width = Math.floor(window.innerWidth * DPR);
+      H = canvas.height = Math.floor(window.innerHeight * DPR);
+      cx = W * 0.5;
+      cy = H * 0.44;
+      maxR = Math.min(W, H) * 0.62;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // ---- build spiral galaxy ----
+    var ARMS = 5, TWIST = 3.9, TILT = 0.46;
+    var N = reduce ? 700 : Math.min(2800, Math.floor((window.innerWidth * window.innerHeight) / 620));
+    var parts = new Array(N);
+    for (var i = 0; i < N; i++) {
+      var rn = Math.pow(Math.random(), 0.62);       // radial fraction, denser toward core
+      var arm = i % ARMS;
+      var spread = (Math.random() - 0.5) * (0.34 - rn * 0.20);
+      parts[i] = {
+        rn: rn,
+        a0: arm * (Math.PI * 2 / ARMS) + rn * TWIST + spread,
+        size: (0.6 + Math.random() * 1.5) * DPR,
+        tw: Math.random() * Math.PI * 2,           // twinkle phase
+        tws: 1.5 + Math.random() * 2.5,            // twinkle speed
+        br: 0.5 + Math.random() * 0.5
+      };
+    }
+
+    // color stops from core → rim (white → lavender → violet → blue → teal)
+    function colorFor(rn, k) {
+      var r, g, b;
+      if (rn < 0.16) { r = 236; g = 228; b = 255; }
+      else if (rn < 0.42) { var t = (rn - 0.16) / 0.26; r = 236 + (139 - 236) * t; g = 228 + (108 - 228) * t; b = 255 + (245 - 255) * t; }
+      else if (rn < 0.72) { var t2 = (rn - 0.42) / 0.30; r = 139 + (74 - 139) * t2; g = 108 + (140 - 108) * t2; b = 245 + (255 - 245) * t2; }
+      else { var t3 = (rn - 0.72) / 0.28; r = 74 + (72 - 74) * t3; g = 140 + (217 - 140) * t3; b = 255 + (217 - 255) * t3; }
+      return 'rgba(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ',' + k.toFixed(3) + ')';
+    }
+
+    function drawCore(rot) {
+      // bright core glow
+      var cr = maxR * 0.24;
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
+      g.addColorStop(0, 'rgba(255,255,255,0.95)');
+      g.addColorStop(0.18, 'rgba(210,190,255,0.7)');
+      g.addColorStop(0.5, 'rgba(120,80,235,0.25)');
+      g.addColorStop(1, 'rgba(80,60,180,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, cy, cr, 0, Math.PI * 2); ctx.fill();
+      // vertical light beam (like the reference)
+      var bw = maxR * 0.03;
+      var bg = ctx.createLinearGradient(cx, cy - maxR * 1.1, cx, cy + maxR * 1.1);
+      bg.addColorStop(0, 'rgba(180,200,255,0)');
+      bg.addColorStop(0.5, 'rgba(220,225,255,0.5)');
+      bg.addColorStop(1, 'rgba(180,200,255,0)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(cx - bw / 2, cy - maxR * 1.1, bw, maxR * 2.2);
+    }
+
+    var t0 = performance.now();
+    var speedMul = 1;
+    var raf = 0;
+
+    function frame(now) {
+      var t = (now - t0) / 1000;
+      var rot = t * 0.22 * speedMul;
+
+      // semi-transparent clear leaves motion trails → silky spiral streaks
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(4,4,13,0.24)';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.globalCompositeOperation = 'lighter';
+      drawCore(rot);
+
+      for (var i = 0; i < N; i++) {
+        var p = parts[i];
+        var r = p.rn * maxR;
+        // differential rotation — inner particles sweep faster
+        var a = p.a0 + rot * (0.6 + 0.9 / (p.rn + 0.18));
+        var x = cx + Math.cos(a) * r;
+        var y = cy + Math.sin(a) * r * TILT;
+        var tw = 0.6 + 0.4 * Math.sin(p.tw + t * p.tws);
+        var k = p.br * tw * (1 - p.rn * 0.35);
+        ctx.fillStyle = colorFor(p.rn, k);
+        ctx.beginPath();
+        ctx.arc(x, y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (reduce) return;               // one static-ish frame is enough; loop still runs below
+      raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+    if (reduce) { raf = requestAnimationFrame(function loop(n){ frame(n); raf = requestAnimationFrame(loop); }); }
+
+    // ---- loading bar + timing ----
+    var barEl = el.querySelector('[data-bar]');
+    var pctEl = el.querySelector('[data-pct]');
+    var MIN = 2000;                     // minimum on-screen time
+    var ready = false;
+    window.addEventListener('load', function () { ready = true; });
+    // safety: never hang if 'load' somehow doesn't fire
+    setTimeout(function () { ready = true; }, 8000);
+
+    function tick() {
+      var elapsed = performance.now() - t0;
+      // bar climbs to 90% over MIN, then completes once ready
+      var timed = Math.min(elapsed / MIN, 1);
+      var pct = ready ? Math.max(timed, 0.9) : timed * 0.9;
+      if (ready && elapsed >= MIN) pct = 1;
+      barEl.style.width = (pct * 100).toFixed(0) + '%';
+      pctEl.textContent = (pct * 100).toFixed(0) + '%';
+      if (pct >= 1 && ready && elapsed >= MIN) { finish(); return; }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    var finished = false;
+    function finish() {
+      if (finished) return; finished = true;
+      speedMul = 6;                     // warp: spin up as we zoom in
+      el.classList.add('warp');
+      var done = function () {
+        cancelAnimationFrame(raf);
+        el.classList.add('gone');
+        document.documentElement.style.overflow = '';
+        window.removeEventListener('resize', resize);
+        el.parentNode && el.parentNode.removeChild(el);
+      };
+      el.addEventListener('animationend', done, { once: true });
+      setTimeout(done, 1400);           // fallback if animationend misses
+    }
+  })();
+</script>

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Aurora from '../components/Aurora.astro';
+import Preloader from '../components/Preloader.astro';
 import { getCollection } from 'astro:content';
 import { SHELF_TYPES, fmtKicker } from '../data/shelves';
 import { execSync } from 'node:child_process';
@@ -20,6 +21,7 @@ try {
 ---
 
 <Base title="Mostafa Okasha — I build things for fun.">
+  <Preloader />
   <Aurora />
 
   <div class="page">
