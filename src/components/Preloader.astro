@@ -23,7 +23,7 @@
     z-index: 9999;
     background: #04040d;
     overflow: hidden;
-    transform-origin: 50% 44%;
+    transform-origin: 50% 46%;
     will-change: transform, opacity;
   }
   .preloader canvas {
@@ -106,61 +106,89 @@
     var W = 0, H = 0, cx = 0, cy = 0, maxR = 0;
 
     function resize() {
-      W = canvas.width = Math.floor(window.innerWidth * DPR);
-      H = canvas.height = Math.floor(window.innerHeight * DPR);
-      cx = W * 0.5;
-      cy = H * 0.44;
-      maxR = Math.min(W, H) * 0.62;
+      var iw = window.innerWidth || document.documentElement.clientWidth || 0;
+      var ih = window.innerHeight || document.documentElement.clientHeight || 0;
+      var w = Math.floor(iw * DPR), h = Math.floor(ih * DPR);
+      if (w === W && h === H) return;           // no change → keep the motion trails
+      W = canvas.width = w; H = canvas.height = h;
+      cx = W * 0.5; cy = H * 0.46; maxR = Math.min(W, H) * 0.62;
     }
     resize();
     window.addEventListener('resize', resize);
 
     // ---- build spiral galaxy ----
-    var ARMS = 5, TWIST = 3.9, TILT = 0.46;
-    var N = reduce ? 700 : Math.min(2800, Math.floor((window.innerWidth * window.innerHeight) / 620));
+    // Two broad arms wound ~2.5 turns so, seen at a tilt, they read as fine
+    // nested spiral rings (like the reference "record grooves").
+    var ARMS = 2, TURNS = 2.55, TILT = 0.42;
+    var VW = window.innerWidth || document.documentElement.clientWidth || 1440;
+    var VH = window.innerHeight || document.documentElement.clientHeight || 900;
+    var N = reduce ? 900 : Math.max(1800, Math.min(4200, Math.floor((VW * VH) / 420)));
     var parts = new Array(N);
     for (var i = 0; i < N; i++) {
-      var rn = Math.pow(Math.random(), 0.62);       // radial fraction, denser toward core
+      var u = Math.random();
+      var rn = 0.08 + 0.92 * Math.pow(u, 0.85);      // radius fraction along the arm
       var arm = i % ARMS;
-      var spread = (Math.random() - 0.5) * (0.34 - rn * 0.20);
+      var wind = u * TURNS * Math.PI * 2;            // angle winds as we go outward
+      var jitter = (Math.random() - 0.5) * (0.22 + 0.14 * rn); // dust thickness on the arm
+      var star = Math.random() < 0.07;               // ~7% brighter foreground stars
       parts[i] = {
-        rn: rn,
-        a0: arm * (Math.PI * 2 / ARMS) + rn * TWIST + spread,
-        size: (0.6 + Math.random() * 1.5) * DPR,
-        tw: Math.random() * Math.PI * 2,           // twinkle phase
-        tws: 1.5 + Math.random() * 2.5,            // twinkle speed
-        br: 0.5 + Math.random() * 0.5
+        rn: rn + (Math.random() - 0.5) * 0.015,
+        a0: arm * Math.PI + wind + jitter,
+        size: (star ? 1.4 + Math.random() * 1.5 : 0.7 + Math.random() * 1.15) * DPR,
+        tw: Math.random() * Math.PI * 2,
+        tws: 1.2 + Math.random() * 2.4,
+        br: (star ? 0.9 + Math.random() * 0.1 : 0.5 + Math.random() * 0.42)
       };
     }
 
-    // color stops from core → rim (white → lavender → violet → blue → teal)
+    // blue-forward palette: white-blue core → violet → azure → cyan rim
     function colorFor(rn, k) {
       var r, g, b;
-      if (rn < 0.16) { r = 236; g = 228; b = 255; }
-      else if (rn < 0.42) { var t = (rn - 0.16) / 0.26; r = 236 + (139 - 236) * t; g = 228 + (108 - 228) * t; b = 255 + (245 - 255) * t; }
-      else if (rn < 0.72) { var t2 = (rn - 0.42) / 0.30; r = 139 + (74 - 139) * t2; g = 108 + (140 - 108) * t2; b = 245 + (255 - 245) * t2; }
-      else { var t3 = (rn - 0.72) / 0.28; r = 74 + (72 - 74) * t3; g = 140 + (217 - 140) * t3; b = 255 + (217 - 255) * t3; }
+      if (rn < 0.14) { r = 224; g = 232; b = 255; }
+      else if (rn < 0.34) { var t = (rn - 0.14) / 0.20; r = 224 + (150 - 224) * t; g = 232 + (135 - 232) * t; b = 255; }
+      else if (rn < 0.64) { var t2 = (rn - 0.34) / 0.30; r = 150 + (74 - 150) * t2; g = 135 + (140 - 135) * t2; b = 255; }
+      else { var t3 = (rn - 0.64) / 0.36; r = 74 + (96 - 74) * t3; g = 140 + (210 - 140) * t3; b = 255 + (255 - 255) * t3; }
       return 'rgba(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ',' + k.toFixed(3) + ')';
     }
 
-    function drawCore(rot) {
-      // bright core glow
-      var cr = maxR * 0.24;
-      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
-      g.addColorStop(0, 'rgba(255,255,255,0.95)');
-      g.addColorStop(0.18, 'rgba(210,190,255,0.7)');
-      g.addColorStop(0.5, 'rgba(120,80,235,0.25)');
-      g.addColorStop(1, 'rgba(80,60,180,0)');
+    function drawCore() {
+      // 1. compact soft halo
+      var halo = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.30);
+      halo.addColorStop(0, 'rgba(110,140,255,0.26)');
+      halo.addColorStop(0.5, 'rgba(70,90,200,0.07)');
+      halo.addColorStop(1, 'rgba(40,50,140,0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR * 0.30, 0, Math.PI * 2); ctx.fill();
+      // 2. mid glow
+      var mid = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.085);
+      mid.addColorStop(0, 'rgba(240,244,255,0.92)');
+      mid.addColorStop(0.6, 'rgba(150,180,255,0.4)');
+      mid.addColorStop(1, 'rgba(120,140,255,0)');
+      ctx.fillStyle = mid;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR * 0.085, 0, Math.PI * 2); ctx.fill();
+      // 3. hot point
+      var hot = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.026);
+      hot.addColorStop(0, 'rgba(255,255,255,1)');
+      hot.addColorStop(1, 'rgba(220,235,255,0)');
+      ctx.fillStyle = hot;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR * 0.026, 0, Math.PI * 2); ctx.fill();
+      // 4. delicate anamorphic flare — thin, soft, subtle (NOT a bar)
+      flare(maxR * 0.72, 2.4 * DPR, 'rgba(200,220,255,0.13)', false); // vertical
+      flare(maxR * 0.40, 1.8 * DPR, 'rgba(210,225,255,0.08)', true);  // faint horizontal
+    }
+    function flare(len, halfw, col, horiz) {
+      var g = horiz
+        ? ctx.createLinearGradient(cx - len, cy, cx + len, cy)
+        : ctx.createLinearGradient(cx, cy - len, cx, cy + len);
+      g.addColorStop(0, 'rgba(255,255,255,0)');
+      g.addColorStop(0.5, col);
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.save();
+      ctx.filter = 'blur(' + (2.5 * DPR) + 'px)';
       ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(cx, cy, cr, 0, Math.PI * 2); ctx.fill();
-      // vertical light beam (like the reference)
-      var bw = maxR * 0.03;
-      var bg = ctx.createLinearGradient(cx, cy - maxR * 1.1, cx, cy + maxR * 1.1);
-      bg.addColorStop(0, 'rgba(180,200,255,0)');
-      bg.addColorStop(0.5, 'rgba(220,225,255,0.5)');
-      bg.addColorStop(1, 'rgba(180,200,255,0)');
-      ctx.fillStyle = bg;
-      ctx.fillRect(cx - bw / 2, cy - maxR * 1.1, bw, maxR * 2.2);
+      if (horiz) ctx.fillRect(cx - len, cy - halfw, len * 2, halfw * 2);
+      else ctx.fillRect(cx - halfw, cy - len, halfw * 2, len * 2);
+      ctx.restore();
     }
 
     var t0 = performance.now();
@@ -168,16 +196,18 @@
     var raf = 0;
 
     function frame(now) {
+      resize();                                 // self-corrects if mounted before layout
+      if (!W || !H) { raf = requestAnimationFrame(frame); return; }
       var t = (now - t0) / 1000;
-      var rot = t * 0.22 * speedMul;
+      var rot = t * 0.16 * speedMul;
 
-      // semi-transparent clear leaves motion trails → silky spiral streaks
+      // light trail leaves a subtle streak while keeping the rings defined
       ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = 'rgba(4,4,13,0.24)';
+      ctx.fillStyle = 'rgba(4,4,13,0.28)';
       ctx.fillRect(0, 0, W, H);
 
       ctx.globalCompositeOperation = 'lighter';
-      drawCore(rot);
+      drawCore();
 
       for (var i = 0; i < N; i++) {
         var p = parts[i];
@@ -186,8 +216,8 @@
         var a = p.a0 + rot * (0.6 + 0.9 / (p.rn + 0.18));
         var x = cx + Math.cos(a) * r;
         var y = cy + Math.sin(a) * r * TILT;
-        var tw = 0.6 + 0.4 * Math.sin(p.tw + t * p.tws);
-        var k = p.br * tw * (1 - p.rn * 0.35);
+        var tw = 0.65 + 0.35 * Math.sin(p.tw + t * p.tws);
+        var k = p.br * tw * (1 - p.rn * 0.18);
         ctx.fillStyle = colorFor(p.rn, k);
         ctx.beginPath();
         ctx.arc(x, y, p.size, 0, Math.PI * 2);
