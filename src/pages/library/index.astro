@@ -25,6 +25,7 @@ const rows = entries.map((e) => ({
   title: e.data.title,
   desc: e.data.description,
   meta: fmtMeta(e.data.date, e.data.readingTime),
+  cover: e.data.book?.cover,
   haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
 }));
 ---
@@ -77,8 +78,11 @@ const rows = entries.map((e) => ({
                 {r.badge}
               </span>
               <span class="entry-main">
-                <span class="entry-title">{r.title}</span>
-                <span class="entry-desc">{r.desc}</span>
+                {r.cover && <img class="entry-cover" src={r.cover} alt="" loading="lazy" />}
+                <span class="entry-text">
+                  <span class="entry-title">{r.title}</span>
+                  <span class="entry-desc">{r.desc}</span>
+                </span>
               </span>
               <span class="entry-meta mono">{r.meta}</span>
             </a>
@@ -226,6 +230,15 @@ const rows = entries.map((e) => ({
   }
   .entry:hover { background: rgba(100, 255, 218, 0.04); }
   .entry .badge { align-self: center; }
+  .entry-main { display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+  .entry-cover {
+    width: 40px;
+    flex: none;
+    border-radius: 3px;
+    border: 1px solid var(--mint-border-soft);
+    align-self: center;
+  }
+  .entry-text { min-width: 0; }
   .entry-title { display: block; font-size: 19px; font-weight: 600; color: var(--text-bright); }
   .entry-desc { display: block; margin-top: 4px; font-size: 14px; color: var(--text-muted); }
   .entry-meta { font-size: 12px; color: var(--text-muted); white-space: nowrap; }

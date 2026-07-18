@@ -39,6 +39,7 @@ const library = defineCollection({
         status: z.enum(['To read', 'In progress', 'Finished']).optional(),
         rating: z.number().min(0).max(5).optional(), // out of 5
         categories: z.array(z.string()).default([]),
+        purchase: z.string().optional(), // buy / affiliate link
         links: z
           .object({ goodreads: z.string().optional(), amazon: z.string().optional() })
           .optional(),

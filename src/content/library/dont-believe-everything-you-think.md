@@ -8,11 +8,13 @@ readingTime: 15
 draft: false
 book:
   author: Joseph Nguyen
+  cover: /images/covers/dont-believe-everything-you-think.jpg
   pages: 119
   published: 'June 20, 2022'
   publisher: Independently published
   status: In progress
   categories: [Happiness, Philosophy, Self-Development, Self-Help, Psychology, Motivational]
+  # purchase: https://...   # add your buy/affiliate link when ready
 ---
 
 ## One-paragraph review
