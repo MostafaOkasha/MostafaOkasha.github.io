@@ -26,6 +26,24 @@ const library = defineCollection({
     date: z.coerce.date(),
     readingTime: z.number().optional(), // minutes; computed from words if absent
     draft: z.boolean().default(false),
+
+    // Optional book metadata — set on `type: book` entries. Renders as a
+    // properties panel at the top of the page. All fields optional except author.
+    book: z
+      .object({
+        author: z.string(),
+        cover: z.string().optional(), // /images/... path to the cover
+        pages: z.number().optional(),
+        published: z.string().optional(), // e.g. "June 20, 2022"
+        publisher: z.string().optional(),
+        status: z.enum(['To read', 'In progress', 'Finished']).optional(),
+        rating: z.number().min(0).max(5).optional(), // out of 5
+        categories: z.array(z.string()).default([]),
+        links: z
+          .object({ goodreads: z.string().optional(), amazon: z.string().optional() })
+          .optional(),
+      })
+      .optional(),
   }),
 });
 
