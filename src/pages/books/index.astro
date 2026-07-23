@@ -20,7 +20,10 @@ const view = all.map((b) => ({
 
 const recommended = view.filter((b) => b.data.recommended);
 const reading = view.filter((b) => b.data.status === 'Currently reading');
-const finished = view.filter((b) => b.data.status === 'Finished');
+// finished books sorted by rating, highest first (unrated fall to the end)
+const finished = view
+  .filter((b) => b.data.status === 'Finished')
+  .sort((a, b) => (b.data.rating ?? -1) - (a.data.rating ?? -1));
 const toRead = view.filter((b) => b.data.status === 'To read');
 
 const sections = [
