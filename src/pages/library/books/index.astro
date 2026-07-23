@@ -1,7 +1,7 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Nav from '../../components/Nav.astro';
-import BookCover from '../../components/BookCover.astro';
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../components/Nav.astro';
+import BookCover from '../../../components/BookCover.astro';
 import { getCollection } from 'astro:content';
 
 const all = (await getCollection('books', ({ data }) => !data.draft)).sort((a, b) => {
@@ -52,7 +52,7 @@ const sections = [
           <div class="section-label">★ RECOMMENDED</div>
           <div class="shelf">
             {recommended.map((b) => (
-              <a class="book" href={`/books/${b.slug}`}>
+              <a class="book" href={`/library/books/${b.slug}`}>
                 <span class="cover-wrap">
                   <BookCover title={b.data.title} author={b.data.author} cover={b.data.cover} />
                   {b.notes && <span class="ribbon mono">notes</span>}
@@ -84,7 +84,7 @@ const sections = [
               <p class="sec-sub">{s.sub}</p>
               <div class="shelf">
                 {s.books.map((b) => (
-                  <a class="book" href={`/books/${b.slug}`}>
+                  <a class="book" href={`/library/books/${b.slug}`}>
                     <span class="cover-wrap">
                       <BookCover title={b.data.title} author={b.data.author} cover={b.data.cover} />
                       {b.data.recommended && <span class="star" aria-hidden="true">★</span>}

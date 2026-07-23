@@ -1,7 +1,7 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Nav from '../../components/Nav.astro';
-import BookCover from '../../components/BookCover.astro';
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../components/Nav.astro';
+import BookCover from '../../../components/BookCover.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -22,7 +22,8 @@ const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
 
   <article class="article">
     <div class="top-row mono">
-      <a href="/books">← the bookshelf</a>
+      <a href="/library/books">← the bookshelf</a>
+      <a href="/library">the library ↗</a>
     </div>
 
     <div class="kicker mono">
@@ -100,7 +101,7 @@ const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
     }
 
     <div class="foot">
-      <a href="/books" class="chip-mint">← the bookshelf</a>
+      <a href="/library/books" class="chip-mint">← the bookshelf</a>
     </div>
   </article>
 </Base>

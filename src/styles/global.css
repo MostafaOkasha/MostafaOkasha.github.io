@@ -233,6 +233,9 @@ kbd {
 .mobile-menu .row .num { font-family: var(--font-mono); font-size: 13px; color: var(--mint); }
 .mobile-menu .row .name { font-weight: 700; font-size: 38px; color: var(--text-bright); }
 .mobile-menu .row .count { margin-left: auto; font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+/* books sits one level under library */
+.mobile-menu .row--sub { border-top: none; padding: 4px 4px 14px 22px; }
+.mobile-menu .row--sub .name { font-size: 26px; color: var(--text-body); }
 .mobile-menu .foot {
   display: flex; gap: 18px; flex-wrap: wrap;
   font-family: var(--font-mono); font-size: 13px;

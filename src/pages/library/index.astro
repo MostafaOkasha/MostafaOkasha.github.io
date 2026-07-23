@@ -17,6 +17,8 @@ const shelves = [
   })),
 ];
 
+const bookCount = (await getCollection('books', ({ data }) => !data.draft)).length;
+
 const rows = entries.map((e) => ({
   url: `/library/${e.id}`,
   type: e.data.type,
@@ -46,6 +48,15 @@ const rows = entries.map((e) => ({
           ))
         }
       </div>
+      <a class="bookshelf-link" href="/library/books">
+        <span class="bl-icon" aria-hidden="true">📚</span>
+        <span class="bl-text">
+          <span class="bl-title">The Bookshelf</span>
+          <span class="bl-sub mono">reading · read · to-read</span>
+        </span>
+        <span class="bl-count mono">{bookCount}</span>
+      </a>
+
       <div class="shelf-note mono">
         every entry is a markdown file with a type + topics. drop a file in /library, it appears
         here.
@@ -187,6 +198,34 @@ const rows = entries.map((e) => ({
   }
   .rss-link:hover { color: var(--mint); }
 
+  /* the bookshelf is its own subpage — a real link, not an in-place filter */
+  .bookshelf-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 20px 0;
+    padding: 13px 15px;
+    border: 1px solid var(--mint-border);
+    border-radius: 12px;
+    background: rgba(100, 255, 218, 0.05);
+    transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+  }
+  .bookshelf-link:hover {
+    background: rgba(100, 255, 218, 0.1);
+    border-color: var(--mint);
+    transform: translateY(-1px);
+  }
+  .bookshelf-link .bl-icon { font-size: 20px; line-height: 1; }
+  .bookshelf-link .bl-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .bookshelf-link .bl-title { font-size: 14.5px; font-weight: 600; color: var(--text-bright); }
+  .bookshelf-link .bl-sub { font-size: 10.5px; color: var(--text-muted); letter-spacing: 0.02em; white-space: nowrap; }
+  .bookshelf-link .bl-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--mint);
+    align-self: flex-start;
+  }
+
   .entries { padding: 28px 44px 60px; min-width: 0; }
   .search-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .search-box {
@@ -260,6 +299,7 @@ const rows = entries.map((e) => ({
       align-items: center;
     }
     .shelf.active { border-color: var(--mint); background: rgba(100, 255, 218, 0.08); }
+    .bookshelf-link { margin: 14px 20px 0; }
     .entries { padding: 16px 20px 50px; }
     .entry { grid-template-columns: 1fr; gap: 6px; padding: 15px 0; }
     .entry .badge { justify-self: start; }
