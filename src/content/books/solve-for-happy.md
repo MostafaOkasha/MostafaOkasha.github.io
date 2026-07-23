@@ -5,6 +5,7 @@ author: Mo Gawdat
 cover: /images/covers/solve-for-happy.jpg
 status: Finished
 recommended: true
+rating: 5
 pages: 351
 published: 'March 21, 2017'
 publisher: Gallery Books

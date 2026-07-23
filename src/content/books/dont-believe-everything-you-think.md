@@ -4,6 +4,7 @@ description: 'Joseph Nguyen on how thinking — not our circumstances — is the
 author: Joseph Nguyen
 cover: /images/covers/dont-believe-everything-you-think.jpg
 status: Currently reading
+rating: 4
 recommended: false
 pages: 119
 published: 'June 20, 2022'

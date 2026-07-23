@@ -53,6 +53,13 @@ const sections = [
                 <span class="cover-wrap">
                   <BookCover title={b.data.title} author={b.data.author} cover={b.data.cover} />
                   {b.notes && <span class="ribbon mono">notes</span>}
+                  {b.data.rating != null && (
+                    <span class="rating-strip" aria-label={`${b.data.rating} out of 5`}>
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <span class={i < Math.round(b.data.rating ?? 0) ? 'st on' : 'st'}>★</span>
+                      ))}
+                    </span>
+                  )}
                 </span>
                 <span class="b-title">{b.data.title}</span>
                 <span class="b-author mono">{b.data.author}</span>
@@ -79,6 +86,13 @@ const sections = [
                       <BookCover title={b.data.title} author={b.data.author} cover={b.data.cover} />
                       {b.data.recommended && <span class="star" aria-hidden="true">★</span>}
                       {b.notes && <span class="ribbon mono">notes</span>}
+                      {b.data.rating != null && (
+                        <span class="rating-strip" aria-label={`${b.data.rating} out of 5`}>
+                          {[0, 1, 2, 3, 4].map((i) => (
+                            <span class={i < Math.round(b.data.rating ?? 0) ? 'st on' : 'st'}>★</span>
+                          ))}
+                        </span>
+                      )}
                     </span>
                     <span class="b-title">{b.data.title}</span>
                     <span class="b-author mono">{b.data.author}</span>
@@ -126,7 +140,7 @@ const sections = [
 
   .ribbon {
     position: absolute;
-    bottom: 8px;
+    top: 8px;
     left: 8px;
     font-size: 9.5px;
     letter-spacing: 0.08em;
@@ -144,6 +158,21 @@ const sections = [
     color: #ffd76b;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   }
+  /* star rating along the bottom of the spine, over a readability gradient */
+  .rating-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    padding: 14px 6px 7px;
+    border-radius: 0 0 5px 5px;
+    background: linear-gradient(transparent, rgba(4, 6, 15, 0.82));
+  }
+  .rating-strip .st { font-size: 12px; line-height: 1; color: rgba(255, 255, 255, 0.28); }
+  .rating-strip .st.on { color: #ffd76b; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7); }
 
   @media (max-width: 768px) {
     .wrap { padding: 28px 20px 60px; }
