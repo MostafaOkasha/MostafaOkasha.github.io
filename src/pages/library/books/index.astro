@@ -40,6 +40,7 @@ const sections = [
   <Nav current="books" />
 
   <div class="wrap">
+    <a class="back-link mono" href="/library">← the library</a>
     <h1 class="page-title">The Bookshelf.</h1>
     <p class="page-sub">
       What I'm reading, what I've read, and what's next. Books with a summary are marked — open one
@@ -111,6 +112,13 @@ const sections = [
 
 <style>
   .wrap { padding: 40px 44px 80px; max-width: 1100px; margin: 0 auto; }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .back-link:hover { color: var(--mint); }
   .sec { margin-top: 44px; }
   .sec .count { color: var(--text-muted); font-size: 13px; }
   .sec-sub { margin: 4px 0 0; font-size: 13.5px; color: var(--text-muted); }
