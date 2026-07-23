@@ -5,6 +5,7 @@ import { SHELF_TYPES, fmtMeta } from '../data/shelves';
 const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+const bookEntries = await getCollection('books', ({ data }) => !data.draft);
 
 const items = [
   ...entries.map((e) => ({
@@ -15,7 +16,16 @@ const items = [
     url: `/library/${e.id}`,
     haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
   })),
+  ...bookEntries.map((b) => ({
+    title: b.data.title,
+    badge: 'BOOK',
+    color: '#7dead8',
+    meta: b.data.author,
+    url: `/books/${b.id}`,
+    haystack: `${b.data.title} ${b.data.author} ${(b.data.description ?? '')} ${b.data.topics.join(' ')}`.toLowerCase(),
+  })),
   { title: 'The Library', badge: 'PAGE', color: '#8892b0', meta: 'all shelves', url: '/library', haystack: 'library shelves writing essays notes' },
+  { title: 'The Bookshelf', badge: 'PAGE', color: '#8892b0', meta: 'reading · to-read', url: '/books', haystack: 'books bookshelf reading list summaries recommended' },
   { title: 'The Workshop', badge: 'PAGE', color: '#8892b0', meta: 'projects · CAD', url: '/workshop', haystack: 'workshop projects system designs cad photography' },
   { title: 'Resume — with receipts', badge: 'PAGE', color: '#8892b0', meta: 'interactive', url: '/resume', haystack: 'resume cv experience receipts pdf' },
   { title: 'Skills', badge: 'PAGE', color: '#8892b0', meta: 'dossiers', url: '/skills', haystack: 'skills tools python typescript aws dossier' },

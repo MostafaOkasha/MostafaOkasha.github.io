@@ -2,8 +2,8 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /**
- * The Library: every entry is a markdown file in src/content/library/.
- * Drop a file in, it appears on the shelf that matches its `type`.
+ * The Library: essays, notes, papers, reflections, quotes… one shelf system.
+ * (Books live in their own `books` collection — see below.)
  */
 const library = defineCollection({
   loader: glob({ pattern: ['**/*.md', '!_templates/**'], base: './src/content/library' }),
@@ -14,7 +14,6 @@ const library = defineCollection({
       'essay', // essays & deep dives
       'cs', // CS curriculum
       'ml', // ML / AI notes
-      'book', // book summaries
       'paper', // paper notes
       'idea', // open ideas
       'reflection', // personal reflections
@@ -26,26 +25,36 @@ const library = defineCollection({
     date: z.coerce.date(),
     readingTime: z.number().optional(), // minutes; computed from words if absent
     draft: z.boolean().default(false),
-
-    // Optional book metadata — set on `type: book` entries. Renders as a
-    // properties panel at the top of the page. All fields optional except author.
-    book: z
-      .object({
-        author: z.string(),
-        cover: z.string().optional(), // /images/... path to the cover
-        pages: z.number().optional(),
-        published: z.string().optional(), // e.g. "June 20, 2022"
-        publisher: z.string().optional(),
-        status: z.enum(['To read', 'In progress', 'Finished']).optional(),
-        rating: z.number().min(0).max(5).optional(), // out of 5
-        categories: z.array(z.string()).default([]),
-        purchase: z.string().optional(), // buy / affiliate link
-        links: z
-          .object({ goodreads: z.string().optional(), amazon: z.string().optional() })
-          .optional(),
-      })
-      .optional(),
   }),
 });
 
-export const collections = { library };
+/**
+ * The Bookshelf: every book I've read, am reading, or want to read.
+ * The markdown body is the summary/notes (optional — reading & to-read
+ * books can have none). Grouped on /books by `status`.
+ */
+const books = defineCollection({
+  loader: glob({ pattern: ['**/*.md', '!_templates/**'], base: './src/content/books' }),
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    description: z.string().optional(),
+    cover: z.string().optional(), // /images/covers/... ; falls back to a spine card
+    status: z.enum(['To read', 'Currently reading', 'Finished']),
+    recommended: z.boolean().default(false),
+    rating: z.number().min(0).max(5).optional(),
+    pages: z.number().optional(),
+    published: z.string().optional(),
+    publisher: z.string().optional(),
+    categories: z.array(z.string()).default([]),
+    topics: z.array(z.string()).default([]),
+    date: z.coerce.date().optional(), // when read / added
+    purchase: z.string().optional(),
+    links: z
+      .object({ goodreads: z.string().optional(), amazon: z.string().optional() })
+      .optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { library, books };

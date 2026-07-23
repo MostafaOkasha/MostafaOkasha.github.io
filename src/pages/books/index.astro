@@ -1,0 +1,152 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import BookCover from '../../components/BookCover.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('books', ({ data }) => !data.draft)).sort((a, b) => {
+  const da = a.data.date?.valueOf() ?? 0;
+  const db = b.data.date?.valueOf() ?? 0;
+  return db - da;
+});
+
+const hasNotes = (b: (typeof all)[number]) => b.body != null && b.body.trim().length > 0;
+
+const view = all.map((b) => ({
+  slug: b.id,
+  data: b.data,
+  notes: hasNotes(b),
+}));
+
+const recommended = view.filter((b) => b.data.recommended);
+const reading = view.filter((b) => b.data.status === 'Currently reading');
+const finished = view.filter((b) => b.data.status === 'Finished');
+const toRead = view.filter((b) => b.data.status === 'To read');
+
+const sections = [
+  { key: 'reading', label: 'Currently reading', sub: 'on the nightstand right now', books: reading },
+  { key: 'finished', label: 'Read', sub: 'finished — most with notes & summaries', books: finished },
+  { key: 'toread', label: 'Want to read', sub: 'the to-read list', books: toRead },
+];
+---
+
+<Base
+  title="Bookshelf | Mostafa Okasha"
+  description="Books I've read, am reading, and want to read — with summaries and notes for many of them."
+>
+  <Nav current="books" />
+
+  <div class="wrap">
+    <h1 class="page-title">The Bookshelf.</h1>
+    <p class="page-sub">
+      What I'm reading, what I've read, and what's next. Books with a summary are marked — open one
+      for my notes and key takeaways.
+    </p>
+
+    {
+      recommended.length > 0 && (
+        <section class="sec">
+          <div class="section-label">★ RECOMMENDED</div>
+          <div class="shelf">
+            {recommended.map((b) => (
+              <a class="book" href={`/books/${b.slug}`}>
+                <span class="cover-wrap">
+                  <BookCover title={b.data.title} author={b.data.author} cover={b.data.cover} />
+                  {b.notes && <span class="ribbon mono">notes</span>}
+                </span>
+                <span class="b-title">{b.data.title}</span>
+                <span class="b-author mono">{b.data.author}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      sections.map(
+        (s) =>
+          s.books.length > 0 && (
+            <section class="sec">
+              <div class="section-label">
+                {s.label} <span class="count mono">· {s.books.length}</span>
+              </div>
+              <p class="sec-sub">{s.sub}</p>
+              <div class="shelf">
+                {s.books.map((b) => (
+                  <a class="book" href={`/books/${b.slug}`}>
+                    <span class="cover-wrap">
+                      <BookCover title={b.data.title} author={b.data.author} cover={b.data.cover} />
+                      {b.data.recommended && <span class="star" aria-hidden="true">★</span>}
+                      {b.notes && <span class="ribbon mono">notes</span>}
+                    </span>
+                    <span class="b-title">{b.data.title}</span>
+                    <span class="b-author mono">{b.data.author}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .wrap { padding: 40px 44px 80px; max-width: 1100px; margin: 0 auto; }
+  .sec { margin-top: 44px; }
+  .sec .count { color: var(--text-muted); font-size: 13px; }
+  .sec-sub { margin: 4px 0 0; font-size: 13.5px; color: var(--text-muted); }
+
+  .shelf {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 26px 22px;
+  }
+  .book { display: flex; flex-direction: column; }
+  .cover-wrap {
+    position: relative;
+    display: block;
+    transition: transform 180ms ease;
+  }
+  .book:hover .cover-wrap { transform: translateY(-4px); }
+  .cover-wrap :global(.bc) {
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+  }
+  .book:hover :global(.bc) { border-color: var(--mint); }
+  .b-title {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-bright);
+    line-height: 1.3;
+  }
+  .b-author { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+  .ribbon {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--mint);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+  .star {
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    font-size: 15px;
+    color: #ffd76b;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+
+  @media (max-width: 768px) {
+    .wrap { padding: 28px 20px 60px; }
+    .shelf { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 20px 16px; }
+  }
+</style>

@@ -3,7 +3,6 @@ export const SHELF_TYPES = {
   essay: { label: 'essays & deep dives', badge: 'DEEP DIVE', color: '#64ffda' },
   cs: { label: 'CS curriculum', badge: 'CS NOTES', color: '#7cb7ff' },
   ml: { label: 'ML / AI notes', badge: 'ML NOTES', color: '#d8a3ff' },
-  book: { label: 'book summaries', badge: 'BOOK', color: '#7dead8' },
   paper: { label: 'paper notes', badge: 'PAPER', color: '#ffd76b' },
   idea: { label: 'open ideas', badge: 'OPEN IDEA', color: '#ffb26b' },
   reflection: { label: 'reflections', badge: 'REFLECTION', color: '#ff8ba3' },

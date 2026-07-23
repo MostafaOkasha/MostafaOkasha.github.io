@@ -1,14 +1,15 @@
 ---
 interface Props {
   /** current page key for active state + ~/path breadcrumb */
-  current?: 'home' | 'library' | 'workshop' | 'resume' | 'skills' | 'about';
+  current?: 'home' | 'library' | 'books' | 'workshop' | 'resume' | 'skills' | 'about';
 }
 const { current = 'home' } = Astro.props;
 const isHome = current === 'home';
 const links = [
   { key: 'library', href: '/library', label: 'library', num: '01.' },
-  { key: 'workshop', href: '/workshop', label: 'workshop', num: '02.' },
-  { key: 'skills', href: '/skills', label: 'skills', num: '03.' },
+  { key: 'books', href: '/books', label: 'books', num: '02.' },
+  { key: 'workshop', href: '/workshop', label: 'workshop', num: '03.' },
+  { key: 'skills', href: '/skills', label: 'skills', num: '04.' },
 ] as const;
 ---
 
@@ -36,6 +37,9 @@ const links = [
         <>
           <a href="/library" class={current === 'library' ? 'active' : ''}>
             library
+          </a>
+          <a href="/books" class={current === 'books' ? 'active' : ''}>
+            books
           </a>
           <a href="/workshop" class={current === 'workshop' ? 'active' : ''}>
             workshop
@@ -68,17 +72,20 @@ const links = [
     <a class="row" href="/library">
       <span class="num">01</span><span class="name">library</span><span class="count">→</span>
     </a>
+    <a class="row" href="/books">
+      <span class="num">02</span><span class="name">books</span><span class="count">→</span>
+    </a>
     <a class="row" href="/workshop">
-      <span class="num">02</span><span class="name">workshop</span><span class="count">→</span>
+      <span class="num">03</span><span class="name">workshop</span><span class="count">→</span>
     </a>
     <a class="row" href="/skills">
-      <span class="num">03</span><span class="name">skills</span><span class="count">→</span>
+      <span class="num">04</span><span class="name">skills</span><span class="count">→</span>
     </a>
     <a class="row" href="/resume">
-      <span class="num">04</span><span class="name">résumé</span><span class="count">→</span>
+      <span class="num">05</span><span class="name">résumé</span><span class="count">→</span>
     </a>
     <a class="row" href="/about">
-      <span class="num">05</span><span class="name">about</span><span class="count">→</span>
+      <span class="num">06</span><span class="name">about</span><span class="count">→</span>
     </a>
   </div>
   <div class="foot">

@@ -1,20 +1,17 @@
 ---
 title: 'Solve for Happy'
 description: "Mo Gawdat's engineering approach to happiness: bust six illusions, fix seven blind spots, and hold on to five ultimate truths."
-type: book
+author: Mo Gawdat
+cover: /images/covers/solve-for-happy.jpg
+status: Finished
+recommended: true
+pages: 351
+published: 'March 21, 2017'
+publisher: Gallery Books
+categories: [Happiness, Guide / How-to, Motivational, Self-Development, Self-Help, Psychology]
 topics: [happiness, philosophy, psychology, mindfulness, spirituality]
 date: 2026-07-19
-readingTime: 30
-draft: false
-book:
-  author: Mo Gawdat
-  cover: /images/covers/solve-for-happy.jpg
-  pages: 351
-  published: 'March 21, 2017'
-  publisher: Gallery Books
-  status: Finished
-  categories: [Happiness, Guide / How-to, Motivational, Self-Development, Self-Help, Psychology]
-  # purchase: https://...   # add your buy/affiliate link when ready
+# purchase: https://...   # add your buy/affiliate link when ready
 ---
 
 ## One-paragraph review

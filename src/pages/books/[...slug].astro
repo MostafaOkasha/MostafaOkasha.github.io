@@ -1,0 +1,197 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import BookCover from '../../components/BookCover.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books', ({ data }) => !data.draft);
+  return books.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const b = entry.data;
+const hasNotes = entry.body != null && entry.body.trim().length > 0;
+const { Content } = await render(entry);
+const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
+---
+
+<Base title={`${b.title} | Mostafa Okasha`} description={b.description ?? `${b.title} by ${b.author}`}>
+  {hasNotes && <div class="reading-progress" data-progress></div>}
+  <Nav current="books" />
+
+  <article class="article">
+    <div class="top-row mono">
+      <a href="/books">← the bookshelf</a>
+    </div>
+
+    <div class="kicker mono">
+      {b.author.toUpperCase()}{b.recommended && ' · ★ RECOMMENDED'}
+    </div>
+    <h1 class="title">{b.title}</h1>
+
+    <div class="book-meta">
+      <div class="cover-col">
+        <BookCover title={b.title} author={b.author} cover={b.cover} class="panel-cover" />
+      </div>
+      <dl class="book-props">
+        <div class="prop"><dt>Author</dt><dd>{b.author}</dd></div>
+        {
+          b.categories.length > 0 && (
+            <div class="prop">
+              <dt>Category</dt>
+              <dd class="cats">{b.categories.map((c) => <span class="cat">{c}</span>)}</dd>
+            </div>
+          )
+        }
+        {b.pages && <div class="prop"><dt># of Pages</dt><dd>{b.pages}</dd></div>}
+        {b.published && <div class="prop"><dt>Published</dt><dd>{b.published}</dd></div>}
+        {b.publisher && <div class="prop"><dt>Publisher</dt><dd>{b.publisher}</dd></div>}
+        {
+          b.rating != null && (
+            <div class="prop">
+              <dt>Rating</dt>
+              <dd class="rating">
+                {'★'.repeat(Math.round(b.rating))}
+                <span class="rating-empty">{'★'.repeat(5 - Math.round(b.rating))}</span>
+              </dd>
+            </div>
+          )
+        }
+        <div class="prop">
+          <dt>Status</dt>
+          <dd><span class={`status ${statusClass}`}>{b.status}</span></dd>
+        </div>
+        {
+          (b.purchase || b.links?.goodreads || b.links?.amazon) && (
+            <div class="prop">
+              <dt>Links</dt>
+              <dd class="links">
+                {b.purchase && (
+                  <a class="buy" href={b.purchase} target="_blank" rel="noopener">
+                    Buy the book →
+                  </a>
+                )}
+                {b.links?.goodreads && (
+                  <a href={b.links.goodreads} target="_blank" rel="noopener">Goodreads</a>
+                )}
+                {b.links?.amazon && (
+                  <a href={b.links.amazon} target="_blank" rel="noopener">Amazon</a>
+                )}
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+
+    {
+      hasNotes ? (
+        <div class="prose">
+          <Content />
+        </div>
+      ) : (
+        <p class="no-notes mono">
+          {b.status === 'To read'
+            ? 'On the reading list — no notes yet.'
+            : 'Currently reading — notes coming once I finish.'}
+        </p>
+      )
+    }
+
+    <div class="foot">
+      <a href="/books" class="chip-mint">← the bookshelf</a>
+    </div>
+  </article>
+</Base>
+
+{
+  hasNotes && (
+    <script>
+      const bar = document.querySelector('[data-progress]');
+      const onScroll = () => {
+        const h = document.documentElement;
+        const pct = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+        if (bar) (bar as HTMLElement).style.width = Math.min(100, pct * 100) + '%';
+      };
+      document.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    </script>
+  )
+}
+
+<style>
+  .article { max-width: 760px; margin: 0 auto; padding: 26px 44px 80px; }
+  .top-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+  .top-row a:hover { color: var(--mint); }
+  .kicker { margin-top: 26px; font-size: 11px; letter-spacing: 0.12em; color: var(--mint); }
+  .title {
+    margin: 12px 0 26px;
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-bright);
+  }
+
+  .book-meta {
+    display: flex;
+    gap: 26px;
+    align-items: flex-start;
+    margin: 0 0 34px;
+    padding: 24px;
+    border: 1px solid var(--mint-border-soft);
+    border-radius: 14px;
+    background: var(--navy-raised);
+  }
+  .cover-col { width: 132px; flex: none; }
+  .cover-col :global(.panel-cover) { box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5); }
+  .book-props { margin: 0; flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .book-props .prop { display: grid; grid-template-columns: 130px 1fr; gap: 14px; align-items: baseline; }
+  .book-props dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--text-muted); }
+  .book-props dd { margin: 0; font-size: 14.5px; color: var(--text-body); }
+  .book-props .cats { display: flex; flex-wrap: wrap; gap: 6px; }
+  .book-props .cat {
+    font-size: 12px;
+    color: var(--text-bright);
+    background: rgba(100, 255, 218, 0.08);
+    border: 1px solid var(--mint-border);
+    border-radius: 5px;
+    padding: 2px 9px;
+  }
+  .book-props .rating { color: var(--c-paper); letter-spacing: 2px; }
+  .book-props .rating-empty { color: var(--slate-border); }
+  .book-props .status {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border-radius: 999px;
+    padding: 3px 12px;
+  }
+  .status-to-read { background: rgba(137, 146, 176, 0.15); color: var(--text-muted); border: 1px solid var(--slate-border); }
+  .status-currently-reading { background: rgba(124, 183, 255, 0.14); color: var(--c-cs); border: 1px solid rgba(124, 183, 255, 0.4); }
+  .status-finished { background: rgba(125, 234, 216, 0.14); color: var(--c-book); border: 1px solid rgba(125, 234, 216, 0.4); }
+  .book-props .links { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .book-props .links a { color: var(--mint); border-bottom: 1px dashed rgba(100, 255, 218, 0.4); }
+  .book-props .links a.buy {
+    border: 1px solid var(--mint);
+    border-radius: 6px;
+    padding: 5px 14px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    transition: background 150ms ease;
+  }
+  .book-props .links a.buy:hover { background: rgba(100, 255, 218, 0.08); }
+
+  .no-notes { font-size: 13.5px; color: var(--text-muted); padding: 8px 0 20px; }
+
+  .foot { margin-top: 50px; padding-top: 22px; border-top: 1px solid var(--mint-divider); }
+
+  @media (max-width: 640px) {
+    .article { padding: 22px 20px 60px; }
+    .title { font-size: 30px; }
+    .book-meta { flex-direction: column; gap: 18px; }
+    .cover-col { width: 108px; }
+    .book-props .prop { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>

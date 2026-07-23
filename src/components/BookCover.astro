@@ -1,0 +1,75 @@
+---
+/**
+ * A book cover. Uses the real image when `cover` is set; otherwise renders a
+ * tasteful spine-style fallback with the title + author, tinted by a hash of
+ * the title so each book looks distinct.
+ */
+interface Props {
+  title: string;
+  author: string;
+  cover?: string;
+  class?: string;
+}
+const { title, author, cover, class: cls = '' } = Astro.props;
+
+// deterministic hue from the title, so fallback covers are stable + varied
+let h = 0;
+for (let i = 0; i < title.length; i++) h = (h * 31 + title.charCodeAt(i)) % 360;
+const hue = h;
+---
+
+{
+  cover ? (
+    <img class={`bc bc-img ${cls}`} src={cover} alt={`${title} cover`} loading="lazy" />
+  ) : (
+    <span
+      class={`bc bc-fallback ${cls}`}
+      style={`--h:${hue}`}
+      role="img"
+      aria-label={`${title} cover`}
+    >
+      <span class="bc-title">{title}</span>
+      <span class="bc-author">{author}</span>
+    </span>
+  )
+}
+
+<style>
+  .bc {
+    display: block;
+    aspect-ratio: 2 / 3;
+    border-radius: 5px;
+    border: 1px solid var(--mint-border-soft);
+  }
+  .bc-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bc-fallback {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 14px 12px;
+    overflow: hidden;
+    background:
+      linear-gradient(160deg, hsl(var(--h) 45% 26%), hsl(var(--h) 55% 12%));
+    box-shadow: inset 3px 0 0 rgba(255, 255, 255, 0.12);
+  }
+  .bc-title {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #f2f5ff;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .bc-author {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: rgba(242, 245, 255, 0.65);
+  }
+</style>

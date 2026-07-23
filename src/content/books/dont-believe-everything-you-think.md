@@ -1,20 +1,17 @@
 ---
 title: "Don't Believe Everything You Think"
 description: 'Joseph Nguyen on how thinking — not our circumstances — is the root of psychological suffering, and what happens when it settles.'
-type: book
+author: Joseph Nguyen
+cover: /images/covers/dont-believe-everything-you-think.jpg
+status: Currently reading
+recommended: false
+pages: 119
+published: 'June 20, 2022'
+publisher: Independently published
+categories: [Happiness, Philosophy, Self-Development, Self-Help, Psychology, Motivational]
 topics: [happiness, philosophy, psychology, mindfulness, spirituality]
 date: 2026-07-12
-readingTime: 15
-draft: false
-book:
-  author: Joseph Nguyen
-  cover: /images/covers/dont-believe-everything-you-think.jpg
-  pages: 119
-  published: 'June 20, 2022'
-  publisher: Independently published
-  status: In progress
-  categories: [Happiness, Philosophy, Self-Development, Self-Help, Psychology, Motivational]
-  # purchase: https://...   # add your buy/affiliate link when ready
+# purchase: https://...   # add your buy/affiliate link when ready
 ---
 
 ## One-paragraph review
