@@ -13,6 +13,35 @@ Pages**. Dark-only, in the site's navy (`#0a192f`) + mint (`#64ffda`) palette.
 
 **The site and its GitHub repository are both public.** Anything committed is published.
 
+## Start here — every new session
+
+When a user says “Continue from the repository handoff. Follow `AGENTS.md`, recover the
+current state, and proceed with the documented next task. Do not invent work if the handoff
+is stale or ambiguous.”, use this exact recovery protocol before planning or editing:
+
+1. Read this instruction chain, then inspect the checkout:
+   - `git status --short`
+   - `git branch --show-current`
+   - `git log --oneline --decorate -15`
+   - `git diff --stat`
+   - `git diff --cached --stat`
+2. Read [`docs/ai/HANDOFF.md`](docs/ai/HANDOFF.md), the canonical live continuation record.
+3. Read [`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md), the durable project state and
+   approved task queue. This repository uses it instead of a separate `docs/current-state.md`.
+4. Read every task-specific file named by the handoff, then inspect the relevant code and content.
+5. Verify the handoff against the actual branch, commit, working tree, and code. Uncommitted
+   changes belong to the checkout where they exist; do not assume another worktree contains them.
+6. Continue only the explicit, approved next task when the handoff is present, current, and
+   unambiguous. If it is missing, stale, contradictory, or has no approved next task, stop and
+   report the discrepancy or required human decision. Do not invent roadmap work.
+7. Before stopping, update the handoff with exact progress, validation, remaining work, risks,
+   and one concrete next action. Update `PROJECT_STATE.md` too when durable state or the queue
+   changed.
+
+For parallel workstreams, keep `HANDOFF.md` as the index and place task-scoped records in
+`docs/ai/handoffs/`; each record must identify its branch and commit. Do not have two agents
+modify the same checkout concurrently.
+
 ## Sources of truth
 
 When sources conflict, prefer the more authoritative *current* source and report the conflict:
@@ -21,8 +50,9 @@ When sources conflict, prefer the more authoritative *current* source and report
 2. Live code under `src/` and content under `src/content/`
 3. [`README.md`](README.md) — surfaces, structure, deploy model
 4. This file and [`CLAUDE.md`](CLAUDE.md)
-5. [`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md) — current state + next tasks
-6. [`redesign/`](redesign/) — original design handoff (reference; a snapshot, not live spec)
+5. [`docs/ai/HANDOFF.md`](docs/ai/HANDOFF.md) — live continuation state for the current workstream
+6. [`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md) — durable current state + approved task queue
+7. [`redesign/`](redesign/) — original design handoff (reference; a snapshot, not live spec)
 
 ## Repository map
 
@@ -138,8 +168,11 @@ The repo and site are public. Therefore:
 
 Both agents share this file and the templates in `docs/ai/`:
 
-- [`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md) — the **durable, live** state: current repo
-  state, done work, and the next-task queue. Read it first when picking up work; update it before handing off.
+- [`docs/ai/HANDOFF.md`](docs/ai/HANDOFF.md) — the **canonical live continuation record**. Read it
+  at the start of every session, verify it against Git, and update it before handing off or stopping.
+- [`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md) — the **durable project state**: current repo
+  state, completed work, decisions, and the approved next-task queue. Read it during recovery and
+  update it when durable state or the queue changes.
 - [`docs/ai/TASK_TEMPLATE.md`](docs/ai/TASK_TEMPLATE.md) — copy when spec'ing a new task.
 - [`docs/ai/HANDOFF_TEMPLATE.md`](docs/ai/HANDOFF_TEMPLATE.md) — copy to `HANDOFF-<topic>.md` when
   ownership changes or work pauses mid-task.

@@ -1,16 +1,18 @@
 # Project State — okasha.me
 
-The durable, always-current shared state of the project — the single handoff summary any agent
-(Claude, Codex) or a returning human reads first. **Read this before picking up work; update it
-before you hand off or stop.** For a specific mid-task ownership transfer, copy
-[`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `HANDOFF-<topic>.md`. New task specs:
+The durable, always-current shared state of the project — the state and approved queue any agent
+(Claude, Codex) or a returning human can recover from. The primary live continuation record is
+[`HANDOFF.md`](HANDOFF.md); **read both before picking up work and update them before you hand off
+or stop.** For a parallel workstream or specific mid-task ownership transfer, copy
+[`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `handoffs/<topic>.md`. New task specs:
 [`TASK_TEMPLATE.md`](TASK_TEMPLATE.md). Shared rules: [`../../AGENTS.md`](../../AGENTS.md).
 
-_Last updated: 2026-07-24 by Claude._
+_Last updated: 2026-07-24 by Codex._
 
 ## Repository state
-- Branch: `master` — clean, in sync with `origin/master`.
-- HEAD: `f946bad` (bookshelf nested under the library + back-link).
+- Branch: `master` — clean after the local handoff-documentation commit; one commit ahead of
+  `origin/master` until the owner reviews and pushes.
+- Handoff parent: `86df794` (`Hand off prep`). The current handoff commit is verified with `git log -1`.
 - Deploy: pushing `master` → `.github/workflows/deploy.yml` → GitHub Pages (live at okasha.me).
   **The owner reviews and pushes; agents do not push.**
 
