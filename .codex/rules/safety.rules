@@ -1,0 +1,36 @@
+# Codex command-safety rules for okasha.me (experimental Codex feature).
+#
+# These are a convenience guardrail, NOT the security boundary — real protection is the
+# owner's review-before-push workflow and GitHub's branch/Pages settings. They mirror the
+# git policy stated in AGENTS.md ("Git and collaboration" / "Media rules").
+#
+# Scope note: this repo has NO database, container, or infrastructure tooling (no Docker,
+# Postgres, Terraform, or cloud CLIs), so there are no infra/DB destructive commands to guard —
+# only git. Do not add rules for tools this repo does not use.
+#
+# NOTE: authored from the documented Codex rules syntax; validate with Codex's execution-policy
+# checker on a machine with Codex installed before relying on it.
+
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "forbidden",
+    justification = "Do not discard uncommitted work or untracked media. Inspect or `git stash` instead.",
+)
+
+prefix_rule(
+    pattern = ["git", "clean", ["-f", "-fd", "-fdx", "-fx"]],
+    decision = "forbidden",
+    justification = "Do not delete untracked files — this repo keeps media and reference files untracked/at root.",
+)
+
+prefix_rule(
+    pattern = ["git", "push", ["--force", "--force-with-lease", "-f"]],
+    decision = "forbidden",
+    justification = "Never force-push. History on master deploys to production.",
+)
+
+prefix_rule(
+    pattern = ["git", "push"],
+    decision = "prompt",
+    justification = "The owner reviews and pushes; pushing master triggers a production deploy. Ask first.",
+)

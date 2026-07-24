@@ -1,0 +1,10 @@
+# Codex project configuration for okasha.me.
+# Conservative baseline only. Repository facts and engineering rules live in AGENTS.md
+# (which Codex reads automatically from the repo root). Do not add a repo-wide model,
+# credentials, machine-specific paths, or danger-full-access here.
+
+# Ask before running commands that need approval (e.g. anything outside the sandbox).
+approval_policy = "on-request"
+
+# Allow edits within the workspace; deny unrestricted filesystem/network access.
+sandbox_mode = "workspace-write"
