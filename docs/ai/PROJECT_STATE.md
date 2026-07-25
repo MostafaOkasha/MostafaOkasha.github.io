@@ -7,12 +7,13 @@ or stop.** For a parallel workstream or specific mid-task ownership transfer, co
 [`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `handoffs/<topic>.md`. New task specs:
 [`TASK_TEMPLATE.md`](TASK_TEMPLATE.md). Shared rules: [`../../AGENTS.md`](../../AGENTS.md).
 
-_Last updated: 2026-07-24 by Codex._
+_Last updated: 2026-07-25 by Codex._
 
 ## Repository state
 - Branch: `master` — clean after the local handoff-documentation commit; one commit ahead of
   `origin/master` until the owner reviews and pushes.
-- Handoff parent: `86df794` (`Hand off prep`). The current handoff commit is verified with `git log -1`.
+- Handoff parent: `4aa83ad` (`Strengthen cross-agent repository handoff`). The current handoff commit
+  is verified with `git log -1`.
 - Deploy: pushing `master` → `.github/workflows/deploy.yml` → GitHub Pages (live at okasha.me).
   **The owner reviews and pushes; agents do not push.**
 
