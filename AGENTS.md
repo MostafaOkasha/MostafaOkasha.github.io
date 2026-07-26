@@ -174,8 +174,8 @@ Both agents share this file and the templates in `docs/ai/`:
   state, completed work, decisions, and the approved next-task queue. Read it during recovery and
   update it when durable state or the queue changes.
 - [`docs/ai/TASK_TEMPLATE.md`](docs/ai/TASK_TEMPLATE.md) — copy when spec'ing a new task.
-- [`docs/ai/HANDOFF_TEMPLATE.md`](docs/ai/HANDOFF_TEMPLATE.md) — copy to `HANDOFF-<topic>.md` when
-  ownership changes or work pauses mid-task.
+- [`docs/ai/HANDOFF_TEMPLATE.md`](docs/ai/HANDOFF_TEMPLATE.md) — copy to `docs/ai/handoffs/<topic>.md`
+  for a parallel workstream or a specific mid-task ownership transfer.
 
 One model owns implementation at a time; the other may review the diff. Humans approve anything
 that pushes, deploys, or is otherwise irreversible.

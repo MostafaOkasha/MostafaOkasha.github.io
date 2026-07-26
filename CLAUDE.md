@@ -33,6 +33,7 @@ it for facts another agent (Codex) or a human would need. Durable, shared facts 
 
 ## Handing off to Codex
 
-Before a handoff (or when usage limits are near), update
-[`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md) with current state, what's done, and the
-next task — so Codex (or a fresh session) can pick up cleanly. See `AGENTS.md` → "AI collaboration".
+Before a handoff (or when usage limits are near), update the canonical live record
+[`docs/ai/HANDOFF.md`](docs/ai/HANDOFF.md) — and [`docs/ai/PROJECT_STATE.md`](docs/ai/PROJECT_STATE.md)
+when durable state or the approved queue changed — with current state, what's done, and the next
+task, so Codex (or a fresh session) can pick up cleanly. See `AGENTS.md` → "AI collaboration".

@@ -6,75 +6,85 @@ documents. Do not rely on conversation history or agent-specific memory.
 
 ## Handoff metadata
 
-- Task: Claude review of the handoff system, then the next approved site task
-- Status: Review
-- Current owner: Codex
-- Intended next owner: Claude
-- Last updated: 2026-07-25 by Codex
+- Task: Claude review of the handoff system (done) → real book covers (blocked, needs owner assets)
+- Status: Review complete; next product task Blocked on a human decision
+- Current owner: Claude → returning to owner for a decision
+- Intended next owner: Owner (supply/approve cover assets), then Claude implements
+- Last updated: 2026-07-26 by Claude
 - Branch: `master`
-- Base commit: `4aa83ad`
-- Last completed commit: `4aa83ad`
-- Current commit: the handoff commit containing this file; verify with `git log -1`
-- Working tree expected: clean
+- Base commit (before this review): `e9b6726`
+- Current commit: the Claude-review commit containing this update; verify with `git log -1`
+- Working tree expected: clean after the review commit
 
-The receiving agent must verify these fields. The handoff commit is expected to be one commit after
-`4aa83ad` and contain only the handoff-documentation changes. The detailed Claude review is recorded
-in [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md). If the branch, parent commit,
-or working-tree expectation does not match, stop and report the discrepancy before editing. A
-different worktree may not contain uncommitted changes from this checkout.
+The receiving agent must verify these fields. The review commit is expected to be one commit after
+`e9b6726` and contain only handoff-documentation + two coherence fixes (`AGENTS.md`, `CLAUDE.md`).
+If the branch, parent commit, or working-tree expectation does not match, stop and report the
+discrepancy before editing.
 
 ## Documents to read
 
 - [`AGENTS.md`](../../AGENTS.md) — repository rules and session recovery protocol
 - [`docs/ai/PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions, and approved queue
-- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — the receiving agent's review brief
-- [`src/content.config.ts`](../../src/content.config.ts) — book content schema
+- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — the review brief + review result
+- [`src/content.config.ts`](../../src/content.config.ts) — book content schema (`cover` is optional string)
 - [`src/content/books/`](../../src/content/books/) — current book records
-- [`src/components/BookCover.astro`](../../src/components/BookCover.astro) — cover fallback/rendering
+- [`src/components/BookCover.astro`](../../src/components/BookCover.astro) — cover img vs. tinted fallback
 
 ## Current state
 
-The Astro site is on `master`, with the bookshelf nested at `/library/books`. The immediate task is
-Claude's review of the handoff-system work, as detailed in the task-scoped review brief. Once the
-review passes, the next approved product task remains the first item in `PROJECT_STATE.md`: replace
-the two placeholder covers and the eight tinted spine fallbacks with real cover images, then set
-`cover:` for every book and verify the build.
+The Astro site is on `master`, bookshelf nested at `/library/books`. Claude has completed the
+review of Codex's handoff-system work (see below) and applied two documentation-coherence fixes.
+The next approved product task — real book covers — is **blocked** pending a human decision on how
+to source repository-safe cover images (see "Unresolved risks" / "Recommended next action").
 
-## Completed in this handoff
+## Completed in this handoff (Claude review)
 
-- Added the mandatory new-session recovery protocol to `AGENTS.md`.
-- Added this canonical live handoff and the Claude review handoff under `docs/ai/handoffs/`.
-- Strengthened the task-scoped handoff template.
-- Corrected `PROJECT_STATE.md` so its recorded repository state matches the checkout.
-- No product code, content, or media was changed.
+- **Verified Git metadata:** branch `master`, HEAD `e9b6726` (parent `4aa83ad`), working tree clean.
+  Note: `origin/master` is now at `e9b6726` — the owner already pushed the earlier handoff commits
+  (expected; the owner reviews and pushes). Earlier docs' "not pushed / one commit ahead" wording
+  was pre-push drift, now corrected.
+- **Verified scope:** the entire diff since the last product commit `f946bad` touches only
+  `.codex/*`, `AGENTS.md`, `CLAUDE.md`, and `docs/ai/*` — no product code, content, or media.
+- **Verified references:** all 19 paths named across the handoff docs exist; the bracketed
+  `[...slug].astro` route link resolves. 10 book records confirmed (2 placeholder covers, 8 fallbacks).
+- **Verified config:** `.codex/config.toml` (on-request / workspace-write) and
+  `.codex/rules/safety.rules` (git guardrails only) are conservative and correctly scoped — no
+  Docker/Postgres/Terraform rules, matching this repo's stack.
+- **Fixed two coherence defects:**
+  - `AGENTS.md` "AI collaboration" said copy the template to `HANDOFF-<topic>.md`; corrected to
+    `docs/ai/handoffs/<topic>.md` to match every other reference and the actual convention.
+  - `CLAUDE.md` "Handing off to Codex" referenced only `PROJECT_STATE.md`; now also points at the
+    canonical live `HANDOFF.md`.
 
 ## Validation
 
 | Command | Result |
 |---|---|
-| `npm run build` | Passed — 23 pages built on 2026-07-25 |
-| `git diff --check` | Passed |
-| Referenced-path check | Passed — all required handoff/code paths exist |
+| `npm run build` | Passed — 23 pages built on 2026-07-26 (run by Claude) |
+| `git diff --check` | Passed — clean |
+| Referenced-path check | Passed — all handoff/code paths exist |
 
 ## Remaining work
 
-- Implement the real book-cover task described below.
-- Re-run the build and visually verify the bookshelf after the cover change.
+- **Real book covers (blocked).** Set `cover:` for all ten `src/content/books/*.md` and add the
+  images under `images/covers/`. Blocked because real covers are copyrighted publisher artwork and
+  must not be committed to this public repo without owner-provided files or explicit approval of a
+  license-safe source. Setting `cover:` to non-existent files would render broken images (worse than
+  the current clean fallback), so no `cover:` fields were changed.
 
 ## Unresolved risks
 
-- Cover image sources must be appropriate for a public repository and must not introduce
-  confidential material or unlicensed assets without the owner's approval.
+- **Copyright / public-repo assets:** sourcing real covers is the flagged risk. Needs the owner to
+  either drop owned/licensed cover files into `images/covers/`, or approve a specific license-safe
+  source, before implementation.
 
 ## Recommended next action
 
-First complete the Claude review described in
-[`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md). If it passes, implement the real
-book-cover task described in `PROJECT_STATE.md`. Confirm the image sources are safe for this public
-repository, preserve the existing media rules, and run `npm run build`.
-
-If that task is no longer approved or the referenced state conflicts with the code or Git history,
-stop and report the conflict rather than selecting a different task.
+Owner decision required: provide or approve repository-safe cover images (see PROJECT_STATE.md
+task 1). Once the image files exist under `images/covers/`, Claude sets `cover: /images/covers/<file>`
+in each of the ten book records, runs `npm run build`, and previews `/library/books` + a detail
+route on desktop/mobile. If covers are deferred, the next queue item (purchase links) is unaffected
+but was not started, to keep this transfer scoped to the reviewed task.
 
 ## Before stopping
 
