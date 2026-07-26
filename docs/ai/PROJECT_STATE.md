@@ -26,18 +26,19 @@ _Last updated: 2026-07-26 by Claude._
 - **Bookshelf**: `books` content collection (10 entries), covers/ratings, star ratings on spines,
   finished sorted by rating. Nested under the Library at `/library/books`; nav, ⌘K palette, and
   back-links all point there; standalone top-level "books" nav item removed.
+- **Real book covers** (2026-07-26): 9/10 books show real cover art sourced from Open Library
+  (owner-approved source); 1 remains on the deterministic tinted fallback.
 
 ## Next-task queue
 Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
 
-1. **Real book covers.** _(Blocked — needs owner assets/approval as of 2026-07-26.)_
-   `images/covers/dont-believe-everything-you-think.jpg` and `solve-for-happy.jpg` are placeholder
-   art; the other 8 books have no `cover:` and render the tinted spine fallback (`BookCover.astro`).
-   Adding real covers requires image files under `images/covers/` — but real book covers are
-   copyrighted publisher artwork, and this is a public repo, so they must be **owner-provided
-   (owned/licensed)** or a **license-safe source explicitly approved** by the owner. Do not commit
-   downloaded copyrighted covers, and do not set `cover:` to files that don't exist (that renders
-   broken images). _Done when_ every book shows a real, repository-safe cover and the build passes.
+1. ~~**Real book covers.**~~ **DONE 2026-07-26.** Owner approved Open Library as the cover source.
+   9 of 10 books now carry real covers in `images/covers/` with `cover:` set in their records
+   (the two placeholders were replaced with genuine cover art). **"That Little Voice in Your Head"
+   keeps the tinted fallback** — Open Library has the record but no cover image for it, and no ISBN
+   variant resolved. Editions were hand-checked: the French Carnegie, the "Indian edition / illegal
+   for USA & UK sale" Nguyen, and the library-stamped McGonigal scans were rejected in favour of
+   clean English retail editions. _Follow-up (optional):_ supply a cover for that one remaining book.
 2. **Purchase links.** Book schema supports `purchase:` (currently commented out in frontmatter).
    Add buy/affiliate links per book; the book page renders a "Buy the book →" button.
 3. **Fill in book notes.** Several books are intentionally note-less (e.g. "Modern Man in Search of
@@ -48,6 +49,16 @@ Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
    at build time.
 
 ## Known issues / decisions on record
+- **Book-cover sourcing (2026-07-26):** the owner explicitly approved **Open Library**
+  (`covers.openlibrary.org`) as the cover source for this public repo. Covers are publisher
+  artwork used as small thumbnails to identify the books; the licensing basis is the owner's
+  decision on record. Future covers should come from the same source, be **English retail
+  editions**, and be visually checked before committing (reject library-stamped scans, regional
+  "not for sale" editions, wrong-language editions, and square audiobook art where a 2:3 cover exists).
+- **Cosmetic (not fixed):** on the shelf, the star-rating strip and "NOTES" ribbon overlay the
+  cover art, partially covering the printed author name on some covers. The strip's dark gradient
+  keeps the stars legible; changing it is a design decision for the owner, deliberately left alone
+  to keep the cover task scoped.
 - **Dependabot:** ~6 Astro-core alerts remain open; the fix needs an Astro 5→7 major upgrade,
   judged not worth it for a static, no-SSR, trusted-content site. Two `dependabot/*` branches exist
   on the remote. Leave unless deliberately revisiting.

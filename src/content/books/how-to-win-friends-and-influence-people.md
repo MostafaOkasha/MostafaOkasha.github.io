@@ -1,6 +1,7 @@
 ---
 title: 'How to Win Friends and Influence People'
 author: Dale Carnegie
+cover: /images/covers/how-to-win-friends-and-influence-people.jpg
 description: "Carnegie's timeless playbook for dealing with people — through genuine appreciation, seeing the other person's angle, and never criticizing."
 status: Currently reading
 recommended: false

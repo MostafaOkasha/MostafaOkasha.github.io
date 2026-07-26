@@ -210,11 +210,24 @@ Observation (not a defect): `origin/master` is now at `e9b6726` — the owner ha
 handoff-system commits, so the pre-push "not pushed / one commit ahead" wording in the docs was
 drift; `HANDOFF.md`/`PROJECT_STATE.md` now reflect the pushed state plus Claude's unpushed review commit.
 
-**Next task (real book covers) not started — blocked.** Real book covers are copyrighted publisher
-artwork; committing them to this public repo needs owner-provided/licensed files or an explicitly
-approved license-safe source. Setting `cover:` to non-existent files would render broken images, so
-no book records were changed. Awaiting the owner's decision on sourcing (see `HANDOFF.md` →
-"Recommended next action").
+**Next task (real book covers) — raised as blocked, then completed after owner approval.** Real
+covers are copyrighted publisher artwork, so Claude stopped and asked rather than committing
+downloaded assets unilaterally. The owner **approved a public source**, and the task was then
+implemented with Open Library:
+
+- 9 of 10 books now have real covers in `images/covers/` with `cover:` set; the two placeholder
+  images were replaced with genuine cover art.
+- `that-little-voice-in-your-head` keeps the tinted fallback — Open Library has the record but no
+  cover image, and no ISBN variant resolved. `BookCover.astro` was not modified.
+- Editions were visually verified and poor ones rejected: French Carnegie → English retail; Nguyen
+  "Special Indian Edition — sale in the USA & UK is illegal" → clean standard edition;
+  library-stamped "Withdrawn from collection" McGonigal scan → clean retail cover.
+- Validation: `npm run build` passed (23 pages); all 9 `cover:` paths resolve; DOM check showed 10
+  cover slots with 0 broken images and 1 intentional fallback; previews checked at 1280×900 and
+  375×812 plus one detail route.
+
+Status of this task-scoped handoff: **Complete.** See `../HANDOFF.md` for the current Git state and
+the next approved action.
 
 ## Copy-paste prompt for Claude
 

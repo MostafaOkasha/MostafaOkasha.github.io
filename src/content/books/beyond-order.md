@@ -1,6 +1,7 @@
 ---
 title: 'Beyond Order'
 author: Jordan B. Peterson
+cover: /images/covers/beyond-order.jpg
 description: "12 more rules for life — a companion to 12 Rules, on the balance between chaos and order."
 status: To read
 recommended: false

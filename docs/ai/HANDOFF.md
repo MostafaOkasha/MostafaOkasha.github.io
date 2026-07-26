@@ -6,85 +6,92 @@ documents. Do not rely on conversation history or agent-specific memory.
 
 ## Handoff metadata
 
-- Task: Claude review of the handoff system (done) → real book covers (blocked, needs owner assets)
-- Status: Review complete; next product task Blocked on a human decision
-- Current owner: Claude → returning to owner for a decision
-- Intended next owner: Owner (supply/approve cover assets), then Claude implements
+- Task: Claude review of the handoff system (PASS) → real book covers (implemented)
+- Status: Complete — awaiting owner review/push
+- Current owner: Claude (finished)
+- Intended next owner: Owner (review + push), then either agent for the next queue item
 - Last updated: 2026-07-26 by Claude
 - Branch: `master`
-- Base commit (before this review): `e9b6726`
-- Current commit: the Claude-review commit containing this update; verify with `git log -1`
-- Working tree expected: clean after the review commit
+- Base commit (state received): `e9b6726` (`Prepare Claude review handoff`), which was also `origin/master`
+- Current commit: the book-cover commit; verify with `git log -1` (expect 2 local commits ahead of `origin/master`)
+- Working tree expected: clean
+- Push status: **not pushed** — the owner reviews and pushes
 
-The receiving agent must verify these fields. The review commit is expected to be one commit after
-`e9b6726` and contain only handoff-documentation + two coherence fixes (`AGENTS.md`, `CLAUDE.md`).
-If the branch, parent commit, or working-tree expectation does not match, stop and report the
-discrepancy before editing.
+Verify these fields against Git. If they do not match, stop and report before editing.
 
 ## Documents to read
 
 - [`AGENTS.md`](../../AGENTS.md) — repository rules and session recovery protocol
-- [`docs/ai/PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions, and approved queue
-- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — the review brief + review result
-- [`src/content.config.ts`](../../src/content.config.ts) — book content schema (`cover` is optional string)
-- [`src/content/books/`](../../src/content/books/) — current book records
+- [`docs/ai/PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions, approved queue
+- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — review brief + recorded result
+- [`src/content.config.ts`](../../src/content.config.ts) — book schema (`cover` optional string)
 - [`src/components/BookCover.astro`](../../src/components/BookCover.astro) — cover img vs. tinted fallback
 
 ## Current state
 
-The Astro site is on `master`, bookshelf nested at `/library/books`. Claude has completed the
-review of Codex's handoff-system work (see below) and applied two documentation-coherence fixes.
-The next approved product task — real book covers — is **blocked** pending a human decision on how
-to source repository-safe cover images (see "Unresolved risks" / "Recommended next action").
+The Astro site is on `master`, bookshelf nested at `/library/books`. Both pieces of this transfer
+are done:
 
-## Completed in this handoff (Claude review)
+1. **Handoff-system review — PASS** (details in `handoffs/claude-review.md`). Two documentation
+   coherence defects were found and fixed.
+2. **Real book covers — implemented.** 9 of 10 books now render real cover art; 1 keeps the
+   fallback because no cover exists upstream.
 
-- **Verified Git metadata:** branch `master`, HEAD `e9b6726` (parent `4aa83ad`), working tree clean.
-  Note: `origin/master` is now at `e9b6726` — the owner already pushed the earlier handoff commits
-  (expected; the owner reviews and pushes). Earlier docs' "not pushed / one commit ahead" wording
-  was pre-push drift, now corrected.
-- **Verified scope:** the entire diff since the last product commit `f946bad` touches only
-  `.codex/*`, `AGENTS.md`, `CLAUDE.md`, and `docs/ai/*` — no product code, content, or media.
-- **Verified references:** all 19 paths named across the handoff docs exist; the bracketed
-  `[...slug].astro` route link resolves. 10 book records confirmed (2 placeholder covers, 8 fallbacks).
-- **Verified config:** `.codex/config.toml` (on-request / workspace-write) and
-  `.codex/rules/safety.rules` (git guardrails only) are conservative and correctly scoped — no
-  Docker/Postgres/Terraform rules, matching this repo's stack.
-- **Fixed two coherence defects:**
-  - `AGENTS.md` "AI collaboration" said copy the template to `HANDOFF-<topic>.md`; corrected to
-    `docs/ai/handoffs/<topic>.md` to match every other reference and the actual convention.
-  - `CLAUDE.md` "Handing off to Codex" referenced only `PROJECT_STATE.md`; now also points at the
-    canonical live `HANDOFF.md`.
+## Completed in this handoff
+
+**Review (commit `19087c9`)**
+- Verified Git metadata: `master`, HEAD `e9b6726` (parent `4aa83ad`), tree clean.
+- Verified scope: everything since the last product commit `f946bad` touched only `.codex/*`,
+  `AGENTS.md`, `CLAUDE.md`, `docs/ai/*` — no product code or media.
+- Verified all 19 referenced paths exist; `.codex` config/rules conservative and correctly scoped.
+- Fixed: `AGENTS.md` referenced `HANDOFF-<topic>.md` (corrected to `docs/ai/handoffs/<topic>.md`);
+  `CLAUDE.md` handoff section now also points at the canonical `HANDOFF.md`.
+- Noted: `origin/master` had already been pushed to `e9b6726`, so earlier "not pushed" wording was
+  pre-push drift; corrected in the docs.
+
+**Book covers (this commit)**
+- Owner approved **Open Library** as the cover source (recorded in `PROJECT_STATE.md` decisions).
+- Downloaded 9 covers to `images/covers/` and set `cover:` in 9 of 10 `src/content/books/*.md`.
+- Replaced the two placeholder images with genuine cover art.
+- Editions were visually checked and bad ones rejected: French Carnegie edition → English retail;
+  Nguyen "Special Indian Edition / sale in USA & UK is illegal" → clean standard edition;
+  library-stamped "Withdrawn from collection" McGonigal scan → clean retail cover.
+- `that-little-voice-in-your-head` intentionally left with **no** `cover:` — Open Library has the
+  record but no cover image, and no ISBN variant resolved. It renders the tinted fallback.
+- `BookCover.astro` was **not** modified; fallback behavior preserved for future records.
 
 ## Validation
 
 | Command | Result |
 |---|---|
-| `npm run build` | Passed — 23 pages built on 2026-07-26 (run by Claude) |
+| `npm run build` | Passed — 23 pages (re-run after the cover change) |
 | `git diff --check` | Passed — clean |
-| Referenced-path check | Passed — all handoff/code paths exist |
+| Cover-path existence check (9 paths) | Passed — every `cover:` resolves to a real file |
+| DOM check on `/library/books` | Passed — 10 cover slots, **0 broken images**, exactly 1 intentional fallback |
+| Preview `/library/books` @ 1280×900 | Checked — real covers render correctly |
+| Preview `/library/books` @ 375×812 (mobile) | Checked — 2-column grid, covers crisp |
+| Preview `/library/books/12-rules-for-life` | Checked — detail route shows the real cover |
 
 ## Remaining work
 
-- **Real book covers (blocked).** Set `cover:` for all ten `src/content/books/*.md` and add the
-  images under `images/covers/`. Blocked because real covers are copyrighted publisher artwork and
-  must not be committed to this public repo without owner-provided files or explicit approval of a
-  license-safe source. Setting `cover:` to non-existent files would render broken images (worse than
-  the current clean fallback), so no `cover:` fields were changed.
+- Optional: supply a cover for **That Little Voice in Your Head** (Mo Gawdat) if one is wanted;
+  none is available via Open Library. Until then the fallback is correct behavior.
+- Next approved queue item is **purchase links** (`PROJECT_STATE.md` item 2) — not started.
 
 ## Unresolved risks
 
-- **Copyright / public-repo assets:** sourcing real covers is the flagged risk. Needs the owner to
-  either drop owned/licensed cover files into `images/covers/`, or approve a specific license-safe
-  source, before implementation.
+- **Cover licensing:** covers are publisher artwork obtained from Open Library under the owner's
+  explicit approval. Used as small identifying thumbnails. If the owner later wants a stricter
+  basis, the covers are isolated in `images/covers/` and each `cover:` line can be removed to fall
+  back cleanly — no code change required.
+- **Cosmetic (not a defect):** the rating strip / NOTES ribbon overlay cover art and partially cover
+  the printed author name on some covers. Left alone deliberately to keep this task scoped.
 
 ## Recommended next action
 
-Owner decision required: provide or approve repository-safe cover images (see PROJECT_STATE.md
-task 1). Once the image files exist under `images/covers/`, Claude sets `cover: /images/covers/<file>`
-in each of the ten book records, runs `npm run build`, and previews `/library/books` + a detail
-route on desktop/mobile. If covers are deferred, the next queue item (purchase links) is unaffected
-but was not started, to keep this transfer scoped to the reviewed task.
+Owner: review the two local commits and push when satisfied. After that, the next approved task is
+**purchase links** for the books (`PROJECT_STATE.md` item 2) — the schema already supports
+`purchase:` and the detail page already renders a "Buy the book →" button.
 
 ## Before stopping
 
