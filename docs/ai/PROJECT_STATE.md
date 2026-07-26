@@ -55,10 +55,11 @@ Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
   decision on record. Future covers should come from the same source, be **English retail
   editions**, and be visually checked before committing (reject library-stamped scans, regional
   "not for sale" editions, wrong-language editions, and square audiobook art where a 2:3 cover exists).
-- **Cosmetic (not fixed):** on the shelf, the star-rating strip and "NOTES" ribbon overlay the
-  cover art, partially covering the printed author name on some covers. The strip's dark gradient
-  keeps the stars legible; changing it is a design decision for the owner, deliberately left alone
-  to keep the cover task scoped.
+- **Star ratings moved off the covers (2026-07-26):** the rating used to be an absolutely
+  positioned `.rating-strip` overlaying the bottom of the cover art (fine over the old dark
+  placeholder spines, but it hid the printed author name on real covers). It is now a `.rating-row`
+  in the card flow, below the title/author — no gradient needed. The "NOTES" ribbon and the
+  ★ recommended marker remain deliberate corner overlays on the cover.
 - **Dependabot:** ~6 Astro-core alerts remain open; the fix needs an Astro 5→7 major upgrade,
   judged not worth it for a static, no-SSR, trusted-content site. Two `dependabot/*` branches exist
   on the remote. Leave unless deliberately revisiting.
