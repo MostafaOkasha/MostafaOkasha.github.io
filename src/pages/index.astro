@@ -30,6 +30,10 @@ try {
     <!-- hero -->
     <div class="hero">
       <div class="hero-left">
+        <div class="wip-banner" role="status">
+          <span class="wip-tag mono">⚠ UNDER CONSTRUCTION</span>
+          <span class="wip-text">Data is not up to date — I'm still filling this in.</span>
+        </div>
         <div class="status-pill">
           <span class="dot"></span>
           currently: building AI things · Toronto
@@ -126,6 +130,28 @@ try {
     flex-wrap: wrap;
   }
   .hero-left { max-width: 720px; }
+
+  /* temporary work-in-progress notice — remove once the content is current */
+  .wip-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    padding: 9px 14px;
+    border: 1px solid rgba(255, 215, 107, 0.45);
+    border-left: 3px solid var(--c-paper);
+    border-radius: 8px;
+    background: rgba(255, 215, 107, 0.08);
+  }
+  .wip-tag {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--c-paper);
+    white-space: nowrap;
+  }
+  .wip-text { font-size: 13px; color: var(--text-body); }
 
   .status-pill {
     display: inline-flex;
