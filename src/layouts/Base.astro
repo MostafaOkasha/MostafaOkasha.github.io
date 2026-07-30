@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import CommandPalette from '../components/CommandPalette.astro';
+import Lightbox from '../components/Lightbox.astro';
 
 interface Props {
   title: string;
@@ -51,5 +52,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <body>
     <slot />
     <CommandPalette />
+    <Lightbox />
   </body>
 </html>

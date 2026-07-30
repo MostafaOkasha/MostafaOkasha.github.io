@@ -1,0 +1,475 @@
+---
+/**
+ * Site-wide image viewer (lightbox).
+ *
+ * Mounted once from Base.astro, like CommandPalette. Vanilla JS island — no
+ * dependency, consistent with the rest of the site.
+ *
+ * What it picks up automatically:
+ *   - workshop CAD + photo grids, `.prose` content images, the about portrait,
+ *     the profile avatars, and the book-detail cover
+ *   - any `[data-lightbox]` container (explicit opt-in), and `[data-zoom]`
+ *     elements such as the inline SVG system diagrams
+ *
+ * What it deliberately skips:
+ *   - images inside a link (never hijack navigation — e.g. bookshelf covers)
+ *   - UI chrome: the nav logo, timeline company logos, skill icons, signature
+ *   - anything marked `[data-no-lightbox]`
+ *
+ * Items are grouped by their nearest gallery container so ←/→ (and swipe)
+ * move between siblings.
+ */
+---
+
+<div class="lb" data-lb hidden aria-hidden="true">
+  <div class="lb-backdrop" data-lb-backdrop></div>
+
+  <div
+    class="lb-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image viewer"
+    data-lb-dialog
+  >
+    <button class="lb-close" type="button" data-lb-close aria-label="Close image viewer (Esc)">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+
+    <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Previous image">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" /></svg>
+    </button>
+    <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Next image">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" /></svg>
+    </button>
+
+    <figure class="lb-figure" data-lb-figure>
+      <div class="lb-stage" data-lb-stage></div>
+      <figcaption class="lb-cap">
+        <span class="lb-cap-text" data-lb-caption></span>
+        <span class="lb-count mono" data-lb-count aria-live="polite"></span>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-lb]');
+  if (root) {
+    const backdrop = root.querySelector<HTMLElement>('[data-lb-backdrop]')!;
+    const dialog = root.querySelector<HTMLElement>('[data-lb-dialog]')!;
+    const stage = root.querySelector<HTMLElement>('[data-lb-stage]')!;
+    const capEl = root.querySelector<HTMLElement>('[data-lb-caption]')!;
+    const countEl = root.querySelector<HTMLElement>('[data-lb-count]')!;
+    const closeBtn = root.querySelector<HTMLButtonElement>('[data-lb-close]')!;
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-lb-prev]')!;
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-lb-next]')!;
+
+    type Item = { kind: 'img'; src: string; caption: string } | { kind: 'el'; el: Element; caption: string };
+
+    const IMG_SELECTOR = [
+      '.cad img',
+      '.photo img',
+      '.prose img',
+      '.bio img.me',
+      '.ring img',
+      '.cover-col img',
+      '[data-lightbox] img',
+    ].join(',');
+
+    /** groups: key -> items; every trigger knows its group + index */
+    const groups = new Map<string, Item[]>();
+    let current: { key: string; index: number } | null = null;
+    /** the element that opened the viewer — focus returns here on close */
+    let opener: HTMLElement | null = null;
+
+    const groupKeyFor = (el: Element) => {
+      const container = el.closest('.cad-grid, .photo-grid, .prose, [data-lightbox], .diagrams');
+      if (container) {
+        const existing = container.getAttribute('data-lb-group');
+        if (existing) return existing;
+        const key = 'g' + groups.size;
+        container.setAttribute('data-lb-group', key);
+        return key;
+      }
+      return 'solo:' + (groups.size + 1);
+    };
+
+    const push = (key: string, item: Item) => {
+      const arr = groups.get(key) ?? [];
+      arr.push(item);
+      groups.set(key, arr);
+      return arr.length - 1;
+    };
+
+    // ---- collect image triggers -------------------------------------------
+    document.querySelectorAll<HTMLImageElement>(IMG_SELECTOR).forEach((img) => {
+      if (img.closest('[data-no-lightbox]')) return;
+      // never hijack a link (bookshelf covers link to their detail page)
+      if (img.closest('a') && !img.hasAttribute('data-lightbox')) return;
+
+      const caption =
+        img.getAttribute('data-caption') ||
+        img.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ||
+        img.closest('.cad, .photo')?.querySelector('.ctitle')?.textContent?.trim() ||
+        img.getAttribute('alt') ||
+        '';
+
+      const key = groupKeyFor(img);
+      const index = push(key, {
+        kind: 'img',
+        src: img.getAttribute('data-full') || img.currentSrc || img.src,
+        caption,
+      });
+
+      img.classList.add('lb-able');
+      const trigger = (img.closest('.cad, .photo') as HTMLElement) || img;
+      trigger.classList.add('lb-trigger');
+      trigger.setAttribute('tabindex', '0');
+      trigger.setAttribute('role', 'button');
+      trigger.setAttribute('aria-label', caption ? `Expand image: ${caption}` : 'Expand image');
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        open(key, index, trigger);
+      });
+      trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open(key, index, trigger);
+        }
+      });
+    });
+
+    // ---- collect element triggers (inline SVG diagrams) --------------------
+    const zoomEls = [...document.querySelectorAll<HTMLElement>('[data-zoom]')];
+    if (zoomEls.length) {
+      const key = 'diagrams';
+      zoomEls.forEach((el) => {
+        const caption =
+          el.getAttribute('data-caption') ||
+          el.querySelector('.dtitle, .ctitle')?.textContent?.trim() ||
+          '';
+        const index = push(key, { kind: 'el', el, caption });
+        el.classList.add('lb-trigger');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
+        el.setAttribute('aria-label', caption ? `Expand diagram: ${caption}` : 'Expand diagram');
+        el.addEventListener('click', () => open(key, index, el));
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            open(key, index, el);
+          }
+        });
+      });
+    }
+
+    // ---- render / open / close --------------------------------------------
+    let scrollY = 0;
+
+    const render = () => {
+      if (!current) return;
+      const items = groups.get(current.key)!;
+      const item = items[current.index];
+      stage.replaceChildren();
+
+      if (item.kind === 'img') {
+        const img = document.createElement('img');
+        img.className = 'lb-img';
+        img.src = item.src;
+        img.alt = item.caption || '';
+        img.decoding = 'async';
+        stage.append(img);
+        // preload neighbours for snappy paging
+        [current.index - 1, current.index + 1].forEach((i) => {
+          const n = items[i];
+          if (n && n.kind === 'img') {
+            const p = new Image();
+            p.src = n.src;
+          }
+        });
+      } else {
+        const clone = item.el.cloneNode(true) as HTMLElement;
+        clone.classList.remove('lb-trigger');
+        clone.removeAttribute('tabindex');
+        clone.removeAttribute('role');
+        clone.removeAttribute('aria-label');
+        clone.removeAttribute('data-zoom');
+        clone.classList.add('lb-el');
+        stage.append(clone);
+      }
+
+      capEl.textContent = item.caption;
+      const multi = items.length > 1;
+      countEl.textContent = multi ? `${current.index + 1} / ${items.length}` : '';
+      prevBtn.hidden = !multi;
+      nextBtn.hidden = !multi;
+      // restart the entry animation on each change
+      stage.classList.remove('is-in');
+      void stage.offsetWidth;
+      stage.classList.add('is-in');
+    };
+
+    function open(key: string, index: number, from?: HTMLElement) {
+      opener = from ?? (document.activeElement as HTMLElement | null);
+      current = { key, index };
+      // lock scroll without layout shift
+      scrollY = window.scrollY;
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      if (sbw > 0) document.body.style.paddingRight = `${sbw}px`;
+
+      root.hidden = false;
+      root.setAttribute('aria-hidden', 'false');
+      render();
+      void root.offsetWidth;
+      root.classList.add('open');
+      closeBtn.focus();
+    }
+
+    function close() {
+      if (!current) return;
+      current = null;
+      root.classList.remove('open');
+      root.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+
+      const done = () => {
+        root.hidden = true;
+        stage.replaceChildren();
+      };
+      // move focus out before the dialog is hidden, so it is never stranded
+      if (opener && document.contains(opener)) opener.focus({ preventScroll: true });
+      else (document.activeElement as HTMLElement | null)?.blur();
+      opener = null;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) done();
+      else setTimeout(done, 200);
+
+      window.scrollTo({ top: scrollY });
+    }
+
+    const step = (delta: number) => {
+      if (!current) return;
+      const items = groups.get(current.key)!;
+      if (items.length < 2) return;
+      current.index = (current.index + delta + items.length) % items.length;
+      render();
+    };
+
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+    // clicking the empty area around the figure also closes
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog || e.target === stage) close();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (!current) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        step(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        step(-1);
+      } else if (e.key === 'Tab') {
+        // keep focus inside the dialog
+        const focusable = [closeBtn, prevBtn, nextBtn].filter((b) => !b.hidden);
+        const i = focusable.indexOf(document.activeElement as HTMLButtonElement);
+        e.preventDefault();
+        const next = e.shiftKey
+          ? focusable[(i - 1 + focusable.length) % focusable.length]
+          : focusable[(i + 1) % focusable.length];
+        next?.focus();
+      }
+    });
+
+    // swipe to page on touch
+    let tx = 0;
+    let ty = 0;
+    dialog.addEventListener(
+      'touchstart',
+      (e) => {
+        tx = e.changedTouches[0].clientX;
+        ty = e.changedTouches[0].clientY;
+      },
+      { passive: true }
+    );
+    dialog.addEventListener(
+      'touchend',
+      (e) => {
+        const dx = e.changedTouches[0].clientX - tx;
+        const dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+      },
+      { passive: true }
+    );
+  }
+</script>
+
+<style is:global>
+  /* affordance on anything the viewer picked up */
+  .lb-trigger { cursor: zoom-in; }
+  .lb-trigger:focus-visible {
+    outline: 2px solid var(--mint);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+</style>
+
+<style>
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+  }
+  .lb[hidden] { display: none; }
+
+  .lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 6, 15, 0.86);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .lb.open .lb-backdrop { opacity: 1; }
+
+  /* deliberately inset — the viewer is a panel, not an edge-to-edge takeover */
+  .lb-dialog {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 68px 76px 56px;
+    min-height: 0;
+  }
+
+  .lb-figure {
+    position: relative;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    min-height: 0;
+  }
+
+  .lb-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 0;
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 240ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lb-stage.is-in { opacity: 1; transform: none; }
+
+  .lb-stage :global(.lb-img) {
+    display: block;
+    max-width: min(1120px, 100%);
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid var(--mint-border-soft);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    background: var(--navy-raised);
+  }
+  /* cloned inline-SVG diagrams */
+  .lb-stage :global(.lb-el) {
+    max-width: min(1120px, 100%);
+    max-height: 78vh;
+    overflow: auto;
+    background: var(--navy-raised);
+    border: 1px solid var(--mint-border-soft);
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    cursor: default;
+  }
+  .lb-stage :global(.lb-el svg) { max-width: 100%; height: auto; }
+
+  .lb-cap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 760px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 240ms ease 60ms;
+  }
+  .lb.open .lb-cap { opacity: 1; }
+  .lb-cap-text { font-size: 14px; color: var(--text-body); }
+  .lb-count { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+  /* controls */
+  .lb-close,
+  .lb-nav {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    background: rgba(10, 25, 47, 0.72);
+    border: 1px solid var(--mint-border);
+    border-radius: 999px;
+    color: var(--text-bright);
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lb-close:hover,
+  .lb-nav:hover { background: rgba(100, 255, 218, 0.14); border-color: var(--mint); color: var(--mint); }
+  .lb-close:focus-visible,
+  .lb-nav:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+  .lb-close svg,
+  .lb-nav svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* X sits top-left on every viewport, per the design ask */
+  .lb-close { top: 16px; left: 16px; width: 44px; height: 44px; }
+  .lb-nav { top: 50%; transform: translateY(-50%); width: 46px; height: 46px; }
+  .lb-prev { left: 16px; }
+  .lb-next { right: 16px; }
+  .lb-nav:hover { transform: translateY(-50%) scale(1.06); }
+  .lb-nav[hidden] { display: none; }
+
+  @media (max-width: 700px) {
+    .lb-dialog { padding: 66px 14px 44px; }
+    .lb-stage :global(.lb-img),
+    .lb-stage :global(.lb-el) { max-height: 68vh; }
+    .lb-close { top: 12px; left: 12px; }
+    /* keep arrows clear of the close button on small screens */
+    .lb-nav { top: auto; bottom: 12px; transform: none; width: 44px; height: 44px; }
+    .lb-nav:hover { transform: none; }
+    .lb-prev { left: calc(50% - 52px); }
+    .lb-next { right: calc(50% - 52px); }
+    .lb-cap { padding-bottom: 46px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lb-backdrop,
+    .lb-stage,
+    .lb-cap { transition: none; }
+    .lb-stage { transform: none; }
+  }
+</style>

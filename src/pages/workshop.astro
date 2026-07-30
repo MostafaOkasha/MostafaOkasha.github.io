@@ -247,31 +247,9 @@ const cad = [
     </div>
   </div>
 
-  <!-- diagram zoom lightbox -->
-  <div class="zoom-overlay" data-zoom-overlay>
-    <button class="zoom-close mono" data-zoom-close>esc ×</button>
-    <div class="zoom-stage" data-zoom-stage></div>
-  </div>
+  {/* the `[data-zoom]` diagram cards and every image here are opened by the
+      shared viewer in src/components/Lightbox.astro (mounted from Base) */}
 </Base>
-
-<script>
-  const overlay = document.querySelector<HTMLElement>('[data-zoom-overlay]')!;
-  const stage = document.querySelector<HTMLElement>('[data-zoom-stage]')!;
-  document.querySelectorAll('[data-zoom]').forEach((card) => {
-    card.addEventListener('click', () => {
-      const svg = card.querySelector('svg')!.cloneNode(true) as SVGElement;
-      svg.setAttribute('width', '100%');
-      svg.setAttribute('height', '100%');
-      stage.innerHTML = '';
-      stage.appendChild(svg);
-      overlay.classList.add('open');
-    });
-  });
-  const close = () => overlay.classList.remove('open');
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-  document.querySelector('[data-zoom-close]')?.addEventListener('click', close);
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-</script>
 
 <style>
   .wrap { padding: 40px 44px 70px; max-width: 1240px; margin: 0 auto; }
@@ -366,35 +344,6 @@ const cad = [
   }
   .photo .ctitle { font-weight: 600; font-size: 14px; }
 
-  .zoom-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 80;
-    background: rgba(4, 12, 24, 0.9);
-    padding: 6vh 6vw;
-  }
-  .zoom-overlay.open { display: block; }
-  .zoom-stage {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .zoom-close {
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    background: none;
-    border: 1px solid var(--mint-border);
-    color: var(--mint);
-    border-radius: 6px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: 13px;
-    z-index: 81;
-  }
 
   @media (max-width: 1000px) {
     .grid-3 { grid-template-columns: repeat(2, 1fr); }

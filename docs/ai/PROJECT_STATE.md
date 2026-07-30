@@ -28,6 +28,9 @@ _Last updated: 2026-07-26 by Claude._
   back-links all point there; standalone top-level "books" nav item removed.
 - **Real book covers** (2026-07-26): 9/10 books show real cover art sourced from Open Library
   (owner-approved source); 1 remains on the deterministic tinted fallback.
+- **Site-wide image viewer** (2026-07-27): `src/components/Lightbox.astro`, mounted once in
+  `Base.astro`. Vanilla JS (no new dependency, per the scope rules). Replaced the workshop's
+  separate diagram-zoom overlay so there is one viewer with one set of behaviors.
 
 ## Next-task queue
 Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.

@@ -60,7 +60,7 @@ When sources conflict, prefer the more authoritative *current* source and report
   `library/index` + `library/[...slug]`, `library/books/index` + `library/books/[...slug]`,
   `404`, `rss.xml.ts`
 - `src/layouts/` — `Base.astro` (head, fonts, meta, mounts `CommandPalette`), `CaseStudy.astro`
-- `src/components/` — `Nav`, `Aurora` (WebGL backdrop), `Preloader` (loading galaxy), `CommandPalette` (⌘K), `BookCover`
+- `src/components/` — `Nav`, `Aurora` (WebGL backdrop), `Preloader` (loading galaxy), `CommandPalette` (⌘K), `BookCover`, `Lightbox` (site-wide image viewer)
 - `src/content/` — content collections: `library/` (writing) and `books/` (bookshelf), one markdown file each
 - `src/content.config.ts` — collection definitions + Zod schemas (the shelf `type` enum, book schema)
 - `src/data/` — `shelves.ts` (shelf types/badges/colors), `skills.ts`, `receipts.ts` (resume receipts)
@@ -133,6 +133,11 @@ For every non-trivial change:
   Schemas live in `src/content.config.ts`; shelf metadata in `src/data/shelves.ts`.
 - Islands are vanilla JS. Use `<script>` (module, hot-reloaded) over `<script is:inline>`
   (not reliably hot-reloaded) unless inlining is required.
+- Images: `src/components/Lightbox.astro` (mounted once in `Base.astro`) is the single image
+  viewer. It auto-wires content images by selector and skips UI chrome and any image inside an
+  `<a>` (so links are never hijacked). Opt in elsewhere with `[data-lightbox]`, opt out with
+  `[data-no-lightbox]`; `[data-zoom]` elements (the inline SVG diagrams) open in it too. Do not add
+  a second lightbox or per-page zoom overlay.
 - Design tokens (colors, fonts, spacing) come from `src/styles/global.css` custom properties —
   reuse them; don't hard-code new palette values.
 
