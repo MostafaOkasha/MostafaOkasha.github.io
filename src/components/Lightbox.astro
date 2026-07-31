@@ -71,6 +71,7 @@
     const IMG_SELECTOR = [
       '.cad img',
       '.photo img',
+      '.proj img',
       '.prose img',
       '.bio img.me',
       '.ring img',
@@ -83,9 +84,11 @@
     let current: { key: string; index: number } | null = null;
     /** the element that opened the viewer — focus returns here on close */
     let opener: HTMLElement | null = null;
+    /** true when opened via Enter/Space, so the focus ring is meaningful on return */
+    let openedByKeyboard = false;
 
     const groupKeyFor = (el: Element) => {
-      const container = el.closest('.cad-grid, .photo-grid, .prose, [data-lightbox], .diagrams');
+      const container = el.closest('.cad-grid, .photo-grid, .grid-3, .prose, [data-lightbox], .diagrams');
       if (container) {
         const existing = container.getAttribute('data-lb-group');
         if (existing) return existing;
@@ -131,11 +134,13 @@
       trigger.setAttribute('aria-label', caption ? `Expand image: ${caption}` : 'Expand image');
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
+        openedByKeyboard = false;
         open(key, index, trigger);
       });
       trigger.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
+          openedByKeyboard = true;
           open(key, index, trigger);
         }
       });
@@ -155,10 +160,14 @@
         if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
         el.setAttribute('role', 'button');
         el.setAttribute('aria-label', caption ? `Expand diagram: ${caption}` : 'Expand diagram');
-        el.addEventListener('click', () => open(key, index, el));
+        el.addEventListener('click', () => {
+          openedByKeyboard = false;
+          open(key, index, el);
+        });
         el.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
+            openedByKeyboard = true;
             open(key, index, el);
           }
         });
@@ -240,9 +249,22 @@
         root.hidden = true;
         stage.replaceChildren();
       };
-      // move focus out before the dialog is hidden, so it is never stranded
-      if (opener && document.contains(opener)) opener.focus({ preventScroll: true });
-      else (document.activeElement as HTMLElement | null)?.blur();
+      // move focus out before the dialog is hidden, so it is never stranded.
+      // If the viewer was opened with the mouse, restoring focus would otherwise
+      // paint a focus ring the user never asked for (closing with Esc counts as
+      // keyboard input to :focus-visible) — suppress it until they blur or Tab.
+      if (opener && document.contains(opener)) {
+        const el = opener;
+        if (!openedByKeyboard) {
+          el.classList.add('lb-noring');
+          const clear = () => el.classList.remove('lb-noring');
+          el.addEventListener('blur', clear, { once: true });
+          el.addEventListener('keydown', clear, { once: true });
+        }
+        el.focus({ preventScroll: true });
+      } else {
+        (document.activeElement as HTMLElement | null)?.blur();
+      }
       opener = null;
 
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -316,13 +338,18 @@
 </script>
 
 <style is:global>
-  /* affordance on anything the viewer picked up */
+  /* affordance on anything the viewer picked up.
+     No border-radius here — the outline follows each element's own radius,
+     and overriding it would square off the rounded CAD cards. */
   .lb-trigger { cursor: zoom-in; }
+  .lb-trigger:hover,
   .lb-trigger:focus-visible {
     outline: 2px solid var(--mint);
     outline-offset: 3px;
-    border-radius: 4px;
   }
+  /* after a mouse-opened viewer closes, focus returns to the trigger; don't
+     leave a ring sitting there. Hover still shows one. */
+  .lb-trigger.lb-noring:focus-visible:not(:hover) { outline: none; }
 </style>
 
 <style>
