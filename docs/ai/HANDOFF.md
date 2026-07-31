@@ -6,96 +6,84 @@ documents. Do not rely on conversation history or agent-specific memory.
 
 ## Handoff metadata
 
-- Task: Claude review of the handoff system (PASS) → real book covers (implemented)
-- Status: Complete — awaiting owner review/push
-- Current owner: Claude (finished)
-- Intended next owner: Owner (review + push), then either agent for the next queue item
-- Last updated: 2026-07-26 by Claude
+- Task: none in progress — the last batch of site work is finished, pushed, and live
+- Status: Idle / awaiting owner direction
+- Current owner: unassigned
+- Intended next owner: either agent, or the owner for the content items
+- Last updated: 2026-07-31 by Claude
 - Branch: `master`
-- Base commit (state received): `e9b6726` (`Prepare Claude review handoff`), which was also `origin/master`
-- Current commit: the book-cover commit; verify with `git log -1` (expect 2 local commits ahead of `origin/master`)
+- Current commit: `feb58d8` (`Lightbox: don't leave a focus ring after closing with Esc`)
+- `origin/master`: `feb58d8` — **everything is pushed**; nothing is waiting for review
 - Working tree expected: clean
-- Push status: **not pushed** — the owner reviews and pushes
 
-Verify these fields against Git. If they do not match, stop and report before editing.
+Verify with `git status -sb` and `git log -1`. If the tree is dirty or `HEAD` is not `feb58d8`,
+someone has worked since this was written — inspect before editing rather than assuming.
 
 ## Documents to read
 
-- [`AGENTS.md`](../../AGENTS.md) — repository rules and session recovery protocol
-- [`docs/ai/PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions, approved queue
-- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — review brief + recorded result
-- [`src/content.config.ts`](../../src/content.config.ts) — book schema (`cover` optional string)
-- [`src/components/BookCover.astro`](../../src/components/BookCover.astro) — cover img vs. tinted fallback
+- [`AGENTS.md`](../../AGENTS.md) — repository rules and the session recovery protocol
+- [`docs/ai/PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions on record, approved queue
+- [`docs/ai/TASK_TEMPLATE.md`](TASK_TEMPLATE.md) — copy when starting a queue item
+- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — **closed**, historical only
 
 ## Current state
 
-The Astro site is on `master`, bookshelf nested at `/library/books`. Both pieces of this transfer
-are done:
+The Astro site is healthy and fully deployed. Recent work, all live:
 
-1. **Handoff-system review — PASS** (details in `handoffs/claude-review.md`). Two documentation
-   coherence defects were found and fixed.
-2. **Real book covers — implemented.** 9 of 10 books now render real cover art; 1 keeps the
-   fallback because no cover exists upstream.
+| Commit | Date | What |
+|---|---|---|
+| `19087c9` | 07-26 | Review of the Codex handoff system — passed, two doc-coherence fixes |
+| `430879e` | 07-26 | Real book covers, 9/10, from owner-approved Open Library |
+| `2566d4a` | 07-26 | Star ratings moved below the cover instead of overlaying the art |
+| `d39bc38` | 07-28 | Under-construction notice in the homepage hero |
+| `419d4ea` | 07-30 | Site-wide image lightbox (`src/components/Lightbox.astro`) |
+| `feb58d8` | 07-31 | Lightbox: no stuck focus ring after closing with Esc |
 
-## Completed in this handoff
+Details and the reasoning behind each are in `PROJECT_STATE.md` ("Recently completed" and
+"Known issues / decisions on record"). Nothing is half-finished and no branch is outstanding.
 
-**Review (commit `19087c9`)**
-- Verified Git metadata: `master`, HEAD `e9b6726` (parent `4aa83ad`), tree clean.
-- Verified scope: everything since the last product commit `f946bad` touched only `.codex/*`,
-  `AGENTS.md`, `CLAUDE.md`, `docs/ai/*` — no product code or media.
-- Verified all 19 referenced paths exist; `.codex` config/rules conservative and correctly scoped.
-- Fixed: `AGENTS.md` referenced `HANDOFF-<topic>.md` (corrected to `docs/ai/handoffs/<topic>.md`);
-  `CLAUDE.md` handoff section now also points at the canonical `HANDOFF.md`.
-- Noted: `origin/master` had already been pushed to `e9b6726`, so earlier "not pushed" wording was
-  pre-push drift; corrected in the docs.
-
-**Book covers (this commit)**
-- Owner approved **Open Library** as the cover source (recorded in `PROJECT_STATE.md` decisions).
-- Downloaded 9 covers to `images/covers/` and set `cover:` in 9 of 10 `src/content/books/*.md`.
-- Replaced the two placeholder images with genuine cover art.
-- Editions were visually checked and bad ones rejected: French Carnegie edition → English retail;
-  Nguyen "Special Indian Edition / sale in USA & UK is illegal" → clean standard edition;
-  library-stamped "Withdrawn from collection" McGonigal scan → clean retail cover.
-- `that-little-voice-in-your-head` intentionally left with **no** `cover:` — Open Library has the
-  record but no cover image, and no ISBN variant resolved. It renders the tinted fallback.
-- `BookCover.astro` was **not** modified; fallback behavior preserved for future records.
-
-## Validation
+## Validation (last run, 2026-07-31, by Claude)
 
 | Command | Result |
 |---|---|
-| `npm run build` | Passed — 23 pages (re-run after the cover change) |
+| `npm run build` | Passed — 23 pages |
 | `git diff --check` | Passed — clean |
-| Cover-path existence check (9 paths) | Passed — every `cover:` resolves to a real file |
-| DOM check on `/library/books` | Passed — 10 cover slots, **0 broken images**, exactly 1 intentional fallback |
-| Preview `/library/books` @ 1280×900 | Checked — real covers render correctly |
-| Preview `/library/books` @ 375×812 (mobile) | Checked — 2-column grid, covers crisp |
-| Preview `/library/books/12-rules-for-life` | Checked — detail route shows the real cover |
+| Browser preview @ 1280×900 and 375×812 | Checked — lightbox, bookshelf, homepage banner |
+| Console errors | None on `/`, `/workshop`, `/library/books`, book detail |
 
 ## Remaining work
 
-- Optional: supply a cover for **That Little Voice in Your Head** (Mo Gawdat) if one is wanted;
-  none is available via Open Library. Until then the fallback is correct behavior.
-- Next approved queue item is **purchase links** (`PROJECT_STATE.md` item 2) — not started.
+Nothing is in progress. The queue in `PROJECT_STATE.md` is the source of truth; items 1–3 are
+**content the owner supplies**, not engineering:
+
+1. Purchase links for the books (`purchase:` frontmatter — the button already renders)
+2. Book notes / summaries for the note-less books
+3. More library entries (only 3 exist)
+4. Remove the temporary homepage under-construction banner once the above is current
 
 ## Unresolved risks
 
-- **Cover licensing:** covers are publisher artwork obtained from Open Library under the owner's
-  explicit approval. Used as small identifying thumbnails. If the owner later wants a stricter
-  basis, the covers are isolated in `images/covers/` and each `cover:` line can be removed to fall
-  back cleanly — no code change required.
-- **Cosmetic (not a defect):** the rating strip / NOTES ribbon overlay cover art and partially cover
-  the printed author name on some covers. Left alone deliberately to keep this task scoped.
+- **Cover licensing** — book covers are publisher artwork from Open Library, committed under the
+  owner's explicit approval and used as small identifying thumbnails. Each `cover:` line can be
+  removed to fall back cleanly if the owner ever wants a stricter basis; no code change needed.
+- **Dependabot** — ~6 Astro-core advisories are knowingly unfixed (would need an Astro 5→7 major
+  upgrade; judged not worth it for a static, no-SSR, trusted-content site).
+- No correctness, privacy, or data-loss risks outstanding.
 
 ## Recommended next action
 
-Owner: review the two local commits and push when satisfied. After that, the next approved task is
-**purchase links** for the books (`PROJECT_STATE.md` item 2) — the schema already supports
-`purchase:` and the detail page already renders a "Buy the book →" button.
+No approved engineering task is queued — this needs a human decision, not an invented one. Ask the
+owner which they want:
+
+- supply purchase links and/or book notes (content), or
+- start a new feature they name.
+
+If picking up queue item 1 (purchase links), copy `TASK_TEMPLATE.md`, add `purchase:` to the ten
+files in `src/content/books/`, run `npm run build`, and preview a book detail route.
 
 ## Before stopping
 
-Update this file with the exact owner, branch, commits, working-tree files, completed work,
+Update this file with the exact owner, branch, commits, working-tree state, completed work,
 validation results, remaining work, risks, and one concrete next action. Update `PROJECT_STATE.md`
-when the durable state or approved queue changes. Never claim a command passed unless it ran
-successfully.
+when durable state, decisions, or the approved queue change. Never claim a command passed unless it
+ran successfully.

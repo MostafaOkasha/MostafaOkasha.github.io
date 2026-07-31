@@ -1,3 +1,8 @@
+> **CLOSED — historical record, not a live handoff.** Both parts of this transfer finished on
+> 2026-07-26 (review passed; book covers implemented) and are pushed. For current state and the
+> next action, read [`../HANDOFF.md`](../HANDOFF.md) and [`../PROJECT_STATE.md`](../PROJECT_STATE.md).
+> Kept for the decision trail; do not act on the "next task" section below.
+
 # Claude Review Handoff — Handoff System and Repository State
 
 This is a task-scoped handoff for Claude. It records the work completed in this Codex thread,
