@@ -8,13 +8,17 @@ const entries = (await getCollection('library', ({ data }) => !data.draft)).sort
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
+// Only show shelves that actually hold something — an empty shelf advertises a
+// gap rather than a category. They reappear automatically when an entry lands.
 const shelves = [
   { key: 'all', label: 'everything', count: entries.length },
-  ...(Object.keys(SHELF_TYPES) as ShelfType[]).map((key) => ({
-    key,
-    label: SHELF_TYPES[key].label,
-    count: entries.filter((e) => e.data.type === key).length,
-  })),
+  ...(Object.keys(SHELF_TYPES) as ShelfType[])
+    .map((key) => ({
+      key,
+      label: SHELF_TYPES[key].label,
+      count: entries.filter((e) => e.data.type === key).length,
+    }))
+    .filter((s) => s.count > 0),
 ];
 
 const bookCount = (await getCollection('books', ({ data }) => !data.draft)).length;

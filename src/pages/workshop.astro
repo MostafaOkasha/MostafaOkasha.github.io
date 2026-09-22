@@ -1,7 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
-import { PROJECTS as projects } from '../data/projects';
+import { PROJECTS } from '../data/projects';
+
+// Hide "write-up soon" / "retrospective soon" style chips: a promise with no
+// destination reads as an unfinished site. They return when the link is real.
+const projects = PROJECTS.map((p) => ({
+  ...p,
+  links: p.links.filter((l) => !/\bsoon\b/i.test(l.label)),
+}));
 
 const cad = [
   { img: '/images/webp/design/landing-gear.webp', title: 'Aircraft landing gear', cap: 'NX · kinematic simulation', feature: true },
@@ -169,7 +176,7 @@ const cad = [
 
     <!-- PHOTOS -->
     <div class="section-label sec" id="photos">04 · PHOTOGRAPHS</div>
-    <p class="photos-sub">Project moments now; favorites from 10 years of travel and street shots coming.</p>
+    <p class="photos-sub">Project moments from the build.</p>
     <div class="photo-grid">
       <div class="photo">
         <img src="/images/webp/projects/EyeSee/EyeSee1.webp" alt="EyeSee — receiving first place for the VR/AR category" loading="lazy" />
@@ -179,20 +186,9 @@ const cad = [
         <img src="/images/webp/projects/EyeSee/EyeSee2.webp" alt="EyeSee device close-up" loading="lazy" />
         <div class="overlay"><div class="ctitle">EyeSee, up close</div></div>
       </div>
-      <div class="photo-slot mono">travel photo<br />coming soon</div>
-      <div class="photo-slot mono">street photo<br />coming soon</div>
     </div>
 
-    <!-- CREATIVE AI -->
-    <div class="section-label sec" id="creative-ai">05 · CREATIVE AI</div>
-    <p class="photos-sub">Sora experiments and other generative work — being curated now.</p>
-    <div class="photo-grid">
-      {
-        [1, 2, 3, 4].map(() => (
-          <div class="photo-slot mono">sora work<br />coming soon</div>
-        ))
-      }
-    </div>
+  </div>
   </div>
 
   {/* the `[data-zoom]` diagram cards and every image here are opened by the
@@ -263,18 +259,6 @@ const cad = [
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
-  .photo-slot {
-    height: 220px;
-    border: 1px dashed rgba(100, 255, 218, 0.3);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
   .photo {
     position: relative;
     height: 220px;
@@ -302,6 +286,5 @@ const cad = [
     .grid-3, .cad-grid { grid-template-columns: 1fr; }
     .cad.feature { grid-row: span 2; }
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-slot { height: 160px; }
   }
 </style>
