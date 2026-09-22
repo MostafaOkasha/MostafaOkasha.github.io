@@ -517,3 +517,17 @@ kbd {
   .case .diagram-box svg { min-width: 600px; }
   .case figcaption::after { content: ' · scroll →'; color: var(--mint); }
 }
+
+/* Visually hidden, but announced by screen readers. Used for page headings
+   where the visual design carries the title some other way. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

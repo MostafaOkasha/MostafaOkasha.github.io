@@ -57,13 +57,20 @@ const links = [
       )
     }
   </div>
-  <button class="nav-burger" aria-label="Open menu" data-menu-open>
+  <button
+    class="nav-burger"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+    data-menu-open
+  >
     <span></span>
     <span></span>
   </button>
 </nav>
 
-<div class="mobile-menu" data-mobile-menu>
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu role="dialog" aria-modal="true" aria-label="Menu">
   <div class="close-row">
     <button class="close-btn" aria-label="Close menu" data-menu-close>×</button>
   </div>
@@ -100,13 +107,49 @@ const links = [
 </div>
 
 <script>
-  const menu = document.querySelector('[data-mobile-menu]');
-  document.querySelector('[data-menu-open]')?.addEventListener('click', () => {
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  const openBtn = document.querySelector<HTMLElement>('[data-menu-open]');
+  const closeBtn = document.querySelector<HTMLElement>('[data-menu-close]');
+
+  const openMenu = () => {
     menu?.classList.add('open');
     document.body.style.overflow = 'hidden';
-  });
-  document.querySelector('[data-menu-close]')?.addEventListener('click', () => {
-    menu?.classList.remove('open');
+    openBtn?.setAttribute('aria-expanded', 'true');
+    closeBtn?.focus();
+  };
+
+  const closeMenu = () => {
+    if (!menu?.classList.contains('open')) return;
+    menu.classList.remove('open');
     document.body.style.overflow = '';
+    openBtn?.setAttribute('aria-expanded', 'false');
+    openBtn?.focus();
+  };
+
+  openBtn?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (!menu?.classList.contains('open')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeMenu();
+      return;
+    }
+    if (e.key !== 'Tab') return;
+    // trap focus inside the open menu
+    const focusable = menu.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])'
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 </script>
