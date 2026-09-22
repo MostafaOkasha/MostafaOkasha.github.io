@@ -12,11 +12,11 @@ documents. Do not rely on conversation history or agent-specific memory.
 - Intended next owner: either agent, or the owner for the content items
 - Last updated: 2026-09-22 by Claude
 - Branch: `master`
-- Current commit: `4d82e5c` (`Stop advertising the gaps...`); verify with `git log -1`
-- `origin/master`: `f30f670` — **4 local commits are unpushed** and awaiting review
+- Current commit: `32730d4` (`Upgrade Astro 5.18.2 -> 7.3.3...`); verify with `git log -1`
+- `origin/master`: `1665130` — **2 local commits are unpushed** and awaiting review
 - Working tree expected: clean
 
-Verify with `git status -sb` and `git log -1`. If the tree is dirty or `HEAD` is not `2ffc9f2`,
+Verify with `git status -sb` and `git log -1`. If the tree is dirty or `HEAD` is not `32730d4`,
 someone has worked since this was written — inspect before editing rather than assuming.
 
 ## Documents to read
@@ -70,9 +70,8 @@ truth; items 1–3 are **content the owner supplies**, not engineering:
 - **Cover licensing** — book covers are publisher artwork from Open Library, committed under the
   owner's explicit approval and used as small identifying thumbnails. Each `cover:` line can be
   removed to fall back cleanly if the owner ever wants a stricter basis; no code change needed.
-- **Dependabot — contested, see `PROJECT_STATE.md`.** `npm audit` reports 10 vulnerabilities
-  (1 critical, 7 high) against Astro 5.18.2. An external review claims Astro 7.3.2 builds clean
-  and drops this to 3; that is **unverified in this checkout**.
+- **Dependabot — resolved.** Astro upgraded to 7.3.3; `npm audit` reports 0 vulnerabilities
+  (was 10). Output-neutral: the HTML manifest hashes identically to the Astro 5 baseline.
 - No correctness, privacy, or data-loss risks outstanding.
 
 ## External audit (2026-09-22) — what is done vs. blocked
@@ -85,24 +84,26 @@ An outside review of the live site is the driver for the current batch. Done her
 | `4c4e041` | aria-modal, labelled search, semantic results, mobile-menu focus trap + Escape, missing h1s |
 | `da86334` | ⌘K now indexes projects, systems, skills, receipts, article bodies; skill/receipt deep links |
 | `4d82e5c` | empty shelves + "coming soon" placeholders hidden |
+| `88e4721` | malformed markup Astro 5 was silently repairing |
+| `32730d4` | security maintenance — Astro 7.3.3, 10 vulnerabilities → 0 |
 | `f30f670` | the preloader finding — already fixed before the audit landed |
 
 **Blocked on the owner (cannot be invented — public CV):** About rewrite; three
 flagship case studies (Forge OS / Praxis Forge, LifeKeep, Chamber); the Meta
 end-date discrepancy (site says Feb 2026, an earlier note said Jan 2026).
 
-**Open, unblocked, not started:** verify the Astro 5→7 upgrade (see the contested
-Dependabot entry in `PROJECT_STATE.md`); the 180 MB deploy artifact (`images/` is
-169 MB and publishes tracked `.psd`/`.avi`), which must preserve existing URLs.
+**Open, unblocked, not started:** the 180 MB deploy artifact (`images/` is 169 MB
+and publishes tracked `.psd`/`.avi`), which must preserve existing URLs.
+The Astro 5→7 upgrade is **done** (`32730d4`) — audit clean at 0 vulnerabilities.
 
 ## Recommended next action
 
-Owner: review and push the five local commits, then either supply the blocked content (About,
-flagship case studies, the correct Meta end date) or approve verifying the Astro 5→7 upgrade.
+Owner: review and push the two local commits (the Astro 7 upgrade is the meaningful one — it
+changes the build toolchain, so watch that the Pages deploy succeeds).
 
-If picking up the upgrade, do it in isolation: bump Astro, run `npm run build`, confirm 23 pages,
-exercise the lightbox / ⌘K / Aurora islands, re-run `npm audit`, and revert cleanly if anything
-breaks. Then correct the contested Dependabot entry in `PROJECT_STATE.md` with the real result.
+After that the remaining audit work is content you must supply: the About rewrite, the three
+flagship case studies, and the correct Meta end date. The only unblocked engineering item left is
+the 180 MB deploy artifact.
 
 ## Before stopping
 

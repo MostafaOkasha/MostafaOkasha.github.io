@@ -50,7 +50,7 @@ already resolved by `f30f670`.
 **Still open from that audit, and blocked on the owner:** the About rewrite,
 three flagship case studies (Forge OS / Praxis Forge, LifeKeep, Chamber), the
 Meta end-date discrepancy (site says Feb 2026, an earlier note said Jan 2026),
-the Astro 5→7 upgrade decision, and the 180 MB deploy artifact.
+and the 180 MB deploy artifact. (The Astro 5→7 upgrade is done — see the Dependabot entry.)
 
 ## Next-task queue
 Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
@@ -100,11 +100,14 @@ noted below.
   touch this — removing the ring outright is an accessibility regression.
 - **Lightbox never hijacks links:** any image inside an `<a>` is skipped, which is what keeps the
   bookshelf covers navigating to their detail pages. Preserve that guard.
-- **Dependabot — this decision is now contested (2026-09-22):** the record said an Astro 5→7
-  upgrade was not worth it. `npm audit` currently reports **10 vulnerabilities (1 critical,
-  7 high, 1 moderate, 1 low)** against Astro 5.18.2. An external review reports that Dependabot
-  PR #42 (Astro 7.3.2) builds cleanly, still emits 23 pages, and drops the count to 3. That has
-  **not been verified in this checkout** — verify before trusting it, then update this entry.
+- **Dependabot — RESOLVED 2026-09-22, the old decision was wrong.** The record long claimed an
+  Astro 5→7 upgrade was "not worth it for a static site". Verified in this checkout: it is a clean
+  upgrade. Astro is now **7.3.3** and `npm audit` reports **0 vulnerabilities** (down from 10:
+  1 critical, 7 high, 1 moderate, 1 low). `@astrojs/rss` and `@astrojs/sitemap` needed no change.
+  The emitted HTML manifest hashes identically to the Astro 5 baseline, so the upgrade is
+  output-neutral. The only blocker was malformed markup in `workshop.astro` that Astro 5 had been
+  silently repairing (`88e4721`). **Astro 7 requires Node >=22.12.0** — CI pins `node-version: 22`,
+  which satisfies it; do not lower that.
 - **README staleness (minor):** `README.md` still lists "books" among the ten `/library` shelves,
   but books is now the nested `/library/books` subpage. Human-facing; touch up when convenient.
 - **Legacy Jekyll files** (`_includes/`, `_layouts/`, `css/`, `javascripts/`, `_config.yml`,
