@@ -7,7 +7,7 @@ or stop.** For a parallel workstream or specific mid-task ownership transfer, co
 [`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `handoffs/<topic>.md`. New task specs:
 [`TASK_TEMPLATE.md`](TASK_TEMPLATE.md). Shared rules: [`../../AGENTS.md`](../../AGENTS.md).
 
-_Last updated: 2026-07-31 by Claude._
+_Last updated: 2026-09-22 by Claude._
 
 ## Repository state
 - Branch: `master` — clean working tree, **fully pushed**: `HEAD` = `origin/master` = `feb58d8`
@@ -37,6 +37,20 @@ _Last updated: 2026-07-31 by Claude._
 - **Homepage under-construction notice** (2026-07-28, `d39bc38`): amber `.wip-banner` in the hero
   above the status pill, flagging that content is still being filled in. **Temporary** — remove the
   `.wip-banner` markup + styles in `src/pages/index.astro` when the data is current.
+
+### External audit response (2026-09-22)
+An outside review scored content 4/10, search 5/10, a11y 6/10, SEO 6/10. The
+engineering half of its findings is now done (`bb0ff49`, `4c4e041`, `da86334`,
+`4d82e5c`): canonical host + extension-less canonicals + article metadata and
+JSON-LD; palette/mobile-menu dialog semantics, focus trapping and headings;
+⌘K now indexes projects, systems, skills, receipts and article bodies;
+empty shelves and placeholder cards are hidden. Its preloader finding was
+already resolved by `f30f670`.
+
+**Still open from that audit, and blocked on the owner:** the About rewrite,
+three flagship case studies (Forge OS / Praxis Forge, LifeKeep, Chamber), the
+Meta end-date discrepancy (site says Feb 2026, an earlier note said Jan 2026),
+the Astro 5→7 upgrade decision, and the 180 MB deploy artifact.
 
 ## Next-task queue
 Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
@@ -86,9 +100,11 @@ noted below.
   touch this — removing the ring outright is an accessibility regression.
 - **Lightbox never hijacks links:** any image inside an `<a>` is skipped, which is what keeps the
   bookshelf covers navigating to their detail pages. Preserve that guard.
-- **Dependabot:** ~6 Astro-core alerts remain open; the fix needs an Astro 5→7 major upgrade,
-  judged not worth it for a static, no-SSR, trusted-content site. Two `dependabot/*` branches exist
-  on the remote. Leave unless deliberately revisiting.
+- **Dependabot — this decision is now contested (2026-09-22):** the record said an Astro 5→7
+  upgrade was not worth it. `npm audit` currently reports **10 vulnerabilities (1 critical,
+  7 high, 1 moderate, 1 low)** against Astro 5.18.2. An external review reports that Dependabot
+  PR #42 (Astro 7.3.2) builds cleanly, still emits 23 pages, and drops the count to 3. That has
+  **not been verified in this checkout** — verify before trusting it, then update this entry.
 - **README staleness (minor):** `README.md` still lists "books" among the ten `/library` shelves,
   but books is now the nested `/library/books` subpage. Human-facing; touch up when convenient.
 - **Legacy Jekyll files** (`_includes/`, `_layouts/`, `css/`, `javascripts/`, `_config.yml`,

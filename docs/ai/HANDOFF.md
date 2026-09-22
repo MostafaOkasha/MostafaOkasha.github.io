@@ -6,17 +6,17 @@ documents. Do not rely on conversation history or agent-specific memory.
 
 ## Handoff metadata
 
-- Task: none in progress — the last batch of site work is finished, pushed, and live
-- Status: Idle / awaiting owner direction
+- Task: external-audit response — engineering half complete; content half blocked on the owner
+- Status: Awaiting owner review/push, then owner input on content
 - Current owner: unassigned
 - Intended next owner: either agent, or the owner for the content items
-- Last updated: 2026-07-31 by Claude
+- Last updated: 2026-09-22 by Claude
 - Branch: `master`
-- Current commit: `feb58d8` (`Lightbox: don't leave a focus ring after closing with Esc`)
-- `origin/master`: `feb58d8` — **everything is pushed**; nothing is waiting for review
+- Current commit: `4d82e5c` (`Stop advertising the gaps...`); verify with `git log -1`
+- `origin/master`: `f30f670` — **4 local commits are unpushed** and awaiting review
 - Working tree expected: clean
 
-Verify with `git status -sb` and `git log -1`. If the tree is dirty or `HEAD` is not `feb58d8`,
+Verify with `git status -sb` and `git log -1`. If the tree is dirty or `HEAD` is not `2ffc9f2`,
 someone has worked since this was written — inspect before editing rather than assuming.
 
 ## Documents to read
@@ -28,7 +28,8 @@ someone has worked since this was written — inspect before editing rather than
 
 ## Current state
 
-The Astro site is healthy and fully deployed. Recent work, all live:
+The Astro site is healthy. Everything through `f30f670` is live; the five commits after it are
+local and awaiting review. Earlier work, all live:
 
 | Commit | Date | What |
 |---|---|---|
@@ -42,19 +43,22 @@ The Astro site is healthy and fully deployed. Recent work, all live:
 Details and the reasoning behind each are in `PROJECT_STATE.md` ("Recently completed" and
 "Known issues / decisions on record"). Nothing is half-finished and no branch is outstanding.
 
-## Validation (last run, 2026-07-31, by Claude)
+## Validation (last run, 2026-09-22, by Claude)
 
 | Command | Result |
 |---|---|
 | `npm run build` | Passed — 23 pages |
 | `git diff --check` | Passed — clean |
-| Browser preview @ 1280×900 and 375×812 | Checked — lightbox, bookshelf, homepage banner |
-| Console errors | None on `/`, `/workshop`, `/library/books`, book detail |
+| Canonical/sitemap agreement | Checked — both extension-less, both on www |
+| ⌘K queries (`MapSight`, `GPU`, `fraud`, `Colophon`) | Checked — all resolve; previously 2 returned nothing |
+| Deep links `/resume#fraud`, `/skills#gpu` | Checked — open the right receipt/dossier |
+| Mobile menu @ 375×812 | Checked — focus enters, Tab wraps, Esc closes, focus returns |
+| Library / Workshop after cleanup | Checked — 3 populated shelves; 0 empty slots, 0 "soon" chips |
 
 ## Remaining work
 
-Nothing is in progress. The queue in `PROJECT_STATE.md` is the source of truth; items 1–3 are
-**content the owner supplies**, not engineering:
+The engineering sweep is done and committed. The queue in `PROJECT_STATE.md` is the source of
+truth; items 1–3 are **content the owner supplies**, not engineering:
 
 1. Purchase links for the books (`purchase:` frontmatter — the button already renders)
 2. Book notes / summaries for the note-less books
@@ -66,20 +70,39 @@ Nothing is in progress. The queue in `PROJECT_STATE.md` is the source of truth; 
 - **Cover licensing** — book covers are publisher artwork from Open Library, committed under the
   owner's explicit approval and used as small identifying thumbnails. Each `cover:` line can be
   removed to fall back cleanly if the owner ever wants a stricter basis; no code change needed.
-- **Dependabot** — ~6 Astro-core advisories are knowingly unfixed (would need an Astro 5→7 major
-  upgrade; judged not worth it for a static, no-SSR, trusted-content site).
+- **Dependabot — contested, see `PROJECT_STATE.md`.** `npm audit` reports 10 vulnerabilities
+  (1 critical, 7 high) against Astro 5.18.2. An external review claims Astro 7.3.2 builds clean
+  and drops this to 3; that is **unverified in this checkout**.
 - No correctness, privacy, or data-loss risks outstanding.
+
+## External audit (2026-09-22) — what is done vs. blocked
+
+An outside review of the live site is the driver for the current batch. Done here:
+
+| Commit | Audit finding addressed |
+|---|---|
+| `bb0ff49` | canonical host → www, extension-less canonicals, og:type=article, summary_large_image, JSON-LD |
+| `4c4e041` | aria-modal, labelled search, semantic results, mobile-menu focus trap + Escape, missing h1s |
+| `da86334` | ⌘K now indexes projects, systems, skills, receipts, article bodies; skill/receipt deep links |
+| `4d82e5c` | empty shelves + "coming soon" placeholders hidden |
+| `f30f670` | the preloader finding — already fixed before the audit landed |
+
+**Blocked on the owner (cannot be invented — public CV):** About rewrite; three
+flagship case studies (Forge OS / Praxis Forge, LifeKeep, Chamber); the Meta
+end-date discrepancy (site says Feb 2026, an earlier note said Jan 2026).
+
+**Open, unblocked, not started:** verify the Astro 5→7 upgrade (see the contested
+Dependabot entry in `PROJECT_STATE.md`); the 180 MB deploy artifact (`images/` is
+169 MB and publishes tracked `.psd`/`.avi`), which must preserve existing URLs.
 
 ## Recommended next action
 
-No approved engineering task is queued — this needs a human decision, not an invented one. Ask the
-owner which they want:
+Owner: review and push the five local commits, then either supply the blocked content (About,
+flagship case studies, the correct Meta end date) or approve verifying the Astro 5→7 upgrade.
 
-- supply purchase links and/or book notes (content), or
-- start a new feature they name.
-
-If picking up queue item 1 (purchase links), copy `TASK_TEMPLATE.md`, add `purchase:` to the ten
-files in `src/content/books/`, run `npm run build`, and preview a book detail route.
+If picking up the upgrade, do it in isolation: bump Astro, run `npm run build`, confirm 23 pages,
+exercise the lightbox / ⌘K / Aurora islands, re-run `npm audit`, and revert cleanly if anything
+breaks. Then correct the contested Dependabot entry in `PROJECT_STATE.md` with the real result.
 
 ## Before stopping
 
