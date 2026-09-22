@@ -22,7 +22,7 @@ _Last updated: 2026-07-31 by Claude._
 ## Recently completed
 - Full 2019 Jekyll → Astro 5 rebuild; live and deploying via Pages.
 - Interactive resume with sanitized receipts; skills dossiers; workshop + system-design pages.
-- Loading galaxy `Preloader` + WebGL `Aurora` backdrop.
+- WebGL `Aurora` backdrop. (The galaxy intro `Preloader` was removed 2026-09-22 at the owner's request — component deleted, not disabled.)
 - **Bookshelf**: `books` content collection (10 entries), covers/ratings, star ratings on spines,
   finished sorted by rating. Nested under the Library at `/library/books`; nav, ⌘K palette, and
   back-links all point there; standalone top-level "books" nav item removed.

@@ -60,7 +60,7 @@ When sources conflict, prefer the more authoritative *current* source and report
   `library/index` + `library/[...slug]`, `library/books/index` + `library/books/[...slug]`,
   `404`, `rss.xml.ts`
 - `src/layouts/` — `Base.astro` (head, fonts, meta, mounts `CommandPalette`), `CaseStudy.astro`
-- `src/components/` — `Nav`, `Aurora` (WebGL backdrop), `Preloader` (loading galaxy), `CommandPalette` (⌘K), `BookCover`, `Lightbox` (site-wide image viewer)
+- `src/components/` — `Nav`, `Aurora` (WebGL backdrop), `CommandPalette` (⌘K), `BookCover`, `Lightbox` (site-wide image viewer)
 - `src/content/` — content collections: `library/` (writing) and `books/` (bookshelf), one markdown file each
 - `src/content.config.ts` — collection definitions + Zod schemas (the shelf `type` enum, book schema)
 - `src/data/` — `shelves.ts` (shelf types/badges/colors), `skills.ts`, `receipts.ts` (resume receipts)
