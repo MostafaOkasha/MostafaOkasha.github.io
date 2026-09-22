@@ -186,7 +186,14 @@ const TOOLBOX = [
     if (e.key === 'Escape') closeSheet();
   });
 
-  show(skills[0].k, false);
+  // deep link: /skills#<skill-key> opens that dossier (used by ⌘K)
+  const fromHash = decodeURIComponent(location.hash.replace('#', ''));
+  const hasSkill = skills.some((s) => s.k === fromHash);
+  show(hasSkill ? fromHash : skills[0].k, false);
+  if (hasSkill) {
+    document.querySelector(`.tile[data-skill="${fromHash}"]`)
+      ?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
 </script>
 
 <style>

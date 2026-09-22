@@ -186,7 +186,14 @@ import { RECEIPTS } from '../data/receipts';
     if (e.key === 'Escape') closeSheet();
   });
 
-  show('gpu', false);
+  // deep link: /resume#<receipt-key> opens that claim's receipt (used by ⌘K)
+  const fromHash = decodeURIComponent(location.hash.replace('#', ''));
+  const initial = fromHash && receipts[fromHash] ? fromHash : 'gpu';
+  show(initial, false);
+  if (fromHash && receipts[fromHash]) {
+    document.querySelector(`.claim[data-proof="${fromHash}"]`)
+      ?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
 </script>
 
 <style>

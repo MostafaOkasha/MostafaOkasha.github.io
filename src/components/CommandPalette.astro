@@ -1,6 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import { SHELF_TYPES, fmtMeta } from '../data/shelves';
+import { PROJECTS } from '../data/projects';
+import { SKILLS } from '../data/skills';
+import { RECEIPTS } from '../data/receipts';
 
 const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -14,7 +17,58 @@ const items = [
     color: SHELF_TYPES[e.data.type].color,
     meta: fmtMeta(e.data.date, e.data.readingTime),
     url: `/library/${e.id}`,
-    haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
+    // include the entry body so search reaches inside articles, not just metadata
+    haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')} ${e.body ?? ''}`
+      .toLowerCase()
+      .slice(0, 4000),
+  })),
+  // workshop projects
+  ...PROJECTS.map((p) => ({
+    title: p.name,
+    badge: 'PROJECT',
+    color: '#ffb26b',
+    meta: p.year,
+    url: '/workshop',
+    haystack: `${p.name} ${p.desc} ${p.year} project workshop`.toLowerCase(),
+  })),
+  // system-design case studies
+  {
+    title: 'Edge gateway + ingress controller',
+    badge: 'SYSTEM',
+    color: '#7cb7ff',
+    meta: 'case study',
+    url: '/workshop/systems/edge-gateway',
+    haystack:
+      'edge gateway ingress controller tls http/2 streams throughput system design case study meta'.toLowerCase(),
+  },
+  {
+    title: 'Currency-conversion audit',
+    badge: 'SYSTEM',
+    color: '#7cb7ff',
+    meta: 'case study',
+    url: '/workshop/systems/currency-conversion',
+    haystack:
+      'currency conversion audit fx foreign transaction fraud dispute ledgers card network capital one system design case study'.toLowerCase(),
+  },
+  // skill dossiers
+  ...SKILLS.map((s) => ({
+    title: s.name,
+    badge: 'SKILL',
+    color: s.color,
+    meta: s.yrs,
+    url: `/skills#${s.k}`,
+    haystack: `${s.name} ${s.yrs} ${s.since} ${s.chips.join(' ')} ${s.timeline
+      .map((t) => `${t.when} ${t.what}`)
+      .join(' ')} skill`.toLowerCase(),
+  })),
+  // resume claims — each opens its receipt
+  ...Object.entries(RECEIPTS).map(([k, r]) => ({
+    title: r.title,
+    badge: 'RECEIPT',
+    color: '#ffd76b',
+    meta: r.label.toLowerCase(),
+    url: `/resume#${k}`,
+    haystack: `${r.label} ${r.title} ${r.body} resume receipt`.toLowerCase(),
   })),
   ...bookEntries.map((b) => ({
     title: b.data.title,
