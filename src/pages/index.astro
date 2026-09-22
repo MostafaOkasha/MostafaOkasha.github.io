@@ -4,11 +4,29 @@ import Nav from '../components/Nav.astro';
 import Aurora from '../components/Aurora.astro';
 import { getCollection } from 'astro:content';
 import { SHELF_TYPES, fmtKicker } from '../data/shelves';
+import { CASE_STUDIES, CASE_STUDY_BADGE } from '../data/case-studies';
 import { execSync } from 'node:child_process';
 
-const latest = (await getCollection('library', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+// The rail is "latest from the archive", so it has to include the system-design
+// case studies too — they are the strongest writing on the site and were
+// invisible here purely because they are .astro pages, not collection entries.
+const libraryRail = (await getCollection('library', ({ data }) => !data.draft)).map((e) => ({
+  title: e.data.title,
+  date: e.data.date,
+  url: `/library/${e.id}`,
+  badge: SHELF_TYPES[e.data.type].badge,
+}));
+
+const caseStudyRail = CASE_STUDIES.map((c) => ({
+  title: c.title,
+  date: c.date,
+  url: c.url,
+  badge: CASE_STUDY_BADGE.badge,
+}));
+
+const latest = [...libraryRail, ...caseStudyRail]
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .slice(0, 4);
 
 // "last updated with commit @sha" — a carry-over from the 2019 site
 let sha = '';
@@ -74,11 +92,11 @@ try {
         <div class="rail-label mono">LATEST FROM THE ARCHIVE</div>
         {
           latest.map((e) => (
-            <a href={`/library/${e.id}`} class="rail-card">
+            <a href={e.url} class="rail-card">
               <div class="rail-kicker mono">
-                {SHELF_TYPES[e.data.type].badge} · {fmtKicker(e.data.date)}
+                {e.badge} · {fmtKicker(e.date)}
               </div>
-              <div class="rail-title">{e.data.title}</div>
+              <div class="rail-title">{e.title}</div>
             </a>
           ))
         }

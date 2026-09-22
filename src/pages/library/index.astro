@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { getCollection } from 'astro:content';
 import { SHELF_TYPES, fmtMeta, type ShelfType } from '../../data/shelves';
+import { CASE_STUDIES, CASE_STUDY_BADGE } from '../../data/case-studies';
 
 const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -10,8 +11,23 @@ const entries = (await getCollection('library', ({ data }) => !data.draft)).sort
 
 // Only show shelves that actually hold something — an empty shelf advertises a
 // gap rather than a category. They reappear automatically when an entry lands.
+// Case studies are bespoke .astro pages, not collection entries, so they get
+// their own shelf rather than a `type` in the content schema.
+const caseRows = CASE_STUDIES.map((c) => ({
+  url: c.url,
+  type: 'case',
+  badge: CASE_STUDY_BADGE.badge,
+  color: CASE_STUDY_BADGE.color,
+  title: c.title,
+  desc: c.description,
+  date: c.date,
+  meta: fmtMeta(c.date, c.readingTime),
+  haystack: `${c.title} ${c.description} ${c.kicker} ${c.topics.join(' ')}`.toLowerCase(),
+}));
+
 const shelves = [
-  { key: 'all', label: 'everything', count: entries.length },
+  { key: 'all', label: 'everything', count: entries.length + caseRows.length },
+  { key: 'case', label: 'case studies', count: caseRows.length },
   ...(Object.keys(SHELF_TYPES) as ShelfType[])
     .map((key) => ({
       key,
@@ -23,16 +39,20 @@ const shelves = [
 
 const bookCount = (await getCollection('books', ({ data }) => !data.draft)).length;
 
-const rows = entries.map((e) => ({
-  url: `/library/${e.id}`,
-  type: e.data.type,
-  badge: SHELF_TYPES[e.data.type].badge,
-  color: SHELF_TYPES[e.data.type].color,
-  title: e.data.title,
-  desc: e.data.description,
-  meta: fmtMeta(e.data.date, e.data.readingTime),
-  haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
-}));
+const rows = [
+  ...entries.map((e) => ({
+    url: `/library/${e.id}`,
+    type: e.data.type as string,
+    badge: SHELF_TYPES[e.data.type].badge,
+    color: SHELF_TYPES[e.data.type].color,
+    title: e.data.title,
+    desc: e.data.description,
+    date: e.data.date,
+    meta: fmtMeta(e.data.date, e.data.readingTime),
+    haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')}`.toLowerCase(),
+  })),
+  ...caseRows,
+].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 ---
 
 <Base title="Library | Mostafa Okasha" description="Essays, CS notes, ML notes, paper notes, open ideas, reflections, and more — all on one set of shelves.">

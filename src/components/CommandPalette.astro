@@ -4,6 +4,7 @@ import { SHELF_TYPES, fmtMeta } from '../data/shelves';
 import { PROJECTS } from '../data/projects';
 import { SKILLS } from '../data/skills';
 import { RECEIPTS } from '../data/receipts';
+import { CASE_STUDIES, CASE_STUDY_BADGE } from '../data/case-studies';
 
 const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -32,24 +33,14 @@ const items = [
     haystack: `${p.name} ${p.desc} ${p.year} project workshop`.toLowerCase(),
   })),
   // system-design case studies
-  {
-    title: 'Edge gateway + ingress controller',
-    badge: 'SYSTEM',
-    color: '#7cb7ff',
+  ...CASE_STUDIES.map((c) => ({
+    title: c.title,
+    badge: CASE_STUDY_BADGE.badge,
+    color: CASE_STUDY_BADGE.color,
     meta: 'case study',
-    url: '/workshop/systems/edge-gateway',
-    haystack:
-      'edge gateway ingress controller tls http/2 streams throughput system design case study meta'.toLowerCase(),
-  },
-  {
-    title: 'Currency-conversion audit',
-    badge: 'SYSTEM',
-    color: '#7cb7ff',
-    meta: 'case study',
-    url: '/workshop/systems/currency-conversion',
-    haystack:
-      'currency conversion audit fx foreign transaction fraud dispute ledgers card network capital one system design case study'.toLowerCase(),
-  },
+    url: c.url,
+    haystack: `${c.title} ${c.description} ${c.kicker} ${c.topics.join(' ')} case study system design`.toLowerCase(),
+  })),
   // skill dossiers
   ...SKILLS.map((s) => ({
     title: s.name,

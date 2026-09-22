@@ -13,14 +13,20 @@ export const SHELF_TYPES = {
 
 export type ShelfType = keyof typeof SHELF_TYPES;
 
+/**
+ * Entry dates are authored as bare calendar dates (`2026-07-09`), which parse as
+ * UTC midnight. Formatting them with local getters shifts them a day west of
+ * Greenwich — so the same content rendered "jul 08" locally (EDT) and "jul 09"
+ * in CI (UTC). Always read them in UTC so a date renders as written, everywhere.
+ */
 export function fmtMeta(date: Date, readingTime?: number): string {
-  const mon = date.toLocaleString('en-US', { month: 'short' }).toLowerCase();
-  const yr = String(date.getFullYear()).slice(2);
+  const mon = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' }).toLowerCase();
+  const yr = String(date.getUTCFullYear()).slice(2);
   const rt = readingTime ? `${readingTime} min` : 'note';
   return `${rt} · ${mon} '${yr}`;
 }
 
 export function fmtKicker(date: Date): string {
-  const mon = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-  return `${mon} ${String(date.getDate()).padStart(2, '0')}`;
+  const mon = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase();
+  return `${mon} ${String(date.getUTCDate()).padStart(2, '0')}`;
 }
