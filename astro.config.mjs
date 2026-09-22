@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://okasha.me',
+  site: 'https://www.okasha.me',
   trailingSlash: 'never',
   integrations: [sitemap()],
   build: {

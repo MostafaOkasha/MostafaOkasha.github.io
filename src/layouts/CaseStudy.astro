@@ -12,7 +12,7 @@ interface Props {
 const { title, kicker, summary, meta, ogDescription } = Astro.props;
 ---
 
-<Base title={`${title} | Mostafa Okasha`} description={ogDescription ?? summary}>
+<Base title={`${title} | Mostafa Okasha`} description={ogDescription ?? summary} type="article">
   <Nav current="workshop" />
   <article class="case">
     <a href="/workshop#systems" class="case-back mono">← back to the workshop</a>

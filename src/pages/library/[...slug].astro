@@ -21,7 +21,12 @@ const dateStr = entry.data.date
 const rt = entry.data.readingTime;
 ---
 
-<Base title={`${entry.data.title} | Mostafa Okasha`} description={entry.data.description}>
+<Base
+  title={`${entry.data.title} | Mostafa Okasha`}
+  description={entry.data.description}
+  type="article"
+  published={entry.data.date}
+>
   <div class="reading-progress" data-progress></div>
   <Nav current="library" />
 

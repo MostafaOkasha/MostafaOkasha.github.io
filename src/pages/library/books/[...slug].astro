@@ -16,7 +16,12 @@ const { Content } = await render(entry);
 const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
 ---
 
-<Base title={`${b.title} | Mostafa Okasha`} description={b.description ?? `${b.title} by ${b.author}`}>
+<Base
+  title={`${b.title} | Mostafa Okasha`}
+  description={b.description ?? `${b.title} by ${b.author}`}
+  type="article"
+  published={b.date}
+>
   {hasNotes && <div class="reading-progress" data-progress></div>}
   <Nav current="books" />
 
