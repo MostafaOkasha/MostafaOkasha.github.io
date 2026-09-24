@@ -1,11 +1,16 @@
 ---
 import CaseStudy from '../../../layouts/CaseStudy.astro';
+import { caseStudy } from '../../../data/case-studies';
+
+// title / kicker / summary / date live in the registry (single source of truth)
+const cs = caseStudy('edge-gateway');
 ---
 
 <CaseStudy
-  title="An edge gateway for real-time ML, and the ingress controller under it"
-  kicker="System design · Meta Reality Labs · ML platform"
-  summary="Getting live sensor streams from AR devices into models on a locked-down GPU cluster meant two builds: a streaming edge gateway that multiplexes thousands of tunnels over one connection, and a from-scratch Kubernetes ingress controller — because the standard one wasn't allowed in the cluster."
+  title={cs.title}
+  kicker={cs.kicker}
+  summary={cs.description}
+  published={cs.date}
   meta={[
     { k: 'role', v: 'platform / infra engineer' },
     { k: 'stack', v: 'C++ · Python · NGINX · K8s · HTTP/2' },

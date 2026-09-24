@@ -49,3 +49,19 @@ export const CASE_STUDIES: CaseStudyEntry[] = [
     topics: ['systems', 'payments', 'fraud', 'distributed-systems'],
   },
 ];
+
+/**
+ * Look up a case study by slug. Every page under src/pages/workshop/systems/
+ * reads its title, kicker and summary from here, so the page and the archive
+ * listing cannot drift — and a page that isn't registered fails the build
+ * instead of silently being missing from the homepage, Library and RSS.
+ */
+export function caseStudy(slug: string): CaseStudyEntry {
+  const entry = CASE_STUDIES.find((c) => c.slug === slug);
+  if (!entry) {
+    throw new Error(
+      `Case study "${slug}" is not registered in src/data/case-studies.ts — add it there so it appears in the archive.`
+    );
+  }
+  return entry;
+}

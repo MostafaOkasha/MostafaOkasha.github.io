@@ -1,11 +1,16 @@
 ---
 import CaseStudy from '../../../layouts/CaseStudy.astro';
+import { caseStudy } from '../../../data/case-studies';
+
+// title / kicker / summary / date live in the registry (single source of truth)
+const cs = caseStudy('currency-conversion');
 ---
 
 <CaseStudy
-  title="The $10M currency-conversion gap"
-  kicker="System design · Capital One · Fraud & Disputes"
-  summary="A rounding-and-timing gap in cross-border dispute settlement quietly lost money on a subset of cases. Finding it meant reverse-engineering a 95-state dispute lifecycle; fixing it meant a change that spanned 30+ services and four organizations."
+  title={cs.title}
+  kicker={cs.kicker}
+  summary={cs.description}
+  published={cs.date}
   meta={[
     { k: 'role', v: 'lead engineer + de-facto PO' },
     { k: 'span', v: '~2 years' },

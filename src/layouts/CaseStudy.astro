@@ -8,11 +8,13 @@ interface Props {
   summary: string;
   meta: { k: string; v: string }[];
   ogDescription?: string;
+  /** authored date — emitted as article:published_time */
+  published?: Date;
 }
-const { title, kicker, summary, meta, ogDescription } = Astro.props;
+const { title, kicker, summary, meta, ogDescription, published } = Astro.props;
 ---
 
-<Base title={`${title} | Mostafa Okasha`} description={ogDescription ?? summary} type="article">
+<Base title={`${title} | Mostafa Okasha`} description={ogDescription ?? summary} type="article" published={published}>
   <Nav current="workshop" />
   <article class="case">
     <a href="/workshop#systems" class="case-back mono">← back to the workshop</a>
