@@ -7,20 +7,18 @@ or stop.** For a parallel workstream or specific mid-task ownership transfer, co
 [`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `handoffs/<topic>.md`. New task specs:
 [`TASK_TEMPLATE.md`](TASK_TEMPLATE.md). Shared rules: [`../../AGENTS.md`](../../AGENTS.md).
 
-_Last updated: 2026-09-22 by Claude._
+_Last updated: 2026-09-24 by Claude._
 
 ## Repository state
-- Branch: `master` — clean working tree, **fully pushed**: `HEAD` = `origin/master` = `feb58d8`
-  (`Lightbox: don't leave a focus ring after closing with Esc`). Verify with `git log -1` and
-  `git status -sb`.
-- Deploy: pushing `master` → `.github/workflows/deploy.yml` → GitHub Pages (live at okasha.me).
-  **The owner reviews and pushes; agents do not push.** Everything through `feb58d8` is live.
-- Handoff-system review (Claude, 2026-07-26): **passed** — scope was docs/config only, build green
-  (23 pages), `.codex` config conservative. Two coherence fixes applied. That task-scoped record
-  ([`handoffs/claude-review.md`](handoffs/claude-review.md)) is closed; do not treat it as live.
+- Branch: `master`. Verify with `git status -sb` and `git log -1` — this file does not pin a
+  commit hash, because a pinned hash goes stale the moment anyone commits (it already did once).
+  `HANDOFF.md` records the exact commit at the last handoff.
+- Deploy: pushing `master` → `.github/workflows/deploy.yml` → GitHub Pages (live at www.okasha.me).
+  **The owner reviews and pushes; agents do not push.** CI has been green on Astro 7 since `9e0ba3f`.
+- Toolchain: Astro **7.3.3**, Node **>=22.12** (`.nvmrc`, `package.json` engines). `npm audit`: 0.
 
 ## Recently completed
-- Full 2019 Jekyll → Astro 5 rebuild; live and deploying via Pages.
+- Full 2019 Jekyll → Astro rebuild (built on Astro 5, now Astro 7); live via Pages.
 - Interactive resume with sanitized receipts; skills dossiers; workshop + system-design pages.
 - WebGL `Aurora` backdrop. (The galaxy intro `Preloader` was removed 2026-09-22 at the owner's request — component deleted, not disabled.)
 - **Bookshelf**: `books` content collection (10 entries), covers/ratings, star ratings on spines,
@@ -37,6 +35,13 @@ _Last updated: 2026-09-22 by Claude._
 - **Homepage under-construction notice** (2026-07-28, `d39bc38`): amber `.wip-banner` in the hero
   above the status pill, flagging that content is still being filled in. **Temporary** — remove the
   `.wip-banner` markup + styles in `src/pages/index.astro` when the data is current.
+- **Case studies surfaced** (`969c96e`, `1c48902`): the two system-design case studies were missing
+  from the homepage rail, Library and RSS because they are `.astro` pages, not collection entries.
+  `src/data/case-studies.ts` registers them; pages read their metadata from it via `caseStudy()`.
+- **⌘K index moved to `/search.json`** (`dc8a5eb`): it had been inlined into every page (55% of all
+  HTML). Total HTML 1,113 KB → 483 KB; homepage 41.8 KB → 14.4 KB.
+- **No links to empty shelves** (`c8e2577`): homepage tiles, receipts and skill dossiers filter
+  `/library?shelf=X` links through `isLiveLink`.
 
 ### External audit response (2026-09-22)
 An outside review scored content 4/10, search 5/10, a11y 6/10, SEO 6/10. The
@@ -58,22 +63,21 @@ Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
 **No task is currently in progress.** Nothing here is started; pick the top item or take owner
 direction. Items 1–3 mostly need *content from the owner*, not engineering.
 
-1. **Purchase links.** Book schema supports `purchase:` (currently commented out in each
-   frontmatter). Add buy/affiliate links per book; `src/pages/library/books/[...slug].astro`
-   already renders a "Buy the book →" button when `purchase:` is set — so this is content-only,
-   no code change expected.
-2. **Fill in book notes.** Several books are intentionally note-less (e.g. "Modern Man in Search of
-   a Soul") or "Coming soon" (e.g. "Don't Believe Everything You Think" review/summary). The owner
-   adds notes over time; keep private self-reflection passages **out** (public repo).
-3. **Grow the Library.** Only 3 library entries exist. New entries are markdown files in
-   `src/content/library/` (see `src/content/library/_templates/`); shelves/badges/search/RSS update
-   at build time.
-4. **Retire the under-construction banner** once the content above is current — remove the
-   `.wip-banner` markup and styles from `src/pages/index.astro`.
-
-_Small optional follow-ups:_ a cover for "That Little Voice in Your Head" (none exists on Open
-Library — it is the one book still on the tinted fallback); the `README.md` shelf-list touch-up
-noted below.
+1. **Write the first ML / AI entry.** The site's headline is "these days I build AI applications",
+   yet the `ml` shelf is empty — so the homepage "AI LAB" tile, two skill dossiers and three receipts
+   are currently hidden (see `isLiveLink`). One published `type: ml` entry brings all of them back
+   automatically. Highest-leverage piece of content on the site. Needs the owner's material.
+2. **About rewrite + correct Meta end date.** About reads as the 2019 student site (unsourced "90% of
+   humanity" claim, two goals "still being written"). The Meta end date is Feb 2026 on the site and
+   Jan 2026 in an earlier note — owner must confirm. Needs the owner.
+3. **Current flagship work** — Forge OS / Praxis Forge, LifeKeep, Chamber as case studies (follow the
+   `workshop/systems/*` structure and register in `case-studies.ts`). Needs the owner.
+4. **Retire the under-construction banner** once 1–2 are done. It frames everything a visitor reads
+   as unreliable; it should not outlive the About rewrite.
+5. **Books:** purchase links (`purchase:` frontmatter; the button already renders) and notes for the
+   note-less books. Content only.
+6. **180 MB deploy artifact** — `images/` publishes tracked `.psd`/`.avi` originals. Only unblocked
+   engineering item; must keep every existing URL resolving.
 
 ## Known issues / decisions on record
 - **Book-cover sourcing (2026-07-26):** the owner explicitly approved **Open Library**
@@ -108,8 +112,16 @@ noted below.
   output-neutral. The only blocker was malformed markup in `workshop.astro` that Astro 5 had been
   silently repairing (`88e4721`). **Astro 7 requires Node >=22.12.0** — CI pins `node-version: 22`,
   which satisfies it; do not lower that.
-- **README staleness (minor):** `README.md` still lists "books" among the ten `/library` shelves,
-  but books is now the nested `/library/books` subpage. Human-facing; touch up when convenient.
+- **⌘K index is fetched, not inlined (2026-09-24):** built by `src/data/search-index.ts` and served
+  as `/search.json`, loaded on first palette open. Do not move it back into `define:vars` — that
+  duplicates it into every page.
+- **Case-study registry is the source of truth (2026-09-24):** title / kicker / summary / date live in
+  `src/data/case-studies.ts`; pages call `caseStudy(slug)`, which fails the build if unregistered.
+- **Dates render in UTC (2026-09-23):** bare frontmatter dates are UTC midnight; `fmtMeta`/`fmtKicker`
+  use UTC getters so a date renders as written and local and CI builds agree.
+- **GPG on this machine (2026-09-23):** two gpg installs with separate keyrings. The signing key
+  `D3B605C66327602A` is only in `/opt/homebrew/bin/gpg`; `/usr/local/bin/gpg` (MacGPG2) lacks it, and
+  whichever is first on `PATH` wins. If a commit fails with "No secret key", that is the cause.
 - **Legacy Jekyll files** (`_includes/`, `_layouts/`, `css/`, `javascripts/`, `_config.yml`,
   `index.html`, `404.html`) are retained for reference and are not built. Do not delete without the
   owner's say-so (and never delete media).

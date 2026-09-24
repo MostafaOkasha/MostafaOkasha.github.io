@@ -1,113 +1,73 @@
 # Repository Handoff — okasha.me
 
-This is the canonical live continuation record for the primary workstream. A fresh agent should
-read it after `AGENTS.md`, verify it against Git, then read `PROJECT_STATE.md` and the listed task
-documents. Do not rely on conversation history or agent-specific memory.
+The canonical live continuation record. A fresh agent reads it after `AGENTS.md`, verifies it
+against Git, then reads `PROJECT_STATE.md`. Do not rely on conversation history or agent memory.
 
 ## Handoff metadata
 
-- Task: external-audit response — engineering half complete; content half blocked on the owner
-- Status: Awaiting owner review/push, then owner input on content
+- Task: review-and-fix pass on the recent batch (done) — next work is content, blocked on the owner
+- Status: Complete — awaiting owner review/push, then owner content
 - Current owner: unassigned
-- Intended next owner: either agent, or the owner for the content items
-- Last updated: 2026-09-22 by Claude
+- Intended next owner: the owner (content), then either agent to build it into pages
+- Last updated: 2026-09-24 by Claude
 - Branch: `master`
-- Current commit: `32730d4` (`Upgrade Astro 5.18.2 -> 7.3.3...`); verify with `git log -1`
-- `origin/master`: `1665130` — **2 local commits are unpushed** and awaiting review
+- Current commit: the commit containing this file — verify with `git log -1`; its parent is the
+  docs commit after `1c48902`
+- `origin/master` at handoff: `969c96e`; everything after it is local and unpushed
 - Working tree expected: clean
 
-Verify with `git status -sb` and `git log -1`. If the tree is dirty or `HEAD` is not `32730d4`,
-someone has worked since this was written — inspect before editing rather than assuming.
+Verify with `git status -sb` and `git log --oneline -8`. If the tree is dirty or the log does not
+end in the commits listed below, someone worked after this was written — inspect before editing.
 
 ## Documents to read
 
-- [`AGENTS.md`](../../AGENTS.md) — repository rules and the session recovery protocol
-- [`docs/ai/PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions on record, approved queue
-- [`docs/ai/TASK_TEMPLATE.md`](TASK_TEMPLATE.md) — copy when starting a queue item
-- [`docs/ai/handoffs/claude-review.md`](handoffs/claude-review.md) — **closed**, historical only
+- [`AGENTS.md`](../../AGENTS.md) — rules, recovery protocol, and the architecture constraints added
+  this pass (case-study registry, no links to empty shelves, UTC dates)
+- [`PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions on record, **the reprioritized queue**
+- [`handoffs/claude-review.md`](handoffs/claude-review.md) — closed, historical only
 
-## Current state
+## What this pass did
 
-The Astro site is healthy. Everything through `f30f670` is live; the five commits after it are
-local and awaiting review. Earlier work, all live:
+A review of the previous turns' work found defects, most introduced by those turns. Fixed:
 
-| Commit | Date | What |
-|---|---|---|
-| `19087c9` | 07-26 | Review of the Codex handoff system — passed, two doc-coherence fixes |
-| `430879e` | 07-26 | Real book covers, 9/10, from owner-approved Open Library |
-| `2566d4a` | 07-26 | Star ratings moved below the cover instead of overlaying the art |
-| `d39bc38` | 07-28 | Under-construction notice in the homepage hero |
-| `419d4ea` | 07-30 | Site-wide image lightbox (`src/components/Lightbox.astro`) |
-| `feb58d8` | 07-31 | Lightbox: no stuck focus ring after closing with Esc |
-
-Details and the reasoning behind each are in `PROJECT_STATE.md` ("Recently completed" and
-"Known issues / decisions on record"). Nothing is half-finished and no branch is outstanding.
-
-## Validation (last run, 2026-09-22, by Claude)
-
-| Command | Result |
+| Commit | Fix |
 |---|---|
-| `npm run build` | Passed — 23 pages |
-| `git diff --check` | Passed — clean |
-| Canonical/sitemap agreement | Checked — both extension-less, both on www |
-| ⌘K queries (`MapSight`, `GPU`, `fraud`, `Colophon`) | Checked — all resolve; previously 2 returned nothing |
-| Deep links `/resume#fraud`, `/skills#gpu` | Checked — open the right receipt/dossier |
-| Mobile menu @ 375×812 | Checked — focus enters, Tab wraps, Esc closes, focus returns |
-| Library / Workshop after cleanup | Checked — 3 populated shelves; 0 empty slots, 0 "soon" chips |
+| `dc8a5eb` | ⌘K index moved from inline-on-every-page to one cached `/search.json`. HTML 1,113 → 483 KB |
+| `c8e2577` | six links promised an empty "ML" shelf (incl. the homepage AI LAB tile); now filtered at build time |
+| `1c48902` | case-study metadata had two copies; the registry is now the single source, unregistered pages fail the build |
+| docs commit | `engines` >=22.12, AGENTS.md/README updated for Astro 7, new constraints written down |
+
+Earlier in the same session (already pushed through `969c96e`): case studies surfaced on the homepage
+rail, Library and RSS; dates render in UTC; `.nvmrc`; Astro 7.3.3 with 0 vulnerabilities.
+
+## Validation (2026-09-24, by Claude)
+
+| Check | Result |
+|---|---|
+| `npm run build` | Passed — 23 pages + `/search.json` |
+| ⌘K: requests on page load / first open / reopen | 0 / 1 (`/search.json`) / 0 |
+| ⌘K: `MapSight`, `GPU`, `ingress` | all resolve; case study ranks first for GPU and ingress |
+| Built site: `/library?shelf=` links to a missing shelf | none |
+| `/skills#llm` vs `/skills#aws` | dead note hidden vs live note kept |
+| Unregistered case-study page (throwaway) | build fails with the expected message |
+| Console errors (home, skills, resume) | none |
+| CI deploys | green through `969c96e` on Astro 7 |
 
 ## Remaining work
 
-The engineering sweep is done and committed. The queue in `PROJECT_STATE.md` is the source of
-truth; items 1–3 are **content the owner supplies**, not engineering:
-
-1. Purchase links for the books (`purchase:` frontmatter — the button already renders)
-2. Book notes / summaries for the note-less books
-3. More library entries (only 3 exist)
-4. Remove the temporary homepage under-construction banner once the above is current
+See `PROJECT_STATE.md` → Next-task queue. The top item changed: **one published ML/AI entry** is now
+the highest-leverage content on the site — it restores the hidden AI LAB tile, two skill dossiers and
+three receipt links automatically.
 
 ## Unresolved risks
 
-- **Cover licensing** — book covers are publisher artwork from Open Library, committed under the
-  owner's explicit approval and used as small identifying thumbnails. Each `cover:` line can be
-  removed to fall back cleanly if the owner ever wants a stricter basis; no code change needed.
-- **Dependabot — resolved.** Astro upgraded to 7.3.3; `npm audit` reports 0 vulnerabilities
-  (was 10). Output-neutral: the HTML manifest hashes identically to the Astro 5 baseline.
-- No correctness, privacy, or data-loss risks outstanding.
-
-## External audit (2026-09-22) — what is done vs. blocked
-
-An outside review of the live site is the driver for the current batch. Done here:
-
-| Commit | Audit finding addressed |
-|---|---|
-| `bb0ff49` | canonical host → www, extension-less canonicals, og:type=article, summary_large_image, JSON-LD |
-| `4c4e041` | aria-modal, labelled search, semantic results, mobile-menu focus trap + Escape, missing h1s |
-| `da86334` | ⌘K now indexes projects, systems, skills, receipts, article bodies; skill/receipt deep links |
-| `4d82e5c` | empty shelves + "coming soon" placeholders hidden |
-| `88e4721` | malformed markup Astro 5 was silently repairing |
-| `32730d4` | security maintenance — Astro 7.3.3, 10 vulnerabilities → 0 |
-| `f30f670` | the preloader finding — already fixed before the audit landed |
-
-**Blocked on the owner (cannot be invented — public CV):** About rewrite; three
-flagship case studies (Forge OS / Praxis Forge, LifeKeep, Chamber); the Meta
-end-date discrepancy (site says Feb 2026, an earlier note said Jan 2026).
-
-**Open, unblocked, not started:** the 180 MB deploy artifact (`images/` is 169 MB
-and publishes tracked `.psd`/`.avi`), which must preserve existing URLs.
-The Astro 5→7 upgrade is **done** (`32730d4`) — audit clean at 0 vulnerabilities.
+- The homepage currently has **no AI section at all** (the tile is hidden because the shelf is empty),
+  while the hero says "these days I build AI applications". Honest, but a visible gap until item 1 ships.
+- Eight open Dependabot PRs predate the Astro 7 upgrade and are likely superseded (`npm audit` is 0).
+  Closing them is an owner action.
+- GPG: two keyrings on this machine — see the decision in `PROJECT_STATE.md` if signing fails.
 
 ## Recommended next action
 
-Owner: review and push the two local commits (the Astro 7 upgrade is the meaningful one — it
-changes the build toolchain, so watch that the Pages deploy succeeds).
-
-After that the remaining audit work is content you must supply: the About rewrite, the three
-flagship case studies, and the correct Meta end date. The only unblocked engineering item left is
-the 180 MB deploy artifact.
-
-## Before stopping
-
-Update this file with the exact owner, branch, commits, working-tree state, completed work,
-validation results, remaining work, risks, and one concrete next action. Update `PROJECT_STATE.md`
-when durable state, decisions, or the approved queue change. Never claim a command passed unless it
-ran successfully.
+Owner: review and push the local commits. Then supply material for the first ML/AI entry (queue item
+1) and confirm the Meta end date (item 2); either agent can then write them up.
