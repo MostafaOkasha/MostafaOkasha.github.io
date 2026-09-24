@@ -1,80 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
-import { SHELF_TYPES, fmtMeta } from '../data/shelves';
-import { PROJECTS } from '../data/projects';
-import { SKILLS } from '../data/skills';
-import { RECEIPTS } from '../data/receipts';
-import { CASE_STUDIES, CASE_STUDY_BADGE } from '../data/case-studies';
-
-const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
-const bookEntries = await getCollection('books', ({ data }) => !data.draft);
-
-const items = [
-  ...entries.map((e) => ({
-    title: e.data.title,
-    badge: SHELF_TYPES[e.data.type].badge,
-    color: SHELF_TYPES[e.data.type].color,
-    meta: fmtMeta(e.data.date, e.data.readingTime),
-    url: `/library/${e.id}`,
-    // include the entry body so search reaches inside articles, not just metadata
-    haystack: `${e.data.title} ${e.data.description} ${e.data.topics.join(' ')} ${e.body ?? ''}`
-      .toLowerCase()
-      .slice(0, 4000),
-  })),
-  // workshop projects
-  ...PROJECTS.map((p) => ({
-    title: p.name,
-    badge: 'PROJECT',
-    color: '#ffb26b',
-    meta: p.year,
-    url: '/workshop',
-    haystack: `${p.name} ${p.desc} ${p.year} project workshop`.toLowerCase(),
-  })),
-  // system-design case studies
-  ...CASE_STUDIES.map((c) => ({
-    title: c.title,
-    badge: CASE_STUDY_BADGE.badge,
-    color: CASE_STUDY_BADGE.color,
-    meta: 'case study',
-    url: c.url,
-    haystack: `${c.title} ${c.description} ${c.kicker} ${c.topics.join(' ')} case study system design`.toLowerCase(),
-  })),
-  // skill dossiers
-  ...SKILLS.map((s) => ({
-    title: s.name,
-    badge: 'SKILL',
-    color: s.color,
-    meta: s.yrs,
-    url: `/skills#${s.k}`,
-    haystack: `${s.name} ${s.yrs} ${s.since} ${s.chips.join(' ')} ${s.timeline
-      .map((t) => `${t.when} ${t.what}`)
-      .join(' ')} skill`.toLowerCase(),
-  })),
-  // resume claims — each opens its receipt
-  ...Object.entries(RECEIPTS).map(([k, r]) => ({
-    title: r.title,
-    badge: 'RECEIPT',
-    color: '#ffd76b',
-    meta: r.label.toLowerCase(),
-    url: `/resume#${k}`,
-    haystack: `${r.label} ${r.title} ${r.body} resume receipt`.toLowerCase(),
-  })),
-  ...bookEntries.map((b) => ({
-    title: b.data.title,
-    badge: 'BOOK',
-    color: '#7dead8',
-    meta: b.data.author,
-    url: `/library/books/${b.id}`,
-    haystack: `${b.data.title} ${b.data.author} ${(b.data.description ?? '')} ${b.data.topics.join(' ')}`.toLowerCase(),
-  })),
-  { title: 'The Library', badge: 'PAGE', color: '#8892b0', meta: 'all shelves', url: '/library', haystack: 'library shelves writing essays notes' },
-  { title: 'The Bookshelf', badge: 'PAGE', color: '#8892b0', meta: 'in the library', url: '/library/books', haystack: 'books bookshelf reading list summaries recommended library' },
-  { title: 'The Workshop', badge: 'PAGE', color: '#8892b0', meta: 'projects · CAD', url: '/workshop', haystack: 'workshop projects system designs cad photography' },
-  { title: 'Resume — with receipts', badge: 'PAGE', color: '#8892b0', meta: 'interactive', url: '/resume', haystack: 'resume cv experience receipts pdf' },
-  { title: 'Skills', badge: 'PAGE', color: '#8892b0', meta: 'dossiers', url: '/skills', haystack: 'skills tools python typescript aws dossier' },
-];
+// The search index is served from /search.json (src/data/search-index.ts),
+// not inlined here — see that module for why.
 ---
 
 <div class="palette-overlay" data-palette>
@@ -106,22 +32,42 @@ const items = [
   </div>
 </div>
 
-<script is:inline define:vars={{ items }}>
+<script>
+  type Item = { title: string; badge: string; color: string; meta: string; url: string; haystack: string };
+
   (() => {
-    const overlay = document.querySelector('[data-palette]');
-    const input = overlay.querySelector('[data-palette-input]');
-    const resultsEl = overlay.querySelector('[data-palette-results]');
-    const statusEl = overlay.querySelector('[data-palette-status]');
+    const overlay = document.querySelector<HTMLElement>('[data-palette]');
+    if (!overlay) return;
+    const input = overlay.querySelector<HTMLInputElement>('[data-palette-input]')!;
+    const resultsEl = overlay.querySelector<HTMLElement>('[data-palette-results]')!;
+    const statusEl = overlay.querySelector<HTMLElement>('[data-palette-status]');
     let sel = 0;
-    let shown = [];
+    let shown: Item[] = [];
+
+    // fetched once, on first open, then cached for the session (and by the browser)
+    let items: Item[] | null = null;
+    let loading: Promise<void> | null = null;
+    const load = () =>
+      (loading ??= fetch('/search.json')
+        .then((r) => (r.ok ? r.json() : []))
+        .then((data: Item[]) => {
+          items = data;
+        })
+        .catch(() => {
+          items = [];
+        }));
 
     // results are user-visible strings interpolated into HTML — escape them
-    const esc = (s) =>
+    const esc = (s: unknown) =>
       String(s).replace(/[&<>"']/g, (c) =>
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!
       );
 
     const render = () => {
+      if (!items) {
+        resultsEl.innerHTML = '<div class="empty">loading…</div>';
+        return;
+      }
       const q = input.value.trim().toLowerCase();
       shown = q ? items.filter((i) => i.haystack.includes(q) || i.title.toLowerCase().includes(q)) : items.slice(0, 8);
       sel = Math.min(sel, Math.max(0, shown.length - 1));
@@ -160,6 +106,7 @@ const items = [
       sel = 0;
       render();
       setTimeout(() => input.focus(), 0);
+      if (!items) load().then(() => overlay.classList.contains('open') && render());
     };
     const close = () => {
       overlay.classList.remove('open');
