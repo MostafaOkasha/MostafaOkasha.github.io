@@ -4,7 +4,7 @@
 
 [![Deploy to GitHub Pages](https://github.com/MostafaOkasha/MostafaOkasha.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/MostafaOkasha/MostafaOkasha.github.io/actions/workflows/deploy.yml)
 
-Rebuilt from scratch in 2026: **Astro 5** + content collections + vanilla-JS islands,
+Rebuilt from scratch in 2026: **Astro 7** + content collections + vanilla-JS islands,
 deployed to **GitHub Pages** via Actions. Designed dark-only in the site's original
 navy (`#0a192f`) + mint (`#64ffda`) palette. The design handoff lives in [`redesign/`](redesign/).
 
@@ -15,7 +15,8 @@ navy (`#0a192f`) + mint (`#64ffda`) palette. The design handoff lives in [`redes
 | Route | What it is |
 |---|---|
 | `/` | Aurora flow-field hero, latest-from-the-archive rail, section index |
-| `/library` | Ten shelves of writing — essays, CS curriculum, ML notes, books, papers, ideas, reflections, quotes, spirituality, resource maps |
+| `/library` | Writing on typed shelves (essays, CS & ML notes, papers, ideas, reflections, quotes, spirituality, resource maps) plus the system-design case studies; empty shelves stay hidden |
+| `/library/books` | The bookshelf — reading, read, to-read, with notes on some |
 | `/workshop` | Projects, system-design diagrams (click to zoom), the CAD gallery, photographs |
 | `/resume` | The paper resume — every dashed claim opens its receipts. `⌘P`-clean print stylesheet |
 | `/skills` | Evidence-backed skill dossiers — click a tool, see where it shipped |
@@ -37,6 +38,7 @@ build time. The ten `type` values map to the ten shelves (see `src/data/shelves.
 ## Running locally
 
 ```bash
+nvm use           # Node >=22.12 (see .nvmrc) — Astro 7 will not run on 21
 npm install
 npm run dev        # dev server on :4321 with hot reload
 npm run build      # static build into dist/

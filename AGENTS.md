@@ -8,7 +8,7 @@ Codex reads this file directly. Keep it verified and concise — detailed docs a
 
 `okasha.me` — Mostafa Okasha's personal archive: writing, projects, CAD, system
 designs, a bookshelf, and an interactive resume. It is a **static site** built with
-**Astro 5** + content collections + small vanilla-JS islands, deployed to **GitHub
+**Astro 7** + content collections + small vanilla-JS islands, deployed to **GitHub
 Pages**. Dark-only, in the site's navy (`#0a192f`) + mint (`#64ffda`) palette.
 
 **The site and its GitHub repository are both public.** Anything committed is published.
@@ -58,12 +58,14 @@ When sources conflict, prefer the more authoritative *current* source and report
 
 - `src/pages/` — routes. `index`, `about`, `resume`, `skills`, `workshop` (+ `workshop/systems/*`),
   `library/index` + `library/[...slug]`, `library/books/index` + `library/books/[...slug]`,
-  `404`, `rss.xml.ts`
+  `404`, `rss.xml.ts`, `search.json.ts`
 - `src/layouts/` — `Base.astro` (head, fonts, meta, mounts `CommandPalette`), `CaseStudy.astro`
 - `src/components/` — `Nav`, `Aurora` (WebGL backdrop), `CommandPalette` (⌘K), `BookCover`, `Lightbox` (site-wide image viewer)
 - `src/content/` — content collections: `library/` (writing) and `books/` (bookshelf), one markdown file each
 - `src/content.config.ts` — collection definitions + Zod schemas (the shelf `type` enum, book schema)
-- `src/data/` — `shelves.ts` (shelf types/badges/colors), `skills.ts`, `receipts.ts` (resume receipts)
+- `src/data/` — `shelves.ts` (shelf types/badges/colors, `liveShelves`/`isLiveLink`), `skills.ts`,
+  `receipts.ts` (resume receipts), `projects.ts` (workshop projects), `case-studies.ts` (case-study
+  registry), `search-index.ts` (the ⌘K index, served as `/search.json` by `src/pages/search.json.ts`)
 - `src/scripts/` — `backdrop.js` (the WebGL nebula, from the design handoff)
 - `src/styles/global.css` — the full design-token system
 - `public/` — `CNAME` + symlinks (`images`, `videos`, `resume`, `documents`) to the root media dirs
@@ -85,7 +87,9 @@ When sources conflict, prefer the more authoritative *current* source and report
 npm install          # local (CI uses `npm ci` with the committed package-lock.json)
 ```
 
-Required tooling: **Node 22** (the version CI uses — see `.github/workflows/deploy.yml`).
+Required tooling: **Node >=22.12** (Astro 7's floor; pinned in `.nvmrc` and `package.json`
+`engines`, and CI uses Node 22 — see `.github/workflows/deploy.yml`). Run `nvm use` first: a
+Node 21 default makes `npm run build` fail immediately.
 No local services, containers, or env vars are required. There is no `.env`.
 
 ## Canonical commands
@@ -138,6 +142,15 @@ For every non-trivial change:
   `<a>` (so links are never hijacked). Opt in elsewhere with `[data-lightbox]`, opt out with
   `[data-no-lightbox]`; `[data-zoom]` elements (the inline SVG diagrams) open in it too. Do not add
   a second lightbox or per-page zoom overlay.
+- Case studies are bespoke `.astro` pages in `src/pages/workshop/systems/`. Each must be registered in
+  `src/data/case-studies.ts` and read its title/kicker/summary via `caseStudy(slug)` — that is what
+  puts it on the homepage rail, the Library and RSS. An unregistered page fails the build.
+- Never link to something that does not exist yet. Empty shelves are hidden, and any
+  `/library?shelf=X` link (homepage tiles, receipts, skill dossiers) goes through `isLiveLink`, so it
+  disappears while the shelf is empty and returns on its own when content lands.
+- Dates are authored as bare calendar dates (UTC midnight). Format them with UTC getters — see
+  `fmtMeta`/`fmtKicker` — or they render a day early west of Greenwich and differ between a local and
+  a CI build.
 - Design tokens (colors, fonts, spacing) come from `src/styles/global.css` custom properties —
   reuse them; don't hard-code new palette values.
 
