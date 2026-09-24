@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Aurora from '../components/Aurora.astro';
 import { getCollection } from 'astro:content';
-import { SHELF_TYPES, fmtKicker } from '../data/shelves';
+import { SHELF_TYPES, fmtKicker, liveShelves, isLiveLink } from '../data/shelves';
 import { CASE_STUDIES, CASE_STUDY_BADGE } from '../data/case-studies';
 import { execSync } from 'node:child_process';
 
@@ -27,6 +27,17 @@ const caseStudyRail = CASE_STUDIES.map((c) => ({
 const latest = [...libraryRail, ...caseStudyRail]
   .sort((a, b) => b.date.valueOf() - a.date.valueOf())
   .slice(0, 4);
+
+// Section index. A tile whose shelf is empty is hidden (and the rest renumbered)
+// rather than linking to an empty filter — it returns once that shelf has content.
+const live = await liveShelves();
+const sections = [
+  { label: 'WRITING', sub: 'essays & deep dives', href: '/library' },
+  { label: 'AI LAB', sub: 'workflows & prompts', href: '/library?shelf=ml' },
+  { label: 'PROJECTS', sub: 'robots, hacks, products', href: '/workshop' },
+  { label: 'DESIGN', sub: 'CAD & photography', href: '/workshop#design' },
+  { label: 'RESUME', sub: 'interactive, with receipts', href: '/resume' },
+].filter((t) => isLiveLink(t.href, live));
 
 // "last updated with commit @sha" — a carry-over from the 2019 site
 let sha = '';
@@ -104,27 +115,15 @@ try {
     </div>
 
     <!-- section index -->
-    <div class="section-index">
-      <a href="/library">
-        <div class="idx mono">01 · WRITING</div>
-        <div class="sub">essays &amp; deep dives</div>
-      </a>
-      <a href="/library?shelf=ml">
-        <div class="idx mono">02 · AI LAB</div>
-        <div class="sub">workflows &amp; prompts</div>
-      </a>
-      <a href="/workshop">
-        <div class="idx mono">03 · PROJECTS</div>
-        <div class="sub">robots, hacks, products</div>
-      </a>
-      <a href="/workshop#design">
-        <div class="idx mono">04 · DESIGN</div>
-        <div class="sub">CAD &amp; photography</div>
-      </a>
-      <a href="/resume">
-        <div class="idx mono">05 · RESUME</div>
-        <div class="sub">interactive, with receipts</div>
-      </a>
+    <div class="section-index" style={`--cols:${sections.length}`}>
+      {
+        sections.map((t, i) => (
+          <a href={t.href}>
+            <div class="idx mono">{String(i + 1).padStart(2, '0')} · {t.label}</div>
+            <div class="sub">{t.sub}</div>
+          </a>
+        ))
+      }
     </div>
   </div>
 </Base>
@@ -261,7 +260,7 @@ try {
   .section-index {
     padding: 40px 48px 44px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(var(--cols, 5), 1fr);
     gap: 16px;
   }
   .section-index a {

@@ -2,6 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import { SKILLS } from '../data/skills';
+import { liveShelves, isLiveLink } from '../data/shelves';
+
+// A dossier's "see it on the Library shelf" note is blanked when that shelf is
+// empty, instead of pointing at a filter that silently shows everything.
+const live = await liveShelves();
+const skills = SKILLS.map((s) => (isLiveLink(s.libHref, live) ? s : { ...s, lib: '', libHref: '' }));
 
 // The full toolbox — every icon from the original site, same groupings.
 const icon = (f: string, name: string) => ({ src: `/images/webp/skills/${f}.webp`, name });
@@ -145,7 +151,7 @@ const TOOLBOX = [
   </div>
 </Base>
 
-<script is:inline define:vars={{ skills: SKILLS }}>
+<script is:inline define:vars={{ skills }}>
   const $ = (s) => document.querySelector(s);
   const dossier = $('[data-dossier]');
   const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
@@ -163,7 +169,8 @@ const TOOLBOX = [
       .join('');
     $('[data-d-chips]').innerHTML = s.chips.map((c) => `<span class="chip-slate">${c}</span>`).join('');
     $('[data-d-libnote]').textContent = s.lib;
-    $('[data-d-lib]').setAttribute('href', s.libHref);
+    $('[data-d-lib]').setAttribute('href', s.libHref || '/library');
+    $('[data-d-lib]').hidden = !s.libHref;
     document.querySelectorAll('.tile').forEach((t) => t.classList.toggle('sel', t.dataset.skill === s.k));
     if (openSheet && isMobile()) dossier.classList.add('sheet-open');
   }
@@ -300,6 +307,7 @@ const TOOLBOX = [
   .dossier :global(.what) { font-size: 14px; color: var(--text-body); }
   .ships { margin-top: 22px; }
   .d-chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+  .d-lib[hidden] { display: none; }
   .d-lib {
     display: block;
     margin-top: 26px;

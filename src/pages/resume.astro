@@ -2,6 +2,16 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import { RECEIPTS } from '../data/receipts';
+import { liveShelves, isLiveLink } from '../data/shelves';
+
+// Receipt links to an empty Library shelf are dropped (they return when it fills).
+const live = await liveShelves();
+const receipts = Object.fromEntries(
+  Object.entries(RECEIPTS).map(([k, r]) => [
+    k,
+    { ...r, links: r.links.filter((l) => isLiveLink(l.href, live)) },
+  ])
+);
 ---
 
 <Base title="Resume | Mostafa Okasha" description="The paper resume, but every claim opens its receipts — stories, diagrams, and artifacts.">
@@ -146,7 +156,7 @@ import { RECEIPTS } from '../data/receipts';
   </div>
 </Base>
 
-<script is:inline define:vars={{ receipts: RECEIPTS }}>
+<script is:inline define:vars={{ receipts }}>
   const rLabel = document.querySelector('[data-r-label]');
   const rTitle = document.querySelector('[data-r-title]');
   const rBody = document.querySelector('[data-r-body]');

@@ -1,3 +1,6 @@
+import { getCollection } from 'astro:content';
+import { CASE_STUDIES } from './case-studies';
+
 /** Shelf definitions: type key → label + badge + color token. */
 export const SHELF_TYPES = {
   essay: { label: 'essays & deep dives', badge: 'DEEP DIVE', color: '#64ffda' },
@@ -29,4 +32,25 @@ export function fmtMeta(date: Date, readingTime?: number): string {
 export function fmtKicker(date: Date): string {
   const mon = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase();
   return `${mon} ${String(date.getUTCDate()).padStart(2, '0')}`;
+}
+
+/**
+ * Shelf keys that currently hold at least one published entry (plus the
+ * synthetic `case` shelf when case studies exist). Build-time only.
+ */
+export async function liveShelves(): Promise<Set<string>> {
+  const entries = await getCollection('library', ({ data }) => !data.draft);
+  const live = new Set<string>(entries.map((e) => e.data.type));
+  if (CASE_STUDIES.length) live.add('case');
+  return live;
+}
+
+/**
+ * False for a `/library?shelf=X` link whose shelf is empty. Empty shelves are
+ * hidden, so such a link silently lands on "everything" — a promise with no
+ * destination. Filter these out; they come back on their own when content lands.
+ */
+export function isLiveLink(href: string, live: Set<string>): boolean {
+  const m = href.match(/^\/library\?shelf=([a-z-]+)/);
+  return !m || live.has(m[1]);
 }
