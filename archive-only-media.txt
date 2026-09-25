@@ -1,0 +1,42 @@
+# Archive-only media: kept in the repo, NOT published to the site.
+#
+# The repo's root media dirs (images/, videos/) are symlinked into public/, so Astro
+# used to publish every file in them — including raw phone photos, Snapchat exports,
+# and .psd/.avi originals — making the Pages deploy ~190 MB.
+#
+# Every path below was checked against every version of every text file in git
+# history (178 commits, all branches) and has NEVER been linked by any page, so
+# excluding it cannot break an existing okasha.me URL. Files are only listed if they
+# are >= 1 MB or a non-web format; small never-linked files stay published because
+# they cost nothing and could have been shared by direct link.
+#
+# The media rule still holds: these files are NOT deleted — they stay in the repo.
+# The build hook in astro.config.mjs removes them from dist/ only, and FAILS the
+# build if any built page ever starts referencing one (re-publish it by deleting its
+# line here). One path per line, relative to the repo root.
+
+images/DSC_0027 - Copy.png
+images/design/20151109_153506.jpg
+images/design/20151109_153512.jpg
+images/design/20151109_153514.jpg
+images/design/20151109_153516.jpg
+images/design/20151116_150521.jpg
+images/design/20151123_145818.jpg
+images/design/20151123_145820.jpg
+images/design/54258274_641619992935548_8833030780335685632_n.png
+images/design/IMG_20190330_171740.jpg
+images/design/Snapchat-156854380.mp4
+images/design/Snapchat-2050244091.mp4
+images/design/Snapchat-267097249.mp4
+images/design/Snapchat-287353632.mp4
+images/design/Snapchat-814520910.mp4
+images/design/Snapchat-815309672.mp4
+images/design/Untitled.png
+images/design/VID_20150209_175318.mp4
+images/design/VID_20150324_124554.mp4
+images/design/movie.avi
+images/design/page 1 send.png
+images/design/page 2 send.png
+images/m-logo - Copy.psd
+images/projects/Project Images/Snapchat-384362855 - Copy.psd
+images/projects/Project Images/Snapchat-384362855.psd
