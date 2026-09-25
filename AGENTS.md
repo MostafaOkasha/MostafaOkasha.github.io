@@ -69,6 +69,7 @@ When sources conflict, prefer the more authoritative *current* source and report
 - `src/scripts/` — `backdrop.js` (the WebGL nebula, from the design handoff)
 - `src/styles/global.css` — the full design-token system
 - `public/` — `CNAME` + symlinks (`images`, `videos`, `resume`, `documents`) to the root media dirs
+- `archive-only-media.txt` — media kept in the repo but excluded from the deploy (see Media rules)
 - `.github/workflows/deploy.yml` — build + deploy to Pages on push to `master`
 - `.claude/launch.json` — Claude Code preview/dev server definitions
 - `.codex/config.toml` — Codex project baseline; `.codex/rules/safety.rules` — git command guardrails
@@ -159,6 +160,10 @@ For every non-trivial change:
 - **Never delete media.** `images/`, `videos/`, `resume/`, `documents/` live at the repo root and
   are symlinked into `public/`, so 2019 URLs still resolve. Deleting or moving them breaks links.
 - Add media under the existing root dirs; it is served from the symlinked `public/` path.
+- **Publishing ≠ keeping.** `archive-only-media.txt` lists large originals that stay in the repo but
+  are removed from `dist/` by the build hook in `astro.config.mjs`. The build fails if any page
+  references a listed file — to use one on the site, delete its line. Only add a file to the list if
+  no version of the site has ever linked it (check `git log --all -p`), or its old URL will break.
 
 ## Security and privacy
 

@@ -5,15 +5,14 @@ against Git, then reads `PROJECT_STATE.md`. Do not rely on conversation history 
 
 ## Handoff metadata
 
-- Task: review-and-fix pass on the recent batch (done) — next work is content, blocked on the owner
+- Task: deploy-artifact cleanup (done); every remaining queue item needs owner content
 - Status: Complete — awaiting owner review/push, then owner content
 - Current owner: unassigned
 - Intended next owner: the owner (content), then either agent to build it into pages
-- Last updated: 2026-09-24 by Claude
+- Last updated: 2026-09-25 by Claude
 - Branch: `master`
-- Current commit: the commit containing this file — verify with `git log -1`; its parent is the
-  docs commit after `1c48902`
-- `origin/master` at handoff: `969c96e`; everything after it is local and unpushed
+- Current commit: the commit containing this file — verify with `git log -1`; its parent is `162cf08`
+- `origin/master` at handoff: `1118097`; everything after it is local and unpushed
 - Working tree expected: clean
 
 Verify with `git status -sb` and `git log --oneline -8`. If the tree is dirty or the log does not
@@ -35,7 +34,8 @@ A review of the previous turns' work found defects, most introduced by those tur
 | `dc8a5eb` | ⌘K index moved from inline-on-every-page to one cached `/search.json`. HTML 1,113 → 483 KB |
 | `c8e2577` | six links promised an empty "ML" shelf (incl. the homepage AI LAB tile); now filtered at build time |
 | `1c48902` | case-study metadata had two copies; the registry is now the single source, unregistered pages fail the build |
-| docs commit | `engines` >=22.12, AGENTS.md/README updated for Astro 7, new constraints written down |
+| `9003bcc` | `engines` >=22.12, AGENTS.md/README updated for Astro 7, new constraints written down |
+| `162cf08` | deploy artifact 190 MB → 41 MB: 25 never-linked originals kept in repo, excluded from `dist/` |
 
 Earlier in the same session (already pushed through `969c96e`): case studies surfaced on the homepage
 rail, Library and RSS; dates render in UTC; `.nvmrc`; Astro 7.3.3 with 0 vulnerabilities.
@@ -51,7 +51,10 @@ rail, Library and RSS; dates render in UTC; `.nvmrc`; Astro 7.3.3 with 0 vulnera
 | `/skills#llm` vs `/skills#aws` | dead note hidden vs live note kept |
 | Unregistered case-study page (throwaway) | build fails with the expected message |
 | Console errors (home, skills, resume) | none |
-| CI deploys | green through `969c96e` on Astro 7 |
+| CI deploys | green through `1118097` on Astro 7 |
+| Media exclusion | 25 files out of `dist/`, 0 removed from repo; 159 ever-linked files all still in `dist/` |
+| Media on 8 page types | 79 references, all HTTP 200 |
+| Safety rails | page using an archived file → build fails; `../canary` entry → aborts, canary kept |
 
 ## Remaining work
 
@@ -69,5 +72,7 @@ three receipt links automatically.
 
 ## Recommended next action
 
-Owner: review and push the local commits. Then supply material for the first ML/AI entry (queue item
-1) and confirm the Meta end date (item 2); either agent can then write them up.
+Owner: review and push the local commits (the media change shrinks the next Pages deploy to ~41 MB —
+worth a glance that it deploys green). After that there is **no engineering work left in the queue**:
+supply material for the first ML/AI entry (item 1) and confirm the Meta end date (item 2), and either
+agent can write them up.

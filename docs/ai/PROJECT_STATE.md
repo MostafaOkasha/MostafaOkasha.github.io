@@ -7,7 +7,7 @@ or stop.** For a parallel workstream or specific mid-task ownership transfer, co
 [`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `handoffs/<topic>.md`. New task specs:
 [`TASK_TEMPLATE.md`](TASK_TEMPLATE.md). Shared rules: [`../../AGENTS.md`](../../AGENTS.md).
 
-_Last updated: 2026-09-24 by Claude._
+_Last updated: 2026-09-25 by Claude._
 
 ## Repository state
 - Branch: `master`. Verify with `git status -sb` and `git log -1` — this file does not pin a
@@ -40,6 +40,8 @@ _Last updated: 2026-09-24 by Claude._
   `src/data/case-studies.ts` registers them; pages read their metadata from it via `caseStudy()`.
 - **⌘K index moved to `/search.json`** (`dc8a5eb`): it had been inlined into every page (55% of all
   HTML). Total HTML 1,113 KB → 483 KB; homepage 41.8 KB → 14.4 KB.
+- **Deploy artifact 190 MB → 41 MB** (`162cf08`): 25 never-linked originals excluded via
+  `archive-only-media.txt`; kept in the repo.
 - **No links to empty shelves** (`c8e2577`): homepage tiles, receipts and skill dossiers filter
   `/library?shelf=X` links through `isLiveLink`.
 
@@ -76,8 +78,8 @@ direction. Items 1–3 mostly need *content from the owner*, not engineering.
    as unreliable; it should not outlive the About rewrite.
 5. **Books:** purchase links (`purchase:` frontmatter; the button already renders) and notes for the
    note-less books. Content only.
-6. **180 MB deploy artifact** — `images/` publishes tracked `.psd`/`.avi` originals. Only unblocked
-   engineering item; must keep every existing URL resolving.
+6. ~~**180 MB deploy artifact**~~ **Done 2026-09-25** (`162cf08`): deploy 190 MB → 41 MB. There is no
+   unblocked engineering item left in the queue — everything above needs the owner.
 
 ## Known issues / decisions on record
 - **Book-cover sourcing (2026-07-26):** the owner explicitly approved **Open Library**
@@ -112,6 +114,10 @@ direction. Items 1–3 mostly need *content from the owner*, not engineering.
   output-neutral. The only blocker was malformed markup in `workshop.astro` that Astro 5 had been
   silently repairing (`88e4721`). **Astro 7 requires Node >=22.12.0** — CI pins `node-version: 22`,
   which satisfies it; do not lower that.
+- **Archive-only media (2026-09-25):** `archive-only-media.txt` + the `astro.config.mjs` hook keep
+  25 large originals out of the deploy. Chosen by scanning all git history, not current sources:
+  56 files unused today were linked by older pages and must stay published. The list is committed
+  (not computed) because CI's shallow clone cannot scan history.
 - **⌘K index is fetched, not inlined (2026-09-24):** built by `src/data/search-index.ts` and served
   as `/search.json`, loaded on first palette open. Do not move it back into `define:vars` — that
   duplicates it into every page.
