@@ -16,7 +16,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const shelf = SHELF_TYPES[entry.data.type];
 const dateStr = entry.data.date
-  .toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+  .toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric', timeZone: 'UTC' })
   .toUpperCase();
 const rt = entry.data.readingTime;
 ---
