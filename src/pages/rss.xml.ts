@@ -3,9 +3,10 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 import { SHELF_TYPES } from '../data/shelves';
 import { CASE_STUDIES } from '../data/case-studies';
+import { visible } from '../data/drafts';
 
 export async function GET(context: APIContext) {
-  const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
+  const entries = (await getCollection('library', visible)).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
 

@@ -1,0 +1,77 @@
+---
+/**
+ * CASE-STUDY TEMPLATE — LifeKeep (Habit28). Visible only in `npm run dev` at /workshop/systems/lifekeep.
+ *
+ * To publish:
+ *   1. replace every ✎ below, and the ✎ fields of 'lifekeep' in src/data/case-studies.ts
+ *      (title, kicker, description, date) and its project card in src/data/projects.ts;
+ *   2. move this file to src/pages/workshop/systems/lifekeep.astro (imports use `@/`, so no edits);
+ *   3. delete `draft: true` from both registry entries.
+ * The production build fails while any ✎ remains or if a link points at a page that isn't built.
+ *
+ * Structure mirrors src/pages/workshop/systems/currency-conversion.astro — read it for tone.
+ * Keep it sanitized: no employer internals, colleague or partner names (AGENTS.md).
+ */
+import CaseStudy from '@/layouts/CaseStudy.astro';
+import { caseStudy } from '@/data/case-studies';
+
+const cs = caseStudy('lifekeep');
+---
+
+<CaseStudy
+  title={cs.title}
+  kicker={cs.kicker}
+  summary={cs.description}
+  published={cs.date}
+  draft={cs.draft}
+  source="src/drafts/pages/workshop/systems/lifekeep.astro"
+  meta={[
+    { k: 'role', v: '✎ your role (e.g. founder · sole engineer)' },
+    { k: 'span', v: '✎ timeline (e.g. 2025 — now)' },
+    { k: 'stack', v: '✎ the 3–5 technologies that matter' },
+    { k: 'impact', v: '✎ the one number that proves it works' },
+  ]}
+>
+  <h2>Context</h2>
+  <p class="lead">
+    ✎ Two or three sentences a smart outsider could follow: what LifeKeep (Habit28) is, who it is for, and
+    why the problem is worth solving. Set up the stakes — the currency-conversion case study opens
+    with the money that was quietly being lost.
+  </p>
+
+  <h2>The problem</h2>
+  <p>
+    ✎ What was hard, specifically. Constraints beat adjectives: scale, latency budget, cost, a
+    deadline, a platform you were not allowed to use. Name the moment you realized the obvious
+    approach would not work.
+  </p>
+
+  <h2>Step 1 — ✎ name the first move</h2>
+  <p>✎ The first thing you built or figured out, and why it came first.</p>
+  <div class="callout">
+    ✎ Optional callout: the one insight a reader should remember if they skim everything else.
+  </div>
+
+  <h2>Step 2 — ✎ name the second move</h2>
+  <p>✎ The core design. A diagram helps: export one to images/projects/LifeKeep/ and add an &lt;img&gt;.</p>
+
+  <h2>Decisions and trade-offs</h2>
+  <ul>
+    <li>✎ A decision you made — and the alternative you rejected, with the reason.</li>
+    <li>✎ Another.</li>
+  </ul>
+
+  <h2>Results</h2>
+  <div class="stats">
+    <div class="stat"><div class="v">✎ 10×</div><div class="k">✎ what improved</div></div>
+    <div class="stat"><div class="v">✎ 1,000</div><div class="k">✎ users / requests / hours saved</div></div>
+    <div class="stat"><div class="v">✎ 0</div><div class="k">✎ a quality or reliability number</div></div>
+  </div>
+  <p>✎ One paragraph on outcomes. If it is still in progress, say exactly where it stands.</p>
+
+  <h2>What I'd do differently</h2>
+  <p>✎ The honest part. This is what separates a case study from a brochure.</p>
+
+  <h2>Scaling it 10× / 100×</h2>
+  <p>✎ What breaks first at 10× and what you would change at 100×.</p>
+</CaseStudy>

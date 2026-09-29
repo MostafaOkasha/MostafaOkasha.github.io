@@ -5,14 +5,14 @@ against Git, then reads `PROJECT_STATE.md`. Do not rely on conversation history 
 
 ## Handoff metadata
 
-- Task: deploy-artifact cleanup (done); every remaining queue item needs owner content
+- Task: content templates + dev-only draft system (done); remaining work is the owner filling them in
 - Status: Complete — awaiting owner review/push, then owner content
 - Current owner: unassigned
 - Intended next owner: the owner (content), then either agent to build it into pages
-- Last updated: 2026-09-25 by Claude
+- Last updated: 2026-09-29 by Claude
 - Branch: `master`
-- Current commit: the commit containing this file — verify with `git log -1`; its parent is `162cf08`
-- `origin/master` at handoff: `1118097`; everything after it is local and unpushed
+- Current commit: the commit containing this file — verify with `git log -1`
+- `origin/master` at handoff: `face663`; everything after it is local and unpushed
 - Working tree expected: clean
 
 Verify with `git status -sb` and `git log --oneline -8`. If the tree is dirty or the log does not
@@ -25,7 +25,31 @@ end in the commits listed below, someone worked after this was written — inspe
 - [`PROJECT_STATE.md`](PROJECT_STATE.md) — durable state, decisions on record, **the reprioritized queue**
 - [`handoffs/claude-review.md`](handoffs/claude-review.md) — closed, historical only
 
-## What this pass did
+## Latest pass (2026-09-29): templates for everything missing
+
+Owner asked for placeholders showing where each missing piece goes and how it will look.
+- `src/data/drafts.ts` — the rule: drafts visible in `npm run dev`, absent from production.
+- Templates in their final locations: 15 Library drafts (the 16 entries planned in the design
+  handoff, minus one that already shipped as a case study, plus a project-retrospective), 2 book
+  drafts, 3 case-study pages + project cards, the About rewrite (`/drafts/about`).
+- Dev-only hints: book notes / buy links, Workshop photo + Creative AI slots, project write-ups.
+- `/drafts` dashboard (dev only): every template, gap and fact-to-confirm, with exact files.
+- Build guards: leftover `✎` → fail; internal link to an unbuilt page → fail.
+- Also fixed: article header date was still local-time (`d5bcf5a`); `_templates/` had a broken
+  `type: book` stub.
+
+| Check | Result |
+|---|---|
+| Production output vs pre-change snapshot | byte-identical (35 text files hashed, 229-file list) |
+| `✎` in production output | 0 |
+| Publish a draft with placeholders left | build fails, names the files |
+| Un-draft a project card without moving its case study | build fails on the dead link |
+| Guards on today's site | pass; 706 internal links inspected |
+| Dev: every `/drafts` link | 33/33 return 200 |
+| Dev: live `/about` | unchanged (no banner); rewrite only at `/drafts/about` |
+| Console errors (dev) | none |
+
+## Earlier pass: review and fixes
 
 A review of the previous turns' work found defects, most introduced by those turns. Fixed:
 
@@ -72,7 +96,6 @@ three receipt links automatically.
 
 ## Recommended next action
 
-Owner: review and push the local commits (the media change shrinks the next Pages deploy to ~41 MB —
-worth a glance that it deploys green). After that there is **no engineering work left in the queue**:
-supply material for the first ML/AI entry (item 1) and confirm the Meta end date (item 2), and either
-agent can write them up.
+Owner: review and push, then run `npm run dev` and open `/drafts`. Start with one ML/AI entry and
+the Meta end date. Either agent can help turn rough notes into a template's final text — but never
+invent facts to fill a `✎`; ask the owner.

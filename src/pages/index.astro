@@ -6,15 +6,17 @@ import { getCollection } from 'astro:content';
 import { SHELF_TYPES, fmtKicker, liveShelves, isLiveLink } from '../data/shelves';
 import { CASE_STUDIES, CASE_STUDY_BADGE } from '../data/case-studies';
 import { execSync } from 'node:child_process';
+import { visible } from '../data/drafts';
 
 // The rail is "latest from the archive", so it has to include the system-design
 // case studies too — they are the strongest writing on the site and were
 // invisible here purely because they are .astro pages, not collection entries.
-const libraryRail = (await getCollection('library', ({ data }) => !data.draft)).map((e) => ({
+const libraryRail = (await getCollection('library', visible)).map((e) => ({
   title: e.data.title,
   date: e.data.date,
   url: `/library/${e.id}`,
   badge: SHELF_TYPES[e.data.type].badge,
+  draft: e.data.draft,
 }));
 
 const caseStudyRail = CASE_STUDIES.map((c) => ({
@@ -22,6 +24,7 @@ const caseStudyRail = CASE_STUDIES.map((c) => ({
   date: c.date,
   url: c.url,
   badge: CASE_STUDY_BADGE.badge,
+  draft: c.draft ?? false,
 }));
 
 const latest = [...libraryRail, ...caseStudyRail]
@@ -107,7 +110,7 @@ try {
               <div class="rail-kicker mono">
                 {e.badge} · {fmtKicker(e.date)}
               </div>
-              <div class="rail-title">{e.title}</div>
+              <div class="rail-title">{e.title}{e.draft && <span class="dev-chip">DRAFT</span>}</div>
             </a>
           ))
         }

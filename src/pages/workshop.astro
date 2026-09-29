@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import { PROJECTS } from '../data/projects';
+import DevHint from '../components/DevHint.astro';
+const DEV = import.meta.env.DEV;
 
 // Hide "write-up soon" / "retrospective soon" style chips: a promise with no
 // destination reads as an unfinished site. They return when the link is real.
@@ -44,6 +46,10 @@ const cad = [
           <div class="card proj">
             {p.img ? (
               <img src={p.img} alt={p.name} class="cover" loading="lazy" />
+            ) : p.draft ? (
+              <div class="cover dev-ph-cover">
+                ✎ cover image — add it under images/projects/{p.name}/ and set img in src/data/projects.ts
+              </div>
             ) : (
               <div class="cover cover-map" aria-hidden="true">
                 <svg viewBox="0 0 300 190" width="100%" height="100%">
@@ -61,7 +67,7 @@ const cad = [
             )}
             <div class="body">
               <div class="head-row">
-                <div class="pname">{p.name}</div>
+                <div class="pname">{p.name}{p.draft && <span class="dev-chip">DRAFT</span>}</div>
                 <span class="year mono">{p.year}</span>
               </div>
               <div class="pdesc">{p.desc}</div>
@@ -79,6 +85,13 @@ const cad = [
     </div>
 
     <!-- SYSTEM DESIGNS -->
+    <DevHint title="Project write-ups" file="src/content/library/project-retrospective.md">
+      <p>The old cards promised write-ups ("write-up soon", "retrospective soon"). Copy the
+      retrospective template once per project, then add <code>{`{ label: 'write-up', href: '/library/<file-name>', mint: false }`}</code>
+      to that project's <code>links</code> in <code>src/data/projects.ts</code>. The three DRAFT cards above
+      are your current flagship work — their case-study templates are linked from each card.</p>
+    </DevHint>
+
     <div class="section-label sec" id="systems">02 · SYSTEM DESIGNS</div>
     <p class="sys-sub">Two are full case studies — context, architecture, tradeoffs, and what I'd change at 100×.</p>
     <div class="grid-3">
@@ -186,7 +199,33 @@ const cad = [
         <img src="/images/webp/projects/EyeSee/EyeSee2.webp" alt="EyeSee device close-up" loading="lazy" />
         <div class="overlay"><div class="ctitle">EyeSee, up close</div></div>
       </div>
+      {
+        DEV && (
+          <>
+            <div class="dev-slot">✎ travel photo<br />save it as images/webp/photos/&lt;name&gt;.webp,<br />then copy a .photo block above</div>
+            <div class="dev-slot">✎ street photo<br />same as above — each .photo block<br />opens in the lightbox automatically</div>
+          </>
+        )
+      }
     </div>
+
+    {
+      DEV && (
+        <>
+          <div class="section-label sec" id="creative-ai">05 · CREATIVE AI</div>
+          <DevHint title="Creative AI (hidden until it has work in it)" file="src/pages/workshop.astro">
+            <p>This section is dev-only right now. When you have Sora / generative pieces to show, add
+            a <code>&lt;div class="photo-grid"&gt;</code> here with one <code>.photo</code> block per piece
+            (video works too — use <code>&lt;video&gt;</code> inside the block), and move the section out of
+            the <code>DEV &amp;&amp;</code> guard.</p>
+          </DevHint>
+          <div class="photo-grid">
+            <div class="dev-slot">✎ Sora piece</div>
+            <div class="dev-slot">✎ Sora piece</div>
+          </div>
+        </>
+      )
+    }
   </div>
 
   {/* the `[data-zoom]` diagram cards and every image here are opened by the

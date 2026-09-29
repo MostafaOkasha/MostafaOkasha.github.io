@@ -22,18 +22,22 @@ navy (`#0a192f`) + mint (`#64ffda`) palette. The design handoff lives in [`redes
 | `/skills` | Evidence-backed skill dossiers — click a tool, see where it shipped |
 | `⌘K` | Command palette over everything, from any page |
 
-## Writing a new library entry
+## Writing content
 
-```bash
-# 1. copy a template
-cp src/content/library/_templates/reflection-template.md src/content/library/my-new-entry.md
-# 2. fill in frontmatter (title, description, type, topics, date) + write markdown
-# 3. remove `draft: true`, then:
-git add . && git commit -m "New entry" && git push
-```
+Run `npm run dev` and open **http://localhost:4321/drafts** — a dev-only list of every template
+on the site (planned Library entries, book notes, case studies, the About rewrite), each with the
+exact file to edit and how many placeholders are left.
 
-That's it — the shelf, badge, search index, homepage rail, and ⌘K palette all update at
-build time. The ten `type` values map to the ten shelves (see `src/data/shelves.ts`).
+- **Templates are placed where the real content goes.** Each is a normal file marked
+  `draft: true` (or, for whole pages, a file under `src/drafts/pages/`). In `npm run dev` it
+  appears in place — stamped DRAFT, every placeholder highlighted — so you see exactly how it
+  will read. It never appears in a production build.
+- **Placeholders start with `✎`.** Search for it to jump between them.
+- **Publish** by replacing every `✎` and deleting `draft: true`. The build refuses while any
+  `✎` is left or while anything links to a page that doesn't exist, so an unfinished template
+  cannot reach the live site.
+- **New entry:** copy a blank form from `src/content/library/_templates/` (one per shelf) or
+  `src/content/books/_templates/book.md`.
 
 ## Running locally
 

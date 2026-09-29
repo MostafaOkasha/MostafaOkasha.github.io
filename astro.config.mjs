@@ -75,11 +75,96 @@ function archiveOnlyMedia() {
   };
 }
 
+/**
+ * Drafts and placeholders (see src/data/drafts.ts for the rule).
+ *
+ * dev   — pages under src/drafts/pages/ are routed at the same path they will
+ *         have once moved into src/pages/ (or under /drafts/ when that path is
+ *         already taken, e.g. the About rewrite at /drafts/about), plus the
+ *         /drafts dashboard. None of these exist in a production build.
+ * build — two guards, so a template can never ship:
+ *         1. no ✎ placeholder may appear anywhere in the output;
+ *         2. no internal link may point at a page or file that was not built
+ *            (catches a draft that was un-drafted but not moved, typos, and
+ *            anything that links to a template).
+ */
+function draftsAndGuards() {
+  const root = fileURLToPath(new URL('.', import.meta.url));
+  const draftPages = path.join(root, 'src/drafts/pages');
+  const realPages = path.join(root, 'src/pages');
+
+  return {
+    name: 'drafts-and-guards',
+    hooks: {
+      'astro:config:setup': ({ command, injectRoute, logger }) => {
+        if (command !== 'dev') return;
+        injectRoute({ pattern: '/drafts', entrypoint: path.join(root, 'src/drafts/dashboard.astro') });
+        if (!fs.existsSync(draftPages)) return;
+        (function walk(dir) {
+          for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+            const abs = path.join(dir, e.name);
+            if (e.isDirectory()) { walk(abs); continue; }
+            if (!e.name.endsWith('.astro')) continue;
+            const rel = path.relative(draftPages, abs).replace(/\.astro$/, '').replace(/(^|\/)index$/, '');
+            const taken = ['.astro', '/index.astro'].some((x) => fs.existsSync(path.join(realPages, rel + x)));
+            const pattern = (taken ? '/drafts/' : '/') + rel;
+            injectRoute({ pattern, entrypoint: abs });
+            logger.info(`draft page ${pattern}  <-  src/drafts/pages/${rel}.astro`);
+          }
+        })(draftPages);
+      },
+
+      'astro:build:done': ({ dir }) => {
+        const out = fs.realpathSync(fileURLToPath(dir));
+        const texts = [];
+        (function walk(d) {
+          for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+            const p = path.join(d, e.name);
+            if (e.isDirectory()) walk(p);
+            else if (/\.(html|css|js|mjs|json|xml|txt|webmanifest)$/i.test(e.name)) {
+              texts.push([path.relative(out, p), fs.readFileSync(p, 'utf8')]);
+            }
+          }
+        })(out);
+
+        // 1. placeholders
+        const leaked = texts.filter(([, t]) => t.includes('✎')).map(([f]) => f);
+        if (leaked.length) {
+          throw new Error(
+            'a ✎ placeholder reached the production build. Replace it (or keep the entry ' +
+              '`draft: true`) — found in:\n  ' + leaked.join('\n  ')
+          );
+        }
+
+        // 2. internal links: href/src attributes, plus href/url values in inline JSON
+        const exists = (url) => {
+          let p = decodeURI(url.split('#')[0].split('?')[0]);
+          if (p === '' || p === '/') return fs.existsSync(path.join(out, 'index.html'));
+          p = p.replace(/\/$/, '');
+          return [p, p + '.html', p + '/index.html'].some((c) => {
+            const f = path.join(out, c);
+            return f.startsWith(out) && fs.existsSync(f) && fs.statSync(f).isFile();
+          });
+        };
+        const dead = new Set();
+        const linkRe = /(?:\b(?:href|src)=["']|["'](?:href|url)["']\s*:\s*["'])(\/(?!\/)[^"'\s]*)["']/g;
+        for (const [file, text] of texts) {
+          if (!file.endsWith('.html') && !file.endsWith('.json')) continue;
+          for (const m of text.matchAll(linkRe)) if (!exists(m[1])) dead.add(`${m[1]}   (in ${file})`);
+        }
+        if (dead.size) {
+          throw new Error('internal links point at pages or files that were not built:\n  ' + [...dead].join('\n  '));
+        }
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.okasha.me',
   trailingSlash: 'never',
-  integrations: [sitemap(), archiveOnlyMedia()],
+  integrations: [sitemap(), archiveOnlyMedia(), draftsAndGuards()],
   build: {
     format: 'file',
   },

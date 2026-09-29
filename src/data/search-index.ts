@@ -10,6 +10,7 @@ import { PROJECTS } from './projects';
 import { SKILLS } from './skills';
 import { RECEIPTS } from './receipts';
 import { CASE_STUDIES, CASE_STUDY_BADGE } from './case-studies';
+import { visible } from './drafts';
 
 export interface SearchItem {
   title: string;
@@ -21,10 +22,10 @@ export interface SearchItem {
 }
 
 export async function buildSearchIndex(): Promise<SearchItem[]> {
-  const entries = (await getCollection('library', ({ data }) => !data.draft)).sort(
+  const entries = (await getCollection('library', visible)).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
-  const bookEntries = await getCollection('books', ({ data }) => !data.draft);
+  const bookEntries = await getCollection('books', visible);
 
   const items = [
     ...entries.map((e) => ({

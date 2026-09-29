@@ -3,8 +3,9 @@ import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
 import BookCover from '../../../components/BookCover.astro';
 import { getCollection } from 'astro:content';
+import { visible } from '../../../data/drafts';
 
-const all = (await getCollection('books', ({ data }) => !data.draft)).sort((a, b) => {
+const all = (await getCollection('books', visible)).sort((a, b) => {
   const da = a.data.date?.valueOf() ?? 0;
   const db = b.data.date?.valueOf() ?? 0;
   return db - da;

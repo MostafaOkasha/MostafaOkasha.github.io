@@ -1,0 +1,255 @@
+---
+/**
+ * /drafts — the content to-do list. Routed only in `npm run dev` (see the
+ * drafts-and-guards integration in astro.config.mjs); it never exists in a
+ * production build. Everything here is computed from the files themselves, so
+ * it stays accurate as you fill things in.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import { getCollection } from 'astro:content';
+import { SHELF_TYPES } from '@/data/shelves';
+import { ALL_PROJECTS } from '@/data/projects';
+import { ALL_CASE_STUDIES } from '@/data/case-studies';
+
+const ROOT = process.cwd();
+const read = (rel: string) => {
+  try {
+    return fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  } catch {
+    return '';
+  }
+};
+const marks = (rel: string) => (read(rel).match(/✎/g) ?? []).length;
+
+type Row = { title: string; file: string; url?: string; note?: string; left?: number };
+
+// 1. whole-page templates
+const pages: Row[] = [
+  {
+    title: 'About — full rewrite',
+    file: 'src/drafts/pages/about.astro',
+    url: '/drafts/about',
+    note: 'replaces /about when you move it over src/pages/about.astro',
+  },
+  ...ALL_CASE_STUDIES.filter((c) => c.draft).map((c) => ({
+    title: `Case study — ${c.slug}`,
+    file: `src/drafts/pages/workshop/systems/${c.slug}.astro`,
+    url: c.url,
+    note: `also its ✎ fields in src/data/case-studies.ts`,
+  })),
+].map((r) => ({ ...r, left: marks(r.file) }));
+
+// 2. planned library entries
+const library = (await getCollection('library'))
+  .filter((e) => e.data.draft)
+  .map((e) => ({
+    title: e.data.title,
+    shelf: SHELF_TYPES[e.data.type].label,
+    file: `src/content/library/${e.id}.md`,
+    url: `/library/${e.id}`,
+  }))
+  .map((r) => ({ ...r, left: marks(r.file) }))
+  .sort((a, b) => a.shelf.localeCompare(b.shelf));
+
+// 3. books: drafts, then gaps in published books
+const books = await getCollection('books');
+const bookDrafts: Row[] = books
+  .filter((b) => b.data.draft)
+  .map((b) => ({
+    title: `${b.data.title} — ${b.data.author}`,
+    file: `src/content/books/${b.id}.md`,
+    url: `/library/books/${b.id}`,
+  }))
+  .map((r) => ({ ...r, left: marks(r.file) }));
+const published = books.filter((b) => !b.data.draft);
+const noNotes = published.filter((b) => !b.body?.trim());
+const comingSoon = published.filter((b) => /coming soon/i.test(b.body ?? ''));
+const noBuy = published.filter((b) => !b.data.purchase);
+const noCover = published.filter((b) => !b.data.cover);
+
+// 4. project cards
+const projects: Row[] = ALL_PROJECTS.filter((p) => p.draft).map((p) => ({
+  title: p.name,
+  file: 'src/data/projects.ts',
+  url: '/workshop',
+  note: 'plus a cover image under images/projects/',
+}));
+
+const totalLeft =
+  [...pages, ...library, ...bookDrafts].reduce((n, r) => n + (r.left ?? 0), 0) +
+  marks('src/data/projects.ts') +
+  marks('src/data/case-studies.ts');
+const bannerLive = read('src/pages/index.astro').includes('wip-banner');
+---
+
+<Base title="Drafts | okasha.me (dev only)" description="Content to-do list — dev only.">
+  <Nav current="library" />
+  <div class="wrap">
+    <div class="dev-hint-title">dev only · never built for production</div>
+    <h1 class="page-title">What's still a template.</h1>
+    <p class="page-sub">
+      Everything below is visible only in <code>npm run dev</code>. Open a page to see how it will look,
+      then edit the file next to it — search for <mark class="ph">✎</mark> to jump between placeholders.
+      Delete <code>draft: true</code> to publish; the build refuses while any ✎ remains.
+    </p>
+    <p class="tally mono">
+      <b>{totalLeft}</b> placeholders left · <b>{pages.length}</b> page templates ·
+      <b>{library.length}</b> planned entries · <b>{bookDrafts.length}</b> planned books ·
+      <b>{projects.length}</b> project cards
+    </p>
+
+    <h2>1 · Confirm these facts first</h2>
+    <ul class="rows">
+      <li>
+        <span class="t">Meta end date — Feb 2026 on the site, Jan 2026 in an earlier note</span>
+        <span class="f">
+          <code>src/data/journey.ts:20</code> · <code>src/pages/resume.astro:41</code> ·
+          <code>resume/resume.pdf</code>
+        </span>
+      </li>
+      {
+        bannerLive && (
+          <li>
+            <span class="t">Remove the "UNDER CONSTRUCTION" banner once About + one AI entry are live</span>
+            <span class="f"><code>src/pages/index.astro</code> — the <code>.wip-banner</code> div and its styles</span>
+          </li>
+        )
+      }
+    </ul>
+
+    <h2>2 · Pages to write</h2>
+    <ul class="rows">
+      {
+        pages.map((r) => (
+          <li>
+            <a class="t" href={r.url}>{r.title} →</a>
+            <span class="f"><code>{r.file}</code>{r.note && <> · {r.note}</>}</span>
+            <span class="n mono">{r.left} ✎</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>3 · Planned Library entries <span class="sub">(from your design handoff)</span></h2>
+    <p class="hint">
+      The first <b>ML / AI notes</b> entry you publish brings back the homepage AI LAB tile, two skill
+      dossiers and three résumé links automatically.
+    </p>
+    <ul class="rows">
+      {
+        library.map((r) => (
+          <li>
+            <a class="t" href={r.url}>{r.title} →</a>
+            <span class="f"><span class="shelf">{r.shelf}</span> · <code>{r.file}</code></span>
+            <span class="n mono">{r.left} ✎</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>4 · Books</h2>
+    <ul class="rows">
+      {
+        bookDrafts.map((r) => (
+          <li>
+            <a class="t" href={r.url}>{r.title} →</a>
+            <span class="f"><code>{r.file}</code></span>
+            <span class="n mono">{r.left} ✎</span>
+          </li>
+        ))
+      }
+      {
+        noNotes.map((b) => (
+          <li>
+            <a class="t" href={`/library/books/${b.id}`}>{b.data.title} — no notes yet →</a>
+            <span class="f"><code>src/content/books/{b.id}.md</code> · write below the frontmatter</span>
+          </li>
+        ))
+      }
+      {
+        comingSoon.map((b) => (
+          <li>
+            <a class="t" href={`/library/books/${b.id}`}>{b.data.title} — says "Coming soon" publicly →</a>
+            <span class="f"><code>src/content/books/{b.id}.md</code> · replace the "Coming soon" sections</span>
+          </li>
+        ))
+      }
+      <li>
+        <span class="t">Buy links missing on {noBuy.length} of {published.length} published books</span>
+        <span class="f">add <code>purchase: https://…</code> to each book's frontmatter</span>
+      </li>
+      {
+        noCover.map((b) => (
+          <li>
+            <span class="t">{b.data.title} — no cover (shows the tinted spine)</span>
+            <span class="f">
+              not on Open Library; add <code>images/covers/{b.id}.jpg</code> and a <code>cover:</code> line in
+              <code>src/content/books/{b.id}.md</code>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>5 · Workshop</h2>
+    <ul class="rows">
+      {
+        projects.map((r) => (
+          <li>
+            <a class="t" href={r.url}>Project card — {r.title} →</a>
+            <span class="f"><code>{r.file}</code> · {r.note}</span>
+          </li>
+        ))
+      }
+      <li>
+        <a class="t" href="/workshop#photos">Photographs + Creative AI →</a>
+        <span class="f"><code>src/pages/workshop.astro</code> · dev-only slots show where they go</span>
+      </li>
+      <li>
+        <a class="t" href="/library/project-retrospective">Project write-ups (MapSight, ChessMate, EyeSee, DRACO, GlassTasks) →</a>
+        <span class="f"><code>src/content/library/project-retrospective.md</code> · copy once per project</span>
+      </li>
+    </ul>
+
+    <h2>6 · Starting something new</h2>
+    <ul class="rows">
+      <li>
+        <span class="t">Blank form per Library shelf</span>
+        <span class="f"><code>src/content/library/_templates/</code> — copy one into <code>src/content/library/</code></span>
+      </li>
+      <li>
+        <span class="t">Blank book</span>
+        <span class="f"><code>src/content/books/_templates/book.md</code> — copy into <code>src/content/books/</code></span>
+      </li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .wrap { padding: 36px 44px 80px; max-width: 980px; margin: 0 auto; }
+  .page-sub code, .rows code { color: #ffe8a3; font-size: 12.5px; }
+  .tally { margin-top: 18px; font-size: 13px; color: var(--text-muted); }
+  .tally b { color: #ffd76b; }
+  h2 { margin: 42px 0 10px; font-size: 20px; color: var(--text-bright); }
+  h2 .sub { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+  .hint { margin: 0 0 10px; font-size: 14px; color: var(--text-body); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--mint-divider);
+  }
+  .rows .t { font-size: 15px; font-weight: 600; color: var(--text-bright); }
+  .rows a.t:hover { color: var(--mint); }
+  .rows .f { grid-column: 1; font-size: 13px; color: var(--text-muted); }
+  .rows .n { grid-column: 2; grid-row: 1 / span 2; align-self: center; color: #ffd76b; font-size: 12px; }
+  .shelf { color: var(--mint); }
+  @media (max-width: 700px) {
+    .wrap { padding: 24px 18px 60px; }
+  }
+</style>

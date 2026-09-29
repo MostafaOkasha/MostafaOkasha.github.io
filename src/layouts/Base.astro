@@ -12,6 +12,10 @@ interface Props {
   type?: 'website' | 'article';
   /** ISO date — emitted as article:published_time + JSON-LD datePublished */
   published?: Date;
+  /** dev only: stamp this page as a template (never true in a production build) */
+  draft?: boolean;
+  /** dev only: the file to edit, shown on the draft banner */
+  source?: string;
 }
 const {
   title,
@@ -19,7 +23,51 @@ const {
   image = '/images/webp/DSC_0027.webp',
   type = 'website',
   published,
+  draft = false,
+  source,
 } = Astro.props;
+const DEV = import.meta.env.DEV;
+// Dev-only template styling + ✎ highlighter. Injected only when DEV, so production
+// output (and the shared CSS bundle) stays byte-identical. See src/data/drafts.ts.
+const DEV_CSS = `
+            .dev-draft-banner { position: sticky; top: 0; z-index: 60; padding: 9px 16px;
+              background: #3a2f0b; color: #ffe8a3; border-bottom: 1px solid #ffd76b;
+              font: 12.5px/1.5 var(--font-mono); }
+            .dev-draft-banner b { color: #ffd76b; letter-spacing: .08em; }
+            .dev-draft-banner code { color: #fff3c7; }
+            .dev-draft-banner a { color: #ffd76b; text-decoration: underline; }
+            mark.ph { background: rgba(255, 215, 107, .16); color: #ffe8a3; border-radius: 3px;
+              padding: 0 3px; box-shadow: inset 0 -1px 0 rgba(255, 215, 107, .6); }
+            .dev-chip { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 4px;
+              border: 1px solid #ffd76b; color: #ffd76b; font: 600 10px/1.5 var(--font-mono);
+              letter-spacing: .08em; vertical-align: middle; }
+            .dev-hint { margin: 18px 0; padding: 16px 18px; border: 1.5px dashed rgba(255, 215, 107, .55);
+              border-radius: 12px; background: rgba(255, 215, 107, .05); color: var(--text-body);
+              font-size: 14px; line-height: 1.6; }
+            .dev-hint-title { font: 600 11px/1.4 var(--font-mono); letter-spacing: .1em; color: #ffd76b;
+              text-transform: uppercase; margin-bottom: 8px; }
+            .dev-hint code { color: #ffe8a3; font-size: 12.5px; }
+            .dev-hint :is(h2, h3) { margin: 18px 0 6px; color: var(--text-bright); font-size: 17px; }
+            .dev-hint p, .dev-hint ul { margin: 6px 0; }
+            .dev-ph-cover { display: flex; align-items: center; justify-content: center; text-align: center;
+              padding: 16px; min-height: 190px; border-bottom: 1px dashed rgba(255, 215, 107, .5);
+              color: #ffd76b; font: 12px/1.6 var(--font-mono); background: rgba(255, 215, 107, .04); }
+            .dev-slot { min-height: 220px; display: flex; align-items: center; justify-content: center;
+              text-align: center; padding: 16px; border: 1.5px dashed rgba(255, 215, 107, .55);
+              border-radius: 14px; color: #ffd76b; font: 12px/1.7 var(--font-mono); }
+          `;
+const DEV_JS = `
+            (() => {
+              // wrap every text run that contains the ✎ placeholder marker in <mark class="ph">
+              const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode: (n) => n.nodeValue.includes('\u270e') && !n.parentElement.closest('mark.ph, script, style, code')
+                  ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT,
+              });
+              const hits = []; while (walker.nextNode()) hits.push(walker.currentNode);
+              for (const n of hits) { const m = document.createElement('mark'); m.className = 'ph';
+                n.parentNode.replaceChild(m, n); m.appendChild(n); }
+            })();
+          `;
 // `build.format: 'file'` makes Astro.url.pathname end in `.html` at build time,
 // but the served URL is extension-less (`trailingSlash: 'never'`). Normalise so
 // the canonical matches the sitemap and the site's own internal links.
@@ -101,8 +149,28 @@ const schema = isArticle
     <slot name="head" />
   </head>
   <body>
+    {
+      DEV && draft && (
+        <div class="dev-draft-banner" role="note">
+          <b>DRAFT</b> · template, only visible in <code>npm run dev</code>
+          {source && <> · edit <code>{source}</code></>} · replace every highlighted <mark class="ph">✎</mark>, then
+          remove <code>draft: true</code> · <a href="/drafts">all templates →</a>
+        </div>
+      )
+    }
     <slot />
     <CommandPalette />
     <Lightbox />
+    {
+      /* Dev-only styling + placeholder highlighter. Kept inline and inside this
+         DEV guard on purpose: production output must stay byte-identical, so no
+         template styling may enter the shared CSS bundle. */
+      DEV && (
+        <>
+          <style is:inline set:html={DEV_CSS} />
+          <script is:inline set:html={DEV_JS} />
+        </>
+      )
+    }
   </body>
 </html>

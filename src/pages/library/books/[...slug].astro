@@ -3,9 +3,11 @@ import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
 import BookCover from '../../../components/BookCover.astro';
 import { getCollection, render } from 'astro:content';
+import { visible } from '../../../data/drafts';
+import DevHint from '../../../components/DevHint.astro';
 
 export async function getStaticPaths() {
-  const books = await getCollection('books', ({ data }) => !data.draft);
+  const books = await getCollection('books', visible);
   return books.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
@@ -21,6 +23,8 @@ const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
   description={b.description ?? `${b.title} by ${b.author}`}
   type="article"
   published={b.date}
+  draft={b.draft}
+  source={`src/content/books/${entry.id}.md`}
 >
   {hasNotes && <div class="reading-progress" data-progress></div>}
   <Nav current="books" />
@@ -92,6 +96,14 @@ const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
     </div>
 
     {
+      !b.purchase && (
+        <DevHint title="Buy link (optional)" file={`src/content/books/${entry.id}.md`}>
+          <p>Add <code>purchase: https://…</code> to the frontmatter and a <b>Buy the book →</b> button appears in the panel above.</p>
+        </DevHint>
+      )
+    }
+
+    {
       hasNotes ? (
         <div class="prose">
           <Content />
@@ -102,6 +114,21 @@ const statusClass = `status-${b.status.replace(/\s+/g, '-').toLowerCase()}`;
             ? 'On the reading list — no notes yet.'
             : 'Currently reading — notes coming once I finish.'}
         </p>
+      )
+    }
+
+    {
+      !hasNotes && (
+        <DevHint title="Your notes go here" file={`src/content/books/${entry.id}.md`}>
+          <p>Write markdown <b>below the closing <code>---</code></b> of the frontmatter. This is how it will read:</p>
+          <h2>One-paragraph review</h2>
+          <p>✎ Your quick take, once you've finished.</p>
+          <h2>Three-paragraph summary</h2>
+          <p>✎ What the book argues, how, and whether it lands.</p>
+          <h2>Key takeaways</h2>
+          <ul><li>✎ One idea per line — numbered lists work well.</li><li>✎</li></ul>
+          <p>Keep quotes short, and leave private self-reflection out — this repo is public.</p>
+        </DevHint>
       )
     }
 

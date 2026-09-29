@@ -1,0 +1,24 @@
+---
+/**
+ * A template/"what goes here" box that exists only in `npm run dev`.
+ * Renders nothing in a production build. Styled by the dev-only block in
+ * Base.astro (kept out of the shared CSS so production output is unchanged).
+ */
+interface Props {
+  /** short label, e.g. "Book notes go here" */
+  title: string;
+  /** the exact file (and field) to edit */
+  file?: string;
+}
+const { title, file } = Astro.props;
+---
+
+{
+  import.meta.env.DEV && (
+    <div class="dev-hint" role="note">
+      <div class="dev-hint-title">✎ {title}</div>
+      {file && <p>Edit <code>{file}</code></p>}
+      <slot />
+    </div>
+  )
+}

@@ -3,9 +3,10 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { getCollection, render } from 'astro:content';
 import { SHELF_TYPES, fmtMeta } from '../../data/shelves';
+import { visible } from '../../data/drafts';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('library', ({ data }) => !data.draft);
+  const entries = await getCollection('library', visible);
   return entries.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -26,6 +27,8 @@ const rt = entry.data.readingTime;
   description={entry.data.description}
   type="article"
   published={entry.data.date}
+  draft={entry.data.draft}
+  source={`src/content/library/${entry.id}.md`}
 >
   <div class="reading-progress" data-progress></div>
   <Nav current="library" />

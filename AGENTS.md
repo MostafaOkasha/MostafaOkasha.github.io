@@ -66,6 +66,8 @@ When sources conflict, prefer the more authoritative *current* source and report
 - `src/data/` — `shelves.ts` (shelf types/badges/colors, `liveShelves`/`isLiveLink`), `skills.ts`,
   `receipts.ts` (resume receipts), `projects.ts` (workshop projects), `case-studies.ts` (case-study
   registry), `search-index.ts` (the ⌘K index, served as `/search.json` by `src/pages/search.json.ts`)
+- `src/drafts/` — dev-only: `pages/` (page templates, routed only in `npm run dev`) and
+  `dashboard.astro` (the `/drafts` content to-do list). Never part of a production build.
 - `src/scripts/` — `backdrop.js` (the WebGL nebula, from the design handoff)
 - `src/styles/global.css` — the full design-token system
 - `public/` — `CNAME` + symlinks (`images`, `videos`, `resume`, `documents`) to the root media dirs
@@ -100,7 +102,7 @@ validation gate — it type-checks content collections and fails on broken impor
 violations. CI runs it on every push to `master`.
 
 ```bash
-npm run dev        # dev server on :4321 with hot reload
+npm run dev        # dev server on :4321 with hot reload — shows drafts; see /drafts
 npm run build      # static build into dist/ — THE validation command
 npm run preview    # serve the production build (dist/)
 ```
@@ -152,6 +154,14 @@ For every non-trivial change:
 - Dates are authored as bare calendar dates (UTC midnight). Format them with UTC getters — see
   `fmtMeta`/`fmtKicker` — or they render a day early west of Greenwich and differ between a local and
   a CI build.
+- **Drafts and placeholders** (rule in `src/data/drafts.ts`): `draft: true` in frontmatter, `draft: true`
+  on a `projects.ts` / `case-studies.ts` entry, or a page under `src/drafts/pages/` is visible in
+  `npm run dev` (stamped DRAFT, placeholders highlighted) and absent from `npm run build`. Placeholder
+  text starts with `✎`. The build fails if any `✎` reaches the output or any internal link points at
+  something that was not built. Filter collections with `visible`, never with a hand-written
+  `!data.draft`. Dev-only UI goes through `DevHint.astro` or the `DEV_CSS` block in `Base.astro` —
+  never into shared CSS — so production output stays byte-identical. Imports may use the `@/` alias
+  (`@/*` → `src/*`); page templates use it so publishing is a pure file move.
 - Design tokens (colors, fonts, spacing) come from `src/styles/global.css` custom properties —
   reuse them; don't hard-code new palette values.
 

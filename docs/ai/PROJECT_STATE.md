@@ -7,7 +7,7 @@ or stop.** For a parallel workstream or specific mid-task ownership transfer, co
 [`HANDOFF_TEMPLATE.md`](HANDOFF_TEMPLATE.md) to `handoffs/<topic>.md`. New task specs:
 [`TASK_TEMPLATE.md`](TASK_TEMPLATE.md). Shared rules: [`../../AGENTS.md`](../../AGENTS.md).
 
-_Last updated: 2026-09-25 by Claude._
+_Last updated: 2026-09-29 by Claude._
 
 ## Repository state
 - Branch: `master`. Verify with `git status -sb` and `git log -1` — this file does not pin a
@@ -40,6 +40,10 @@ _Last updated: 2026-09-25 by Claude._
   `src/data/case-studies.ts` registers them; pages read their metadata from it via `caseStudy()`.
 - **⌘K index moved to `/search.json`** (`dc8a5eb`): it had been inlined into every page (55% of all
   HTML). Total HTML 1,113 KB → 483 KB; homepage 41.8 KB → 14.4 KB.
+- **Content templates + draft system** (2026-09-29): every missing piece now has a template in the
+  exact place its real content goes, visible only in `npm run dev` (list at `/drafts`). Production
+  output was verified byte-identical before and after. Guards: build fails on any leftover `✎` or
+  any internal link to an unbuilt page.
 - **Deploy artifact 190 MB → 41 MB** (`162cf08`): 25 never-linked originals excluded via
   `archive-only-media.txt`; kept in the repo.
 - **No links to empty shelves** (`c8e2577`): homepage tiles, receipts and skill dossiers filter
@@ -65,21 +69,22 @@ Rough priority order. Promote one to a `TASK_TEMPLATE.md` copy when starting it.
 **No task is currently in progress.** Nothing here is started; pick the top item or take owner
 direction. Items 1–3 mostly need *content from the owner*, not engineering.
 
-1. **Write the first ML / AI entry.** The site's headline is "these days I build AI applications",
-   yet the `ml` shelf is empty — so the homepage "AI LAB" tile, two skill dossiers and three receipts
-   are currently hidden (see `isLiveLink`). One published `type: ml` entry brings all of them back
-   automatically. Highest-leverage piece of content on the site. Needs the owner's material.
-2. **About rewrite + correct Meta end date.** About reads as the 2019 student site (unsourced "90% of
-   humanity" claim, two goals "still being written"). The Meta end date is Feb 2026 on the site and
-   Jan 2026 in an earlier note — owner must confirm. Needs the owner.
-3. **Current flagship work** — Forge OS / Praxis Forge, LifeKeep, Chamber as case studies (follow the
-   `workshop/systems/*` structure and register in `case-studies.ts`). Needs the owner.
-4. **Retire the under-construction banner** once 1–2 are done. It frames everything a visitor reads
-   as unreliable; it should not outlive the About rewrite.
-5. **Books:** purchase links (`purchase:` frontmatter; the button already renders) and notes for the
-   note-less books. Content only.
-6. ~~**180 MB deploy artifact**~~ **Done 2026-09-25** (`162cf08`): deploy 190 MB → 41 MB. There is no
-   unblocked engineering item left in the queue — everything above needs the owner.
+Every item below already has a template in place — run `npm run dev` and open `/drafts` for the
+live list with exact files and placeholder counts. The work is replacing `✎` text, not creating files.
+
+1. **First ML / AI entry** — 3 planned: `src/content/library/{agent-memory-patterns,
+   attention-from-scratch,eval-driven-development}.md`. Publishing any one brings back the homepage
+   AI LAB tile, two skill dossiers and three receipt links.
+2. **About rewrite** — `src/drafts/pages/about.astro` (dev: `/drafts/about`); publish by moving it
+   over `src/pages/about.astro`. **Plus the Meta end date** (Feb vs Jan 2026): `src/data/journey.ts:20`,
+   `src/pages/resume.astro:41`, `resume/resume.pdf`.
+3. **Flagship case studies** — `src/drafts/pages/workshop/systems/{forge-os,lifekeep,chamber}.astro`
+   + their `draft: true` entries in `src/data/case-studies.ts` and `src/data/projects.ts`.
+4. **Retire the under-construction banner** once 1–2 ship (`src/pages/index.astro`, `.wip-banner`).
+5. **The rest of the planned Library** (from the design handoff): 12 more drafts across every shelf,
+   plus `project-retrospective.md` for the old projects' write-ups.
+6. **Books** — drafts for *The Design of Everyday Things* and *Siddhartha*; notes for note-less books;
+   buy links; replace the public "Coming soon" text in *Don't Believe Everything You Think*.
 
 ## Known issues / decisions on record
 - **Book-cover sourcing (2026-07-26):** the owner explicitly approved **Open Library**
@@ -114,6 +119,13 @@ direction. Items 1–3 mostly need *content from the owner*, not engineering.
   output-neutral. The only blocker was malformed markup in `workshop.astro` that Astro 5 had been
   silently repairing (`88e4721`). **Astro 7 requires Node >=22.12.0** — CI pins `node-version: 22`,
   which satisfies it; do not lower that.
+- **Drafts are dev-only, enforced (2026-09-29):** the rule lives in `src/data/drafts.ts`
+  (`visible`, `visibleItem`); page templates in `src/drafts/pages/` are routed by the
+  `drafts-and-guards` integration only when `command === 'dev'`. Template topics come from the design
+  handoff (`redesign/Library.dc.html`, 16 planned entries), not invented. Dev UI must stay out of
+  shared CSS (use `DevHint` / `DEV_CSS`) so production output does not change. `_templates/` was
+  rebuilt as one blank form per shelf; the old topic stubs became the in-place drafts, and the
+  broken `type: book` stub is gone (books are their own collection).
 - **Archive-only media (2026-09-25):** `archive-only-media.txt` + the `astro.config.mjs` hook keep
   25 large originals out of the deploy. Chosen by scanning all git history, not current sources:
   56 files unused today were linked by older pages and must stay published. The list is committed

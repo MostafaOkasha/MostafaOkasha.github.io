@@ -1,69 +1,78 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import { JOURNEY as journey } from '../data/journey';
-
+/**
+ * ABOUT REWRITE TEMPLATE. Visible only in `npm run dev`, at /drafts/about
+ * (the live page at /about is untouched until you publish this).
+ *
+ * To publish: replace every ✎, then move this file over src/pages/about.astro.
+ * Imports use `@/`, so the move needs no edits. The build refuses any leftover ✎.
+ *
+ * Why a rewrite: the live page is the 2019 student voice — an unsourced "90% of
+ * humanity" statistic, two goals that read "still being written", and no mention
+ * of what you do now. The career journey below is real and shared with /about.
+ */
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import DevHint from '@/components/DevHint.astro';
+import { JOURNEY as journey } from '@/data/journey';
 ---
 
-<Base title="About | Mostafa Okasha" description="Who am I? Values, goals, interests, and the whole journey — from a hospital oscilloscope to Reality Labs.">
+<Base
+  title="About | Mostafa Okasha"
+  description="✎ One line for search results and link previews: who you are and what you build now."
+  draft
+  source="src/drafts/pages/about.astro"
+>
   <Nav current="about" />
 
   <div class="wrap">
-    <h1 class="page-title">Hello again!</h1>
-    <p class="page-sub">The human version — who I am, what I believe, and the whole journey.</p>
+    <h1 class="page-title">✎ A one-line headline about who you are now</h1>
+    <p class="page-sub">✎ A sub-line — e.g. what you build, where, and for whom.</p>
 
     <div class="bio">
       <img class="me" src="/images/webp/profile-pic.webp" alt="Mostafa Okasha" />
       <div class="bio-text">
         <p>
-          I'm <b>Mostafa Okasha</b>, a Mechatronics graduate turned <b>Software Engineer</b> living
-          in the Greater Toronto Area (GTA) who enjoys building things and working on projects that
-          bring different technologies together to do something awesome. I especially love writing
-          code and designing my creative ideas.
+          ✎ <b>Now.</b> Who you are in 2026 in two or three sentences: what you are building (your
+          startup / current AI work), and what kind of problems you are best at.
         </p>
         <p>
-          I have a deep passion for <b>Robotics, Task Automation, and Emerging Tech</b>. I have
-          experience in several fields and many skills that can be brought together to provide a
-          unique, outside-the-box perspective. From building complex circuitry to integrating
-          software on servers, I embraced the true meaning of Mechatronics — learning several
-          skills and bringing them together to create beautiful, emerging tech.
+          ✎ <b>How you got here.</b> The short version of the path — Mechatronics → Capital One →
+          Scale AI → Meta → building your own things. One sentence per turn, and the thread that
+          connects them.
         </p>
         <p>
-          I've been developing an extreme interest in leadership and public speaking ever since my
-          internship as an Instructional Assistant at McMaster University. It made me realize the
-          satisfaction of helping others and making positive impacts on any community — so I've set
-          out to take on any role that helps me accomplish this.
+          ✎ <b>What you care about.</b> Specific beats inspirational: a problem you keep coming back
+          to, and why.
         </p>
       </div>
     </div>
+    <DevHint title="Photo" file="images/webp/profile-pic.webp">
+      <p>The rest of the site reads as 2026; if this photo doesn't, drop a newer one next to it and change the <code>src</code> above.</p>
+    </DevHint>
 
-    <div class="section-label sec">01 · VALUES</div>
+    <div class="section-label sec">01 · NOW</div>
     <ul class="values">
-      <li>To always be honest and respectful to everyone that I cross paths with.</li>
-      <li>To always help those in need and to support my friends and family to the best of my ability.</li>
-      <li>To always put in 100% effort into everything that I make.</li>
+      <li>✎ <b>Building</b> — what you're working on, with a link to its case study once it exists.</li>
+      <li>✎ <b>Learning</b> — e.g. the program you're starting, or the area you're going deep on.</li>
+      <li>✎ <b>Open to</b> — what you'd like people to contact you about (consulting, roles, collaborations).</li>
     </ul>
 
-    <div class="section-label sec">02 · GOALS</div>
+    <div class="section-label sec">02 · WHAT I BELIEVE</div>
+    <ul class="values">
+      <li>✎ A principle you actually work by, plus the moment that taught it to you.</li>
+      <li>✎ A second one. Concrete beats generic — "always give 100%" says nothing a reader can use.</li>
+      <li>✎ A third — or stop at two. Two real ones beat three filler ones.</li>
+    </ul>
+
+    <div class="section-label sec">03 · WHAT I'M WORKING TOWARD</div>
     <div class="goals">
       <p>
-        Whenever I asked myself what my goals in life were, I always came to the same answer:
-        <b>to change the world.</b> I never quite rationalized the scale of this goal until a few
-        years back, when I realized it would take several lifetimes to do so. Given the shortness
-        of life, I picked the problems I thought were most dire and decided to take it from there:
+        ✎ One or two goals, stated specifically. If you keep the healthcare goal, keep the conviction
+        and drop the unsourced "90%" figure — or cite a source for any statistic you use.
       </p>
-      <ul class="values">
-        <li>
-          Fix the horrible health system we currently have in place. More than 90% of fellow humans
-          do not receive the health treatment and attention that every human deserves. With current
-          technological advances, the world is capable of taking care of everyone.
-        </li>
-        <li class="tbd mono">02 — still being written. <a href="mailto:mostafa@okasha.me">ask me about it →</a></li>
-        <li class="tbd mono">03 — still being written. <a href="mailto:mostafa@okasha.me">ask me about it →</a></li>
-      </ul>
     </div>
 
-    <div class="section-label sec">03 · INTERESTS</div>
+    <div class="section-label sec">04 · INTERESTS</div>
     <div class="chips">
       {
         ['Piano', 'Ukulele', 'Photography', 'Archery', 'Painting', 'Swimming', 'Soccer', 'Designing', 'Ridiculously good Google Reviews', 'Anime'].map(
@@ -71,8 +80,16 @@ import { JOURNEY as journey } from '../data/journey';
         )
       }
     </div>
+    <DevHint title="Interests" file="src/drafts/pages/about.astro">
+      <p>These are your current chips, kept as-is. Trim or add; they are fine as they are.</p>
+    </DevHint>
 
-    <div class="section-label sec">04 · THE WHOLE JOURNEY</div>
+    <div class="section-label sec">05 · THE WHOLE JOURNEY</div>
+    <DevHint title="Confirm your Meta end date" file="src/data/journey.ts (line 20)">
+      <p>The site says <b>Nov 2024 — Feb 2026</b>; an earlier note said <b>January 2026</b>. It is a public
+      claim, so change it everywhere it appears: <code>src/data/journey.ts:20</code>,
+      <code>src/pages/resume.astro:41</code>, and the downloadable <code>resume/resume.pdf</code>.</p>
+    </DevHint>
     <div class="journey">
       {
         journey.map((j) => (
@@ -100,8 +117,9 @@ import { JOURNEY as journey } from '../data/journey';
 
     <div class="epilogue">
       <blockquote>
-        "Everyone thinks of changing the world, but no one thinks of changing himself."
-        <span class="who">— Leo Tolstoy</span>
+        ✎ Keep the Tolstoy line ("Everyone thinks of changing the world, but no one thinks of changing
+        himself.") or choose one that fits who you are now.
+        <span class="who">— ✎ attribution</span>
       </blockquote>
       <div class="sign mono">
         Never stop improving.

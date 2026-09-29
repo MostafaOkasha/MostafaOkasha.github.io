@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { CASE_STUDIES } from './case-studies';
+import { visible } from './drafts';
 
 /** Shelf definitions: type key → label + badge + color token. */
 export const SHELF_TYPES = {
@@ -39,7 +40,7 @@ export function fmtKicker(date: Date): string {
  * synthetic `case` shelf when case studies exist). Build-time only.
  */
 export async function liveShelves(): Promise<Set<string>> {
-  const entries = await getCollection('library', ({ data }) => !data.draft);
+  const entries = await getCollection('library', visible);
   const live = new Set<string>(entries.map((e) => e.data.type));
   if (CASE_STUDIES.length) live.add('case');
   return live;
